@@ -8,5 +8,6 @@
 int main(){
 
     printf("Kayra psuh pr deneme\n");
+    printf("Kayra git branch deneme\n");
     return 0;
 }
