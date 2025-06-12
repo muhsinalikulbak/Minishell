@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:39 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/12 15:02:42 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/06/13 00:56:13 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,22 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <errno.h>
+# include <sys/wait.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h> 
 
+
+/* Libft library */
+# include "libft.h"
+
+/* Project headers */
+# include "builtins.h"
+# include "env_manager.h"
+# include "executor.h"
+# include "lexer.h"
+# include "parser.h"
+# include "signals.h"
 
 
 #endif

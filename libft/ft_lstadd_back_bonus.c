@@ -1,13 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_handler.c                                    :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/12 14:56:52 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/13 01:51:46 by muhsin           ###   ########.fr       */
+/*   Created: 2024/10/29 21:19:18 by mkulbak           #+#    #+#             */
+/*   Updated: 2024/10/29 21:20:04 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
+
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	t_list	*last;
+
+	last = ft_lstlast(*lst);
+	if (!last)
+	{
+		*lst = new;
+		return ;
+	}
+	last->next = new;
+}

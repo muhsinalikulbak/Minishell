@@ -1,13 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_handler.c                                    :+:      :+:    :+:   */
+/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/12 14:56:52 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/13 01:51:46 by muhsin           ###   ########.fr       */
+/*   Created: 2024/10/29 21:20:30 by mkulbak           #+#    #+#             */
+/*   Updated: 2024/10/29 21:20:33 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
+
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
+{
+	if (lst && del)
+	{
+		(*del)(lst->content);
+		free(lst);
+	}
+}

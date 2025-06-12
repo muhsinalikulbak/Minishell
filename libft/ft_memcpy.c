@@ -1,13 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_handler.c                                    :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/12 14:56:52 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/13 01:51:46 by muhsin           ###   ########.fr       */
+/*   Created: 2024/10/12 19:09:06 by mkulbak           #+#    #+#             */
+/*   Updated: 2024/10/26 05:33:41 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
+
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t	i;
+
+	if (!dst && !src)
+		return (NULL);
+	i = 0;
+	while (i < n)
+	{
+		*(unsigned char *)(dst + i) = *(unsigned char *)(src + i);
+		i++;
+	}
+	return (dst);
+}

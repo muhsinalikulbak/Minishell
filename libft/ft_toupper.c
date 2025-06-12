@@ -1,38 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/13 01:52:53 by muhsin           ###   ########.fr       */
+/*   Created: 2024/10/15 20:35:14 by mkulbak           #+#    #+#             */
+/*   Updated: 2025/06/13 02:09:05 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-int main (int argc, char **argv)
+int	ft_toupper(int c)
 {
-    (void)argc;
-    (void)argv;
-    
-    char *line;
-   
-    while (1)
-    {
-        line = readline("minishell> ");
-
-        if (!line){
-            printf("exit\n");
-            break;
-        }
-        if (*line)
-            add_history(line);
-
-        printf("line :%s", line);
-        free(line);
-    }
-
-    return 0;
+	if (c >= 'a' && c <= 'z')
+		c -= 32;
+	return (c);
 }
