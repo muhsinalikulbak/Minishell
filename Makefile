@@ -6,13 +6,14 @@
 #    By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/06/12 13:02:47 by kayraakbas       ###   ########.fr        #
+#    Updated: 2025/06/12 14:59:29 by kayraakbas       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 INCLUDES = -I include
+LDFLAGS = -lreadline
 
 SRCS_DIR = srcs
 SRCS = $(SRCS_DIR)/main.c
@@ -33,7 +34,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@echo "Building $(NAME)..."
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJS)
+	@$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJS) $(LDFLAGS)
     #if using libft: $(LIBFT)
 
 # If using libft, uncomment this rule

@@ -1,38 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   input_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/12 15:04:16 by kayraakbas       ###   ########.fr       */
+/*   Created: 2025/06/12 14:56:52 by kayraakbas        #+#    #+#             */
+/*   Updated: 2025/06/12 15:04:25 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-
-int main (int argc, char **argv)
-{
-    (void)argc;
-    (void)argv;
-    
-    char *line;
-   
-    while (1)
-    {
-        line = readline("minishell> ");
-
-        if (!line){
-            printf("exit\n");
-            break;
-        }
-        if (*line)
-            add_history(line);
-
-        printf("line :%s", line);
-        free(line);
-    }
-
-    return 0;
-}
+#include "includes/minishell.h"
