@@ -6,7 +6,7 @@
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/13 15:11:40 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/06/13 15:29:21 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int main (int argc, char **argv, char **env)
         }
         if (*line)
             add_history(line);
+        lexer(line);
             
         //implement the readline and input handeling int ipnut dir
         

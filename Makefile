@@ -6,7 +6,7 @@
 #    By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/06/13 15:07:22 by kayraakbas       ###   ########.fr        #
+#    Updated: 2025/06/13 15:32:14 by kayraakbas       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,9 @@ INC_PATH = ./includes/
 
 # Source files (manually listed)
 SRC = main.c \
-      input/input_handler.c
-
+      input/input_handler.c \
+	  lexer/lexer.c
+	  
 # Object files generation
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 OBJ = $(SRC:.c=.o)
