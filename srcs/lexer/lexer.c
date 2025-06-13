@@ -6,11 +6,11 @@
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/13 13:55:29 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/06/13 15:18:55 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void lexer(char *command_line){
 

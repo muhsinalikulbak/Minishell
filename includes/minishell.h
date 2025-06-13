@@ -6,7 +6,7 @@
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:39 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/13 15:08:30 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/06/13 15:17:11 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h> 
-# include "lexer.h"
 
 
 /* Libft library */
