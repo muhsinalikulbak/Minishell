@@ -1,27 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_handler.c                                    :+:      :+:    :+:   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/12 14:56:52 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/13 15:06:39 by kayraakbas       ###   ########.fr       */
+/*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
+/*   Updated: 2025/06/12 18:58:54 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-
-
-char *get_input(){
-    
-    char *line = readline("minishell>");
-
-    if (!line)
-        return NULL;
-
-    if (*line)
-        add_history(line);
-
-    return line;
-}
+// implement lexical Analyser in pdf 

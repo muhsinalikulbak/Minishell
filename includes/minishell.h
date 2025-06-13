@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:39 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/13 00:56:13 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/13 15:08:30 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h> 
+# include "lexer.h"
 
 
 /* Libft library */
@@ -37,5 +38,6 @@
 # include "parser.h"
 # include "signals.h"
 
+char *get_input();
 
 #endif

@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_handler.c                                    :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/12 14:56:52 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/13 15:06:39 by kayraakbas       ###   ########.fr       */
+/*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
+/*   Updated: 2025/06/13 13:55:29 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+# include "../../includes/minishell.h"
 
+void lexer(char *command_line){
 
-char *get_input(){
-    
-    char *line = readline("minishell>");
+    (void)command_line;
 
-    if (!line)
-        return NULL;
-
-    if (*line)
-        add_history(line);
-
-    return line;
+    //checks the comamnd based on grammar and tokenize the command
+    // -> will use the string helpers in the libft
+    // -> handles with using tokens utils function 
+    //converts it to command structure
+    //if there is a syntax error returns error
 }
