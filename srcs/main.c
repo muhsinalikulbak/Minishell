@@ -6,11 +6,12 @@
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/13 15:29:21 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/06/13 18:04:30 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+
+#include "../includes/minishell.h"
 
 int main (int argc, char **argv, char **env)
 {
@@ -33,6 +34,8 @@ int main (int argc, char **argv, char **env)
         lexer(line);
             
         //implement the readline and input handeling int ipnut dir
+
+        // create .bash_history file and store commands there
         
         //apply Lexer to split commands into tokens (lex)
         // -> lexer directory will tokenize the input
@@ -46,7 +49,6 @@ int main (int argc, char **argv, char **env)
         // command table will be a SimpleCommand structs 
         // Wildcard and Envars COMEBACK TO THIS AFTER FİNİSHİNG THE COMMAND TABLE 
         // Executer will take the commmand table
-        printf("line :%s", line);
         free(line);
     }
 
