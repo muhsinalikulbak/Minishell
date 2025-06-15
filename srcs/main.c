@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/13 18:04:30 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/06/15 17:35:42 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,34 @@
 
 int main (int argc, char **argv, char **env)
 {
-    (void)argc;
-    (void)argv;
-    (void)env;
-    
-    char *line;
-   
-    while (1)
+    char *str = ft_strdup("Merhaba"); // Bu main process'de ve adresi 0x567 olsun
+
+    int pid = fork();
+
+    if (pid == 0)
     {
-        line = get_input();
+        // Burada da str 0x567'dir
+        int x;
+        str[0] = 'A'; // Eğer veride değişiklik olursa fiziksel adres yine 0x567'yi gösterir ama arka planda
+        // fiziksel adres değişmiş olur
+        
+        // Yani veri değiştirildiği an child process'de str için yeni fiziksel bir yer açılır fakat gözüken adres main'dekidir
+        // O yüzden main'den  child'e geçen memory address'lere  virtual address space denir.
+        // Str main process'den gelmiş olsa bile free edilmedilir. Veriyi değiştirsede değiştirmesede free edilmelidir.
+        // Child process veriyi değiştirsin ya da değiştirmesin  free'lenmeden sonlandığı durumda leak çıkacaktır.
+        // Veriyi değiştirip free ederse değişiklik olduğundan kendi açtığı fiziksel adres'i free'ler
+        // Veriyi değiştirmeden free ederse virtual address'i freeler
+        // Free edilmezse child process çıkarken bunu leak olarak algılar (bu free main'e etki etmez) 
 
-        if (!line){
-            printf("exit\n");
-            break;
-        }
-        if (*line)
-            add_history(line);
-        lexer(line);
-            
-        //implement the readline and input handeling int ipnut dir
-
-        // create .bash_history file and store commands there
-        
-        //apply Lexer to split commands into tokens (lex)
-        // -> lexer directory will tokenize the input
-        
-        //Build command table with Parser (yacc)
-        //Note: Both lex and yacc are standard commands in UNIX
-        //Provide a Command Table after thsoe implementations
-        
-        // comand grammar : cmd [arg]*   ​ [ | cmd [arg]* ]*    [ [> filename] [< filename] [ >& filename] [>> filename] [>>& filename] ]* [&]
-        // syntax of grammar will be checked in parser part 
-        // command table will be a SimpleCommand structs 
-        // Wildcard and Envars COMEBACK TO THIS AFTER FİNİSHİNG THE COMMAND TABLE 
-        // Executer will take the commmand table
-        free(line);
+        printf("Child : %s\n",str);
+        free(str);
+    }
+    else
+    {
+        waitpid(pid, NULL, -1);
+        sleep(2);
+        printf("Main : %s\n",str);
+        free(str);
     }
 
     return 0;
