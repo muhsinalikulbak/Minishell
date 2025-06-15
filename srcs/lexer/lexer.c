@@ -6,84 +6,75 @@
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/14 18:30:58 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/06/15 19:34:58 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void scan(char *input_cmd, t_command cmd){
+void scan(char *input_cmd, t_token **token){
     // commmand matrix
     char **scanned_cmd;
-    int arg = 0;
-    scanned_cmd = ft_split(input_cmd, ' ');
-    
+    int arg;
+    scanned_cmd = ft_split(input_cmd, ' '); // check for the memory leaks in here
+    if (!scanned_cmd)
+    {
+        perror("command could not scanned");
+        return;
+    }
+    arg = 0;
     while (scanned_cmd[arg])
     {
-        if (anlayse(scanned_cmd[arg], cmd) == false)
+        if (anlayse(scanned_cmd[arg], token) == false)
         {
             printf("command not found: %s\n",scanned_cmd[arg]);
             break;
         }
         arg++;
     }
+    arg = 0;
 }
 
-bool anlayse(char *cmd, t_command simple_cmd){
-    t_token token;
+bool anlayse(char *cmd, t_token **token){
+    char *token_value;
+    t_token_type token_type;
+
     //syntax check
-    if(ft_strncmp(cmd, "ls", ft_strlen(cmd)) == 0)
+     if (cmd[0] == '|')
+        token_type = TOKEN_PIPE;
+    else if (cmd[0] == '<')
     {
-        token.value = cmd;
-        token.type = TOKEN_COMMAND;
-        insert_Argument(token, simple_cmd);
-        return (true);
+        if (cmd[1] == '<')
+            token_type = TOKEN_HEREDOC;
+        else
+            token_type = TOKEN_REDIR_IN;
     }
-    else if (ft_strncmp(cmd, "cat", ft_strlen(cmd)) == 0)
+    else if (cmd[0] == '>')
     {
-        return (true);
+        if (cmd[1] == '>')
+            token_type = TOKEN_APPEND;
+        else
+            token_type = TOKEN_REDIR_OUT;
     }
-    else if (ft_strncmp(cmd, "grep", ft_strlen(cmd)) == 0)
-    {
-        return (true);
-    }
-    else if (ft_strncmp(cmd, "-a", ft_strlen(cmd)) == 0)
-    {
-        token.value = cmd;
-        token.type = TOKEN_ARGUMENT;
-        insert_Argument(token, simple_cmd);
-        return (true);
-    }
-    else if (ft_strncmp(cmd, "|", ft_strlen(cmd)) == 0)
-    {
-        token.value = cmd;
-        token.type = TOKEN_PIPE;
-        insert_Argument(token, simple_cmd);
-        return (true);
-    }
+    else if (cmd[0] == '-')
+        token_type = TOKEN_ARGUMENT;
     else
-    {
-        return (false);
-    }
-    return (false);
+        token_type = TOKEN_COMMAND;
+
+    token_value = cmd;        
+    insert_token(token, token_value, token_type);
+    return (true);
 }
 
-void lexer(char *command_line){
+t_token *lexer(char *command_line){
 
     t_command command;
-    scan(command_line, command);
+    t_token *token;
+
+    token = NULL;
+    scan(command_line, &token);
 
     int i = 0;
-  
-
-
-    //syntax_chck(tokenized_cmd);
-
     
-
-    //checks the comamnd based on grammar and tokenize the command
-    // -> will use the string helpers in the libft
-    // -> handles with using tokens utils function 
-    //converts it to command structure
-    //if there is a syntax error returns error
+    return token;   
 }

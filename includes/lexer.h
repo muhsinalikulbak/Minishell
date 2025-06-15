@@ -6,7 +6,7 @@
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/14 18:30:48 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/06/15 18:04:33 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@ typedef enum s_token_type{
 typedef struct s_token{
     char *value;
     t_token_type type;
-
+    struct s_token* next;
+    struct s_token* prev;
 } t_token;
 
 typedef struct s_simple_command{
-	int number_of_available_arguments;
-	int number_of_arguments;
-	t_token** args; 
+	t_token* cmd_head;
 } t_command;
 
 /*
@@ -57,9 +56,15 @@ struct Command {
 };
 */
 
-void lexer(char *command_line);
+t_token *lexer(char *command_line);
 void syntax_chck(char **tokenized_cmd);
-void scan(char *input_cmd, t_command cmd);
-bool anlayse(char *cmd, t_command simple_cmd);
+void scan(char *input_cmd, t_token **token);
+bool anlayse(char *cmd, t_token **token);
 void insert_Argument(t_token token, t_command cmd);
+
+//Token Utils
+void insert_token(t_token **head, char* val, t_token_type token_type);
+void free_list(t_token **list);
+void print_list(t_token *list);
+int ft_num_of_tokens(t_token *list);
 #endif
