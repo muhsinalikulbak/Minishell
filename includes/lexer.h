@@ -6,7 +6,7 @@
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/15 18:04:33 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/06/16 00:10:15 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,31 +36,18 @@ typedef struct s_simple_command{
 	t_token* cmd_head;
 } t_command;
 
-/*
-struct Command {
-    int _numberOfAvailableSimpleCommands;
-    int _numberOfSimpleCommands;
-    SimpleCommand** _simpleCommands;
+typedef struct s_io_redir
+{
     char *_outFile;
     char *_inputFile;
     char *_errFile;
-    int _background;
-    void prompt();
-    void print();
-    void execute();
-    void clear();
-    Command();
-    void insertSimpleCommand(SimpleCommand* simpleCommand);
-    static Command _currentCommand;
-    static SimpleCommand* _currentSimpleCommand;
-};
-*/
+} t_io_redir;
 
 t_token *lexer(char *command_line);
 void syntax_chck(char **tokenized_cmd);
 void scan(char *input_cmd, t_token **token);
 bool anlayse(char *cmd, t_token **token);
-void insert_Argument(t_token token, t_command cmd);
+
 
 //Token Utils
 void insert_token(t_token **head, char* val, t_token_type token_type);

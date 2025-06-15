@@ -6,7 +6,7 @@
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/15 19:35:23 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/06/16 00:51:08 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int main (int argc, char **argv, char **env)
     
     char *line;
     t_command command;
+    t_big_command big_command;
    
     while (1)
     {
@@ -30,6 +31,7 @@ int main (int argc, char **argv, char **env)
             break;
         }
         command.cmd_head = lexer(line);
+        big_command = parser(command.cmd_head);
 
         print_list(command.cmd_head);
         

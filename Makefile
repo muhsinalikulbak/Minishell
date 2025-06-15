@@ -6,7 +6,7 @@
 #    By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/06/14 18:32:00 by kayraakbas       ###   ########.fr        #
+#    Updated: 2025/06/15 23:57:10 by kayraakbas       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,9 @@ INC_PATH = ./includes/
 SRC = main.c \
       input/input_handler.c \
 	  lexer/lexer.c \
-	  lexer/token_utils.c
+	  lexer/token_utils.c \
+	  parser/parser.c \
+	  parser/parser_utils.c \
 	  
 # Object files generation
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
