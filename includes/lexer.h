@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/16 05:04:34 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/17 01:52:38 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,12 @@
 
 typedef enum s_token_type
 {
-	TOKEN_COMMAND,
-	TOKEN_COMMENT,
-	TOKEN_ARGUMENT,
+	TOKEN_WORD,
 	TOKEN_PIPE,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_APPEND,
 	TOKEN_HEREDOC,
-	TOKEN_EOF
 }		t_token_type;
 
 typedef struct s_token
@@ -34,20 +31,8 @@ typedef struct s_token
 	struct s_token	*prev;
 }		t_token;
 
-typedef struct s_simple_command // Bunun yerine direk t_token yeterli olabilir gibi
-{
-	t_token	*cmd_head;
-}		t_command;
-
-typedef struct s_io_redir
-{
-	char	*outfile;
-	char	*infile;
-	char	*errorfile;
-}		t_io_redir;
 
 t_token	*lexer(char *command_line);
-void	syntax_chck(char **tokenized_cmd);
 void	scan(char *input_cmd, t_token **token);
 bool	anlayse(char *cmd, t_token **token);
 void	insert_token(t_token **head, char *val, t_token_type token_type);

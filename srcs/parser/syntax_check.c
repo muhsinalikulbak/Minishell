@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 04:08:38 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/16 05:12:12 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/17 01:17:58 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static bool	pipe_check(t_token *token_list)
 	{
 		if (current->next != NULL)
 		{
-			if (current->type == TOKEN_PIPE && current->next == TOKEN_PIPE)
+			if (current->type == TOKEN_PIPE
+				&& current->next->type == TOKEN_PIPE)
 				return (false);
 		}
 		current = current->next;

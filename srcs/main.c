@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/16 03:54:21 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/17 00:53:10 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 int	main(int argc, char **argv, char **env)
 {
 	char		*line;
-	t_command	command;
 	t_pipeline	pipelines;
 
 	(void)argc;
 	(void)argv;
-	(void)env;
-	while (1)
+	while (true)
 	{
 		line = get_input();
 		if (!line)
@@ -29,10 +27,7 @@ int	main(int argc, char **argv, char **env)
 			printf("exit\n");
 			break ;
 		}
-		command.cmd_head = lexer(line);
-		pipelines = parser(command.cmd_head);
-		print_list(command.cmd_head);
+		pipelines = parser(lexer(line));
 		free(line);
-		free_list(&command.cmd_head);
 	}
 }
