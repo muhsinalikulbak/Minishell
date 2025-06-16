@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/16 03:02:15 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/16 05:04:34 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_token
 	struct s_token	*prev;
 }		t_token;
 
-typedef struct s_simple_command
+typedef struct s_simple_command // Bunun yerine direk t_token yeterli olabilir gibi
 {
 	t_token	*cmd_head;
 }		t_command;
@@ -50,10 +50,9 @@ t_token	*lexer(char *command_line);
 void	syntax_chck(char **tokenized_cmd);
 void	scan(char *input_cmd, t_token **token);
 bool	anlayse(char *cmd, t_token **token);
-
-//Token Utils
 void	insert_token(t_token **head, char *val, t_token_type token_type);
 void	free_list(t_token **list);
 void	print_list(t_token *list);
 int		ft_num_of_tokens(t_token *list);
+t_token	*get_last_token(t_token *head);
 #endif

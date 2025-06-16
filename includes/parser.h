@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/16 03:03:12 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/16 04:45:31 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,32 @@ typedef enum e_error_type
 	SYNTAX_ERROR_HEREDOC_NO_DELIM
 }		t_error_type;
 
-typedef struct s_big_command
+typedef struct s_redir
 {
-	int			number_of_available_simple_commands;
-	int			number_of_simple_commands;
-	t_command	*simple_commands;
-	t_io_redir	io_redirection;
-	/*
-	int _background;
-	static Command _currentCommand;
-	static SimpleCommand* _currentSimpleCommand;
-    */
-}		t_big_command;
+	int             type;        // REDIR_IN, REDIR_OUT, etc.
+	char            *filename;   // target file
+	struct s_redir  *next;
+} t_redir;
+
+typedef struct s_cmd
+{
+	char            **args;         // ["ls", "-la", NULL]
+	t_redir         *redirections;  // linked list of redirections
+	struct s_cmd    *next;          // next command in pipeline
+}	t_cmd;
+
+typedef struct s_pipeline
+{
+	t_cmd   *commands;      // first command in pipeline
+	int     cmd_count;      // number of commands
+}		t_pipeline;
 
 // Parser Utils
-t_big_command	parser(t_token *token_list);
+t_pipeline		parser(t_token *token_list);
 t_command		*init_command_arr(t_command simple_command, int num_of_simple_cmds);
 void			prompt(void);
 void			print(void);
 void			execute(void);
 void			clear(void);
+bool			syntax_check(t_token *token_list);
 #endif
