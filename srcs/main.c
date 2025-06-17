@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/17 00:53:10 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/17 12:42:56 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ int	main(int argc, char **argv, char **env)
 			printf("exit\n");
 			break ;
 		}
-		pipelines = parser(lexer(line));
+		pipelines.commands = parser(lexer(line));
+		if (pipelines.commands != NULL)
+		{
+			
+		}
 		free(line);
 	}
 }

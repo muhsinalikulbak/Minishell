@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/17 01:17:35 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/17 12:42:28 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ typedef struct s_pipeline
 	int     cmd_count;      // number of commands
 }		t_pipeline;
 
-t_pipeline		parser(t_token *token_list);
-bool			syntax_check(t_token *token_list);
+t_cmd	*parser(t_token *token_list);
+bool	syntax_check(t_token *token_list);
 #endif
