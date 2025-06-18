@@ -3,16 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/17 13:01:56 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/18 23:30:06 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	anlayse(char *cmd, t_token **token)
+typedef enum s_token_state
+{
+	STATE_NORMAL,
+	STATE_IN_DQUOTE,
+	STATE_IN_SQUOTE,
+    STATE_IDLE
+}		t_token_state;
+
+static bool is_special_char(char c) {
+    return (c == '|' || c == '<' || c == '>');
+}
+
+static void	tokenize(char *cmd, t_token **token)
 {
 	int				len;
 	t_token_type	token_type;
@@ -39,31 +51,87 @@ static void	anlayse(char *cmd, t_token **token)
 	insert_token(token, cmd, token_type);
 }
 
-static bool	scan(char *input_cmd, t_token **token)
+static void split_line(char *input_cmd, t_token **token)
 {
-	char	**scanned_cmd;
-	int		i;
-
-	i = 0;
-	scanned_cmd = ft_split(input_cmd, ' ');
-	if (!scanned_cmd)
-	{
-		perror("command could not scanned");
-		return (false);
-	}
-	while (scanned_cmd[i])
-	{
-		anlayse(scanned_cmd[i], token);
-		i++;
-	}
-	return (true);
+    int     i;
+    int     j;
+    char    *arg;
+    t_token_state state;
+    
+    arg = NULL;
+    i = 0;
+    j = 0;
+    state = STATE_IDLE;
+    
+    while (input_cmd[i])
+    {
+        if (state == STATE_IDLE && input_cmd[i] != ' ')
+        {
+            state = STATE_NORMAL;
+            if (arg == NULL)
+            {
+                arg = (char *)ft_calloc((ft_strlen(input_cmd) + 1), sizeof(char));
+                j = 0;
+            }
+            if (input_cmd[i] == '"')
+                state = STATE_IN_DQUOTE;
+            else if (input_cmd[i] == '\'')
+                state = STATE_IN_SQUOTE;
+            else
+                arg[j++] = input_cmd[i];
+        }
+        else if (state == STATE_IN_DQUOTE)
+        {
+            if (input_cmd[i] == '"')
+                state = STATE_NORMAL;
+            else
+                arg[j++] = input_cmd[i];
+        }
+        else if (state == STATE_IN_SQUOTE)
+        {
+            if (input_cmd[i] == '\'')
+                state = STATE_NORMAL;
+            else
+                arg[j++] = input_cmd[i];
+        }
+        else if (state == STATE_NORMAL)
+        {
+            if (input_cmd[i] == ' ')
+            {
+                arg[j] = '\0';
+                printf("extracked arg: %s\n", arg);
+                tokenize(arg, token);
+                free(arg);
+                arg = NULL;
+                state = STATE_IDLE;
+            }
+            else if (input_cmd[i] == '"')
+                state = STATE_IN_DQUOTE;
+            else if (input_cmd[i] == '\'')
+                state = STATE_IN_SQUOTE;
+            else
+                arg[j++] = input_cmd[i];
+        }
+        i++;
+    }
+    if (arg != NULL)
+    {
+        arg[j] = '\0';
+        printf("extracked arg:%s \n", arg);
+        tokenize(arg, token);
+        free(arg);
+    }
+    
+    return;
 }
+
+
 
 t_token *lexer(char *command_line)
 {
 	t_token *token;
-	
 	token = NULL;
-	scan(command_line, &token);
+	split_line(command_line, &token);
+    print_list(token);
 	return token;   
 }

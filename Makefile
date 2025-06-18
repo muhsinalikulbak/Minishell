@@ -6,7 +6,7 @@
 #    By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/06/15 23:57:10 by kayraakbas       ###   ########.fr        #
+#    Updated: 2025/06/18 14:01:36 by kayraakbas       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC = main.c \
 	  lexer/token_utils.c \
 	  parser/parser.c \
 	  parser/parser_utils.c \
+	  parser/syntax_check.c \
 	  
 # Object files generation
 SRCS = $(addprefix $(SRC_PATH), $(SRC))

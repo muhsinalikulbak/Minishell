@@ -3,20 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 04:08:38 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/17 01:17:58 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/18 14:02:32 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	redirection_check(t_token *token_list)
-{
-
-	
-}
+static bool	redirection_check(t_token *token_list);
 
 static bool	pipe_check(t_token *token_list)
 {
@@ -38,7 +34,7 @@ static bool	pipe_check(t_token *token_list)
 		current = current->next;
 	}
 	return (true);
-}
+}	
 
 bool	syntax_check(t_token *token_list)
 {
