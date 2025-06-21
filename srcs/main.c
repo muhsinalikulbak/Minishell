@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/21 22:00:24 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/22 01:28:37 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	token = NULL;
 	while (true)
 	{
 		line = get_input();
 		if (line)
 		{
+			token = NULL;
 			lexer(&token, line); 
 			print_list(token);
-			pipelines.commands = parser(token);
-			if (pipelines.commands != NULL)
-			{
+			// pipelines.commands = parser(token);
+			// if (pipelines.commands != NULL)
+			// {
 				
-			}
+			// }
 		}
 		free(line);
 	}
