@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/22 01:18:54 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/22 01:35:43 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	tokenize(t_state_data *data, t_token **token)
 	len = ft_strlen(data->token_value);
 	prev_state = data->prev_state;
 	if (prev_state == STATE_IN_DQUOTE || prev_state == STATE_IN_SQUOTE)
+	{
 		insert_token(token, TOKEN_WORD, data->token_value);
+		return ;
+	}
 	else if (ft_strncmp(data->token_value, "|", len) && len == 1)
 		token_type = TOKEN_PIPE;
 	else if (ft_strncmp(data->token_value, "<", len) && len == 1)
