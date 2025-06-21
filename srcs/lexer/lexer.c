@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/21 22:42:13 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/22 01:18:54 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ void	tokenize(t_state_data *data, t_token **token)
 	prev_state = data->prev_state;
 	if (prev_state == STATE_IN_DQUOTE || prev_state == STATE_IN_SQUOTE)
 		insert_token(token, TOKEN_WORD, data->token_value);
-	else if (ft_strncmp(data->token_value, "|", len))
+	else if (ft_strncmp(data->token_value, "|", len) && len == 1)
 		token_type = TOKEN_PIPE;
-	else if (ft_strncmp(data->token_value, "<", len))
+	else if (ft_strncmp(data->token_value, "<", len) && len == 1)
 		token_type = TOKEN_REDIR_IN;
-	else if (ft_strncmp(data->token_value, ">", len))
+	else if (ft_strncmp(data->token_value, ">", len) && len == 1)
 		token_type = TOKEN_REDIR_OUT;
-	else if (ft_strncmp(data->token_value, "<<", len))
+	else if (ft_strncmp(data->token_value, "<<", len) && len == 2)
 		token_type = TOKEN_HEREDOC;
-	else if (ft_strncmp(data->token_value, ">>", len))
+	else if (ft_strncmp(data->token_value, ">>", len) && len == 2)
 		token_type = TOKEN_APPEND;
 	else
 		token_type = TOKEN_WORD;
@@ -67,7 +67,7 @@ static void	split_line(char *input_line, t_state_data *data)
 	last_state(data);
 }
 
-void lexer(t_token **token, char *input_line)
+void	lexer(t_token **token, char *input_line)
 {
 	t_state_data	data;
 
