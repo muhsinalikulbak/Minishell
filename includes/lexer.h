@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/20 00:13:23 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/21 22:01:11 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,27 @@ typedef struct s_token
 	struct s_token	*prev;
 }		t_token;
 
+typedef struct s_state_data
+{
+	t_token_state	state;
+	t_token_state	prev_state;
+	t_token			**token;
+	char			*token_value;
+	char			*input_line;
+	int				line_length;
+	int				value_idx;
+}		t_state_data;
 
-t_token	*lexer(char *command_line);
-void	insert_token(t_token **head, char *val, t_token_type token_type);
+void	lexer(t_token **token, char *command_line);
+void	insert_token(t_token **token_head, t_token_type token_type, char *value);
 void	free_list(t_token **list);
 void	print_list(t_token *list);
 int		ft_num_of_tokens(t_token *list);
 t_token	*get_last_token(t_token *head);
+void	state_idle(t_state_data *data, char ch);
+void	state_normal(t_state_data *data, char ch);
+void    tokenize(t_state_data *data, t_token **token);
+void	state_double_quote(t_state_data *data, char ch);
+void	state_single_quoute(t_state_data *data, char ch);
+void	last_state(t_state_data *data);
 #endif

@@ -6,128 +6,71 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/20 11:25:52 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/21 22:42:13 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	tokenize(char *cmd, t_token **token)
+static void	state_data_init(t_state_data *data, t_token **token, char *input)
+{
+	data->token = token;
+	data->token_value = NULL;
+	data->input_line = input;
+	data->state = STATE_IDLE;
+	data->prev_state = STATE_NORMAL;
+	data->value_idx = 0;
+}
+
+void	tokenize(t_state_data *data, t_token **token)
 {
 	int				len;
 	t_token_type	token_type;
-	
-	len = ft_strlen(cmd);
-	if (cmd[0] == '|' && len == 1)
+	t_token_state	prev_state;
+
+	len = ft_strlen(data->token_value);
+	prev_state = data->prev_state;
+	if (prev_state == STATE_IN_DQUOTE || prev_state == STATE_IN_SQUOTE)
+		insert_token(token, TOKEN_WORD, data->token_value);
+	else if (ft_strncmp(data->token_value, "|", len))
 		token_type = TOKEN_PIPE;
-	else if (cmd[0] == '<' && len == 1)
+	else if (ft_strncmp(data->token_value, "<", len))
 		token_type = TOKEN_REDIR_IN;
-	else if (cmd[0] == '>' && len == 1)
+	else if (ft_strncmp(data->token_value, ">", len))
 		token_type = TOKEN_REDIR_OUT;
-	else if (cmd[0] == '<' && cmd[1] == '<' && len == 2)
+	else if (ft_strncmp(data->token_value, "<<", len))
 		token_type = TOKEN_HEREDOC;
-	else if (cmd[0] == '>' && cmd[1] == '>' && len == 2)
+	else if (ft_strncmp(data->token_value, ">>", len))
 		token_type = TOKEN_APPEND;
 	else
 		token_type = TOKEN_WORD;
-	insert_token(token, cmd, token_type);
+	insert_token(token, token_type, data->token_value);
 }
 
-static void split_line(char *input_cmd, t_token **token)
+static void	split_line(char *input_line, t_state_data *data)
 {
-    int				i;
-    int				j;
-    char			*arg;
-    t_token_state	state;
-	t_token_state	prev_state;
+	int	i;
 
-	char **states = malloc(sizeof(char*) * 5);
-	states[0] = "NORMAL";
-	states[1] = "DQUOTE";
-	states[2] = "SQUOTE";
-	states[3] = "IDLE";
-	states[4] = NULL;
-
-    arg = NULL;
-    i = 0;
-    j = 0;
-    state = STATE_IDLE;
-    prev_state = STATE_NORMAL;
-    while (input_cmd[i])
-    {
-        if (state == STATE_IDLE && input_cmd[i] != ' ')
-        {
-            state = STATE_NORMAL;
-            if (arg == NULL)
-            {
-                arg = (char *)ft_calloc(ft_strlen(input_cmd) + 1, sizeof(char));
-                j = 0;
-            }
-            if (input_cmd[i] == '"')
-                state = STATE_IN_DQUOTE;
-            else if (input_cmd[i] == '\'')
-                state = STATE_IN_SQUOTE;
-            else
-                arg[j++] = input_cmd[i]; // Bu ilk ekleme olursa | < > gibi kontroller yapılmalı
-        }
-        else if (state == STATE_IN_DQUOTE)
-        {
-			prev_state = state;
-            if (input_cmd[i] == '"')
-                state = STATE_NORMAL;
-            else
-                arg[j++] = input_cmd[i];
-        }
-        else if (state == STATE_IN_SQUOTE)
-        {
-			prev_state = state;
-            if (input_cmd[i] == '\'')
-                state = STATE_NORMAL;
-            else
-                arg[j++] = input_cmd[i];
-        }
-        else if (state == STATE_NORMAL)
-        {
-            if (input_cmd[i] == ' ')
-            {
-                arg[j] = '\0';
-                printf("extracked arg: %s  PREV_TOKEN : %s\n", arg, states[prev_state]);
-                tokenize(arg, token);// Burada ne ile çıktığını yani prev state'i verip ona göre token node ekleyecek // NORMAL STATE NORMAL DEĞİLSE SYNTAX HATASI
-                free(arg);
-                arg = NULL;
-				prev_state = state;
-                state = STATE_IDLE;
-            }
-            else if (input_cmd[i] == '"')
-			{
-				prev_state = state;
-                state = STATE_IN_DQUOTE;
-			}
-            else if (input_cmd[i] == '\'')
-			{
-				prev_state = state;
-                state = STATE_IN_SQUOTE;
-			}
-            else
-                arg[j++] = input_cmd[i]; // State Normal eklemede kontrol yapılıcak ls|cat pipe alınmalı ya da >> << < > alınmalı
-        }
-        i++;
-    }
-    if (arg != NULL)
-    {
-        arg[j] = '\0';
-        printf("extracked arg: %s  PREV_TOKEN : %s\n", arg, states[prev_state]);
-        tokenize(arg, token); // Burada ne ile çıktığını yani prev state'i verip ona göre token node ekleyecek // NORMAL STATE NORMAL DEĞİLSE SYNTAX HATASI
-        free(arg);
-    }
-    return ;
+	i = 0;
+	while (input_line[i])
+	{
+		if (data->state == STATE_IDLE && input_line[i] != ' ')
+			state_idle(data, input_line[i]);
+		else if (data->state == STATE_IN_DQUOTE)
+			state_double_quote(data, input_line[i]);
+		else if (data->state == STATE_IN_SQUOTE)
+			state_single_quoute(data, input_line[i]);
+		else if (data->state == STATE_NORMAL)
+			state_normal(data, input_line[i]);
+		i++;
+	}
+	last_state(data);
 }
 
-t_token *lexer(char *command_line)
+void lexer(t_token **token, char *input_line)
 {
-	t_token *token;
-	token = NULL;
-	split_line(command_line, &token);
-    print_list(token);
-	return token;
+	t_state_data	data;
+
+	state_data_init(&data, token, input_line);
+	split_line(input_line, &data);
 }
