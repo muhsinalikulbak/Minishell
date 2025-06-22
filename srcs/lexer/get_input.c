@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_handler.c                                    :+:      :+:    :+:   */
+/*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/12 14:56:52 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/21 19:39:03 by muhsin           ###   ########.fr       */
+/*   Created: 2025/06/22 13:01:14 by muhsin            #+#    #+#             */
+/*   Updated: 2025/06/22 13:27:27 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *get_input()
+char *get_input(bool quote_state)
 {
-	
-	char *line = readline("minishell~$ ");
+	char *line;
 
+	if (quote_state)
+		line = readline("minishell~$ ");
+	else
+		line = readline("> ");
 	if (!line && !*line)
-		return NULL;
-
-	if (*line)
-		add_history(line);
-	
-	return line;
+		return (NULL);
+	return (line);
 }

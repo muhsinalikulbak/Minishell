@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/22 01:35:43 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/22 14:30:32 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ static void	state_data_init(t_state_data *data, t_token **token, char *input)
 	data->token = token;
 	data->token_value = NULL;
 	data->input_line = input;
+	data->input_length = ft_strlen(input);
 	data->state = STATE_IDLE;
 	data->prev_state = STATE_NORMAL;
 	data->value_idx = 0;
+	data->history = ft_strdup(input); // Double free'den kaçınmak için
 }
 
 void	tokenize(t_state_data *data, t_token **token)
@@ -50,7 +52,7 @@ void	tokenize(t_state_data *data, t_token **token)
 	insert_token(token, token_type, data->token_value);
 }
 
-static void	split_line(char *input_line, t_state_data *data)
+static bool	split_line(char *input_line, t_state_data *data)
 {
 	int	i;
 
@@ -67,13 +69,34 @@ static void	split_line(char *input_line, t_state_data *data)
 			state_normal(data, input_line[i]);
 		i++;
 	}
-	last_state(data);
+	return (last_state(data));
 }
 
-void	lexer(t_token **token, char *input_line)
+char	*lexer(t_token **token, char *input_line)
 {
 	t_state_data	data;
+	bool			quote_state;
+	char			*temp;
 
-	state_data_init(&data, token, input_line);
-	split_line(input_line, &data);
+	state_data_init(&data, token, input_line); 		// Lexer başladı
+	quote_state = split_line(input_line, &data); 	// Ayrıştırma yapıldı tokenlar oluşturuldu.
+	while (!quote_state) 			// Komut geçersiz "  quote ile biterse veri alınmaya devam eder
+	{
+		input_line = get_input(false); 	// yeni komut alınır (readline ile)
+		data.token_value[data.value_idx++] = '-'; // new_line eklenir
+		data.token_value[data.value_idx] = '\0'; // null terminate edilir
+		temp = data.token_value; 		// sonraki input eklendikten sonra free yapılacak
+		data.input_length += ft_strlen(input_line);
+		data.token_value = malloc(data.input_length + 2);
+		ft_memmove(data.token_value, temp, ft_strlen(temp));
+		free(temp); // eski token_value'yu freele
+		temp = data.history;
+		data.history = ft_strjoin(data.history, input_line);
+		free(temp); // eski history'i freele
+		free(data.input_line); // eski input'u freele
+		data.input_line = input_line;
+		quote_state = split_line(input_line, &data);
+	}
+	free(data.input_line);
+	return (data.history);
 }

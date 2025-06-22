@@ -6,7 +6,7 @@
 #    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/06/21 22:03:35 by muhsin           ###   ########.fr        #
+#    Updated: 2025/06/22 13:00:58 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,10 @@ OBJ_PATH = ./objects/
 INC_PATH = ./includes/
 
 SRC = main.c \
-      input/input_handler.c \
 	  lexer/lexer.c \
 	  lexer/lexer_utils.c \
 	  lexer/token_utils.c \
+	  lexer/get_input.c \
 	  parser/parser.c \
 	  parser/parser_utils.c \
 	  parser/syntax_check.c \

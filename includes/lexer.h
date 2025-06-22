@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/21 22:01:11 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/22 14:12:30 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ typedef struct s_state_data
 	t_token			**token;
 	char			*token_value;
 	char			*input_line;
-	int				line_length;
+	char			*history;
+	int				input_length;
 	int				value_idx;
 }		t_state_data;
 
-void	lexer(t_token **token, char *command_line);
+char	*lexer(t_token **token, char *input_line);
 void	insert_token(t_token **token_head, t_token_type token_type, char *value);
 void	free_list(t_token **list);
 void	print_list(t_token *list);
@@ -61,5 +62,6 @@ void	state_normal(t_state_data *data, char ch);
 void    tokenize(t_state_data *data, t_token **token);
 void	state_double_quote(t_state_data *data, char ch);
 void	state_single_quoute(t_state_data *data, char ch);
-void	last_state(t_state_data *data);
+bool	last_state(t_state_data *data);
+char	*get_input(bool quote_state);
 #endif

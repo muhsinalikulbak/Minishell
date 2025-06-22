@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/21 22:35:05 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/22 14:10:11 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	state_idle(t_state_data *data, char ch)
 {
-	int	length;
+	int	len;
 
+	len = data->input_length;
 	data->state = STATE_NORMAL;
 	if (data->token_value == NULL)
 	{
-		length = ft_strlen(data->input_line);
-		data->token_value = (char *)ft_calloc(length, sizeof(char));
+		data->token_value = (char *)ft_calloc(len + 2, sizeof(char));
 		data->value_idx = 0;
 	}
 	if (ch == '"')
@@ -73,16 +73,17 @@ void	state_single_quoute(t_state_data *data, char ch)
 		data->token_value[data->value_idx++] = ch;
 }
 
-void	last_state(t_state_data *data)
+bool	last_state(t_state_data *data)
 {
 	if (data->token_value != NULL)
 	{
-		// if (data->state == STATE_NORMAL)
-		// {
+		if (data->state == STATE_NORMAL)
+		{
 			data->token_value[data->value_idx] = '\0';
 			tokenize(data, data->token);
-		// }
-		// else
-		// 	printf("QUOTE ERROR\n");
+			return (true);
+		}
+		else
+			return (false);
 	}
 }
