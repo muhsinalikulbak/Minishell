@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/22 14:28:53 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/22 15:10:15 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	// while (true)
-	// {
+	while (true)
+	{
 		line = get_input(true);
 		if (line)
 		{
@@ -37,6 +37,6 @@ int	main(int argc, char **argv, char **env)
 				
 			// }
 		}
-	// }
+	}
 	free(history);
 }
