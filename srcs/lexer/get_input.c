@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:01:14 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/22 13:27:27 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/23 13:20:58 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char *get_input(bool quote_state)
 		line = readline("minishell~$ ");
 	else
 		line = readline("> ");
-	if (!line && !*line)
+	if (!line)
 		return (NULL);
 	return (line);
 }

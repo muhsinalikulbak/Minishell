@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/22 15:10:15 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/23 13:20:39 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **env)
 	while (true)
 	{
 		line = get_input(true);
-		if (line)
+		if (line && *line)
 		{
 			token = NULL;
 			history = lexer(&token, line);
