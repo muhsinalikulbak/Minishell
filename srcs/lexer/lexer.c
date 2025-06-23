@@ -6,13 +6,13 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/22 15:13:57 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/23 12:16:21 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	state_data_init(t_state_data *data, t_token **token, char *input)
+static void	state_data_init(t_lexer_data *data, t_token **token, char *input)
 {
 	data->token = token;
 	data->token_value = NULL;
@@ -24,7 +24,7 @@ static void	state_data_init(t_state_data *data, t_token **token, char *input)
 	data->history = ft_strdup(input); // Double free'den kaçınmak için
 }
 
-void	tokenize(t_state_data *data, t_token **token)
+void	tokenize(t_lexer_data *data, t_token **token)
 {
 	int				len;
 	t_token_type	token_type;
@@ -52,7 +52,7 @@ void	tokenize(t_state_data *data, t_token **token)
 	insert_token(token, token_type, data->token_value);
 }
 
-static bool	split_line(char *input_line, t_state_data *data)
+static bool	split_line(char *input_line, t_lexer_data *data)
 {
 	int	i;
 
@@ -74,7 +74,7 @@ static bool	split_line(char *input_line, t_state_data *data)
 
 char	*lexer(t_token **token, char *input_line)
 {
-	t_state_data	data;
+	t_lexer_data	data;
 	bool			quote_state;
 	char			*temp;
 

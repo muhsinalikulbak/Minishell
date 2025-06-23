@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/22 14:12:30 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/23 12:16:30 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_token
 	struct s_token	*prev;
 }		t_token;
 
-typedef struct s_state_data
+typedef struct s_lexer_data
 {
 	t_token_state	state;
 	t_token_state	prev_state;
@@ -49,7 +49,7 @@ typedef struct s_state_data
 	char			*history;
 	int				input_length;
 	int				value_idx;
-}		t_state_data;
+}		t_lexer_data;
 
 char	*lexer(t_token **token, char *input_line);
 void	insert_token(t_token **token_head, t_token_type token_type, char *value);
@@ -57,11 +57,11 @@ void	free_list(t_token **list);
 void	print_list(t_token *list);
 int		ft_num_of_tokens(t_token *list);
 t_token	*get_last_token(t_token *head);
-void	state_idle(t_state_data *data, char ch);
-void	state_normal(t_state_data *data, char ch);
-void    tokenize(t_state_data *data, t_token **token);
-void	state_double_quote(t_state_data *data, char ch);
-void	state_single_quoute(t_state_data *data, char ch);
-bool	last_state(t_state_data *data);
+void	state_idle(t_lexer_data *data, char ch);
+void	state_normal(t_lexer_data *data, char ch);
+void    tokenize(t_lexer_data *data, t_token **token);
+void	state_double_quote(t_lexer_data *data, char ch);
+void	state_single_quoute(t_lexer_data *data, char ch);
+bool	last_state(t_lexer_data *data);
 char	*get_input(bool quote_state);
 #endif

@@ -6,7 +6,7 @@
 #    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/06/22 13:00:58 by muhsin           ###   ########.fr        #
+#    Updated: 2025/06/23 12:17:03 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INC_PATH = ./includes/
 
 SRC = main.c \
 	  lexer/lexer.c \
-	  lexer/lexer_utils.c \
+	  lexer/lexer_state.c \
 	  lexer/token_utils.c \
 	  lexer/get_input.c \
 	  parser/parser.c \

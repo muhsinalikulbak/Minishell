@@ -6,13 +6,13 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/22 14:10:11 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/23 12:16:21 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	state_idle(t_state_data *data, char ch)
+void	state_idle(t_lexer_data *data, char ch)
 {
 	int	len;
 
@@ -31,7 +31,7 @@ void	state_idle(t_state_data *data, char ch)
 		data->token_value[data->value_idx++] = ch;
 }
 
-void	state_normal(t_state_data *data, char ch)
+void	state_normal(t_lexer_data *data, char ch)
 {
 	if (ch == ' ')
 	{
@@ -55,7 +55,7 @@ void	state_normal(t_state_data *data, char ch)
 		data->token_value[data->value_idx++] = ch;
 }
 
-void	state_double_quote(t_state_data *data, char ch)
+void	state_double_quote(t_lexer_data *data, char ch)
 {
 	data->prev_state = data->state;
 	if (ch == '"')
@@ -64,7 +64,7 @@ void	state_double_quote(t_state_data *data, char ch)
 		data->token_value[data->value_idx++] = ch;
 }
 
-void	state_single_quoute(t_state_data *data, char ch)
+void	state_single_quoute(t_lexer_data *data, char ch)
 {
 	data->prev_state = data->state;
 	if (ch == '\'')
@@ -73,7 +73,7 @@ void	state_single_quoute(t_state_data *data, char ch)
 		data->token_value[data->value_idx++] = ch;
 }
 
-bool	last_state(t_state_data *data)
+bool	last_state(t_lexer_data *data)
 {
 	if (data->token_value != NULL)
 	{
