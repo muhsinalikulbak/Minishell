@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/23 12:16:30 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/24 18:36:18 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,7 @@ void	state_double_quote(t_lexer_data *data, char ch);
 void	state_single_quoute(t_lexer_data *data, char ch);
 bool	last_state(t_lexer_data *data);
 char	*get_input(bool quote_state);
+char	*get_input_again(t_lexer_data *data);
+bool	split_line(char *input_line, t_lexer_data *data);
+char	*get_input_again(t_lexer_data *data);
 #endif

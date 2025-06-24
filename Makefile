@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
+#    By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/06/23 12:17:03 by muhsin           ###   ########.fr        #
+#    Updated: 2025/06/24 18:06:32 by mkulbak          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC = main.c \
 	  lexer/lexer.c \
 	  lexer/lexer_state.c \
 	  lexer/token_utils.c \
-	  lexer/get_input.c \
+	  lexer/input.c \
 	  parser/parser.c \
 	  parser/parser_utils.c \
 	  parser/syntax_check.c \
