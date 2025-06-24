@@ -6,7 +6,7 @@
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/24 19:51:32 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/06/24 21:12:18 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	tokenize(t_lexer_data *data, t_token **token)
 	insert_token(token, token_type, data->token_value);
 }
 
-bool	split_line(char *input_line, t_lexer_data *data)
+void	split_line(char *input_line, t_lexer_data *data)
 {
 	int	i;
 
@@ -68,17 +68,13 @@ bool	split_line(char *input_line, t_lexer_data *data)
 			state_normal(data, input_line[i]);
 		i++;
 	}
-	return (last_state(data));
+	last_state(data);
 }
 
-char	*lexer(t_token **token, char *input_line)
+void	lexer(t_token **token, char *input_line)
 {
 	t_lexer_data	data;
-	bool			quote_state;
 
 	state_data_init(&data, token, input_line);
-	quote_state = split_line(input_line, &data);
-	if (!quote_state)
-		return get_input_again(&data);
-	return (input_line);
+	split_line(input_line, &data);
 }

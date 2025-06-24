@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/24 20:50:01 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/06/24 21:15:03 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	char		*history;
 	char		*line;
 	t_token		*token;
 	t_pipeline	pipelines;
@@ -31,8 +30,8 @@ int	main(int argc, char **argv, char **env)
 		if (line && *line)
 		{
 			token = NULL;
-			history = lexer(&token, line);
-			add_history(history); 
+			lexer(&token, line);
+			add_history(line); 
 			print_list(token);
 			free_list(&token);
 			// pipelines.commands = parser(token);
@@ -43,5 +42,4 @@ int	main(int argc, char **argv, char **env)
 		}
 	}
 	free(line);
-	free(history);
 }

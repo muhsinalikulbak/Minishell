@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:32 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/24 16:09:48 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/06/24 21:13:51 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SIGNALS_H
 # define SIGNALS_H
 
-void signal_setup();
-void   handle_eof();
+void	signal_setup();
+void	handle_eof();
 
 #endif

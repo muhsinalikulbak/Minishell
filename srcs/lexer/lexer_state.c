@@ -6,7 +6,7 @@
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/24 20:20:17 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/06/24 21:17:34 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	state_single_quoute(t_lexer_data *data, char ch)
 		data->token_value[data->value_idx++] = ch;
 }
 
-bool	last_state(t_lexer_data *data)
+void	last_state(t_lexer_data *data)
 {
 	if (data->token_value != NULL)
 	{
@@ -81,8 +81,9 @@ bool	last_state(t_lexer_data *data)
 		{
 			data->token_value[data->value_idx] = '\0';
 			tokenize(data, data->token);
-			return (true);
 		}
+		else
+			printf("Hatalı input\n");
+		// Burada false döndür, "sldkfeslf tokenize free'Le execute gitme sonra yeni input al
 	}
-	return (false);
 }

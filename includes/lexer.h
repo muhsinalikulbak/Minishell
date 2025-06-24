@@ -6,7 +6,7 @@
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/24 18:36:18 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/06/24 21:15:28 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_lexer_data
 	int				value_idx;
 }		t_lexer_data;
 
-char	*lexer(t_token **token, char *input_line);
+void	lexer(t_token **token, char *input_line);
 void	insert_token(t_token **token_head, t_token_type token_type, char *value);
 void	free_list(t_token **list);
 void	print_list(t_token *list);
@@ -62,9 +62,7 @@ void	state_normal(t_lexer_data *data, char ch);
 void    tokenize(t_lexer_data *data, t_token **token);
 void	state_double_quote(t_lexer_data *data, char ch);
 void	state_single_quoute(t_lexer_data *data, char ch);
-bool	last_state(t_lexer_data *data);
-char	*get_input(bool quote_state);
-char	*get_input_again(t_lexer_data *data);
-bool	split_line(char *input_line, t_lexer_data *data);
-char	*get_input_again(t_lexer_data *data);
+void	last_state(t_lexer_data *data);
+char	*get_input();
+void	split_line(char *input_line, t_lexer_data *data);
 #endif
