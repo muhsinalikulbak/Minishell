@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:32 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/24 09:14:11 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/06/24 16:09:48 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 # define SIGNALS_H
 
 void signal_setup();
-
+void   handle_eof();
 
 #endif
