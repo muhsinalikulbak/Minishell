@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:47:03 by mkulbak           #+#    #+#             */
-/*   Updated: 2024/10/17 20:12:48 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/06/25 01:18:26 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_strdup(const char	*s1)
 		return (NULL);
 	while (s1[i])
 	{
-		*(heap_str + i) = s1[i];
+		heap_str[i] = s1[i];
 		i++;
 	}
 	heap_str[i] = '\0';

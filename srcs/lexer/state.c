@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_state.c                                      :+:      :+:    :+:   */
+/*   state.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/25 00:11:27 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/25 01:26:46 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	state_idle(t_lexer_data *data, char ch)
 	else if (ch == '\'')
 		data->state = STATE_IN_SQUOTE;
 	else
-		data->token_value[data->value_idx++] = ch;
+		check_operator(data);
 }
 
 void	state_normal(t_lexer_data *data, char ch)
@@ -52,7 +52,7 @@ void	state_normal(t_lexer_data *data, char ch)
 		data->state = STATE_IN_SQUOTE;
 	}
 	else
-		data->token_value[data->value_idx++] = ch;
+		check_operator(data);
 }
 
 void	state_double_quote(t_lexer_data *data, char ch)
