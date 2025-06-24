@@ -3,135 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/18 23:30:06 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/06/24 19:51:32 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-typedef enum s_token_state
+static void	state_data_init(t_lexer_data *data, t_token **token, char *input)
 {
-	STATE_NORMAL,
-	STATE_IN_DQUOTE,
-	STATE_IN_SQUOTE,
-    STATE_IDLE
-}		t_token_state;
-
-static bool is_special_char(char c) {
-    return (c == '|' || c == '<' || c == '>');
+	data->token = token;
+	data->token_value = NULL;
+	data->input_line = input;
+	data->input_length = ft_strlen(input);
+	data->state = STATE_IDLE;
+	data->prev_state = STATE_NORMAL;
+	data->value_idx = 0;
 }
 
-static void	tokenize(char *cmd, t_token **token)
+void	tokenize(t_lexer_data *data, t_token **token)
 {
 	int				len;
 	t_token_type	token_type;
-	
-	len = ft_strlen(cmd);
-	if (len == 1)
+	t_token_state	prev_state;
+
+	len = ft_strlen(data->token_value);
+	prev_state = data->prev_state;
+	if (prev_state == STATE_IN_DQUOTE || prev_state == STATE_IN_SQUOTE)
 	{
-		if (cmd[0] == '|')
-		   token_type = TOKEN_PIPE;
-		if (cmd[0] == '<')
+		insert_token(token, TOKEN_WORD, data->token_value);
+		return ;
+	}
+	else if (ft_strncmp(data->token_value, "|", len) && len == 1)
+		token_type = TOKEN_PIPE;
+	else if (ft_strncmp(data->token_value, "<", len) && len == 1)
 		token_type = TOKEN_REDIR_IN;
-		if (cmd[0] == '>')
+	else if (ft_strncmp(data->token_value, ">", len) && len == 1)
 		token_type = TOKEN_REDIR_OUT;
-	}
-	else if (len == 2)
-	{
-		if (cmd[0] == '<' && cmd[1] == '<')
+	else if (ft_strncmp(data->token_value, "<<", len) && len == 2)
 		token_type = TOKEN_HEREDOC;
-		if (cmd[0] == '>' && cmd[1] == '>')
+	else if (ft_strncmp(data->token_value, ">>", len) && len == 2)
 		token_type = TOKEN_APPEND;
-	}
 	else
-	token_type = TOKEN_WORD;
-	insert_token(token, cmd, token_type);
+		token_type = TOKEN_WORD;
+	insert_token(token, token_type, data->token_value);
 }
 
-static void split_line(char *input_cmd, t_token **token)
+bool	split_line(char *input_line, t_lexer_data *data)
 {
-    int     i;
-    int     j;
-    char    *arg;
-    t_token_state state;
-    
-    arg = NULL;
-    i = 0;
-    j = 0;
-    state = STATE_IDLE;
-    
-    while (input_cmd[i])
-    {
-        if (state == STATE_IDLE && input_cmd[i] != ' ')
-        {
-            state = STATE_NORMAL;
-            if (arg == NULL)
-            {
-                arg = (char *)ft_calloc((ft_strlen(input_cmd) + 1), sizeof(char));
-                j = 0;
-            }
-            if (input_cmd[i] == '"')
-                state = STATE_IN_DQUOTE;
-            else if (input_cmd[i] == '\'')
-                state = STATE_IN_SQUOTE;
-            else
-                arg[j++] = input_cmd[i];
-        }
-        else if (state == STATE_IN_DQUOTE)
-        {
-            if (input_cmd[i] == '"')
-                state = STATE_NORMAL;
-            else
-                arg[j++] = input_cmd[i];
-        }
-        else if (state == STATE_IN_SQUOTE)
-        {
-            if (input_cmd[i] == '\'')
-                state = STATE_NORMAL;
-            else
-                arg[j++] = input_cmd[i];
-        }
-        else if (state == STATE_NORMAL)
-        {
-            if (input_cmd[i] == ' ')
-            {
-                arg[j] = '\0';
-                printf("extracked arg: %s\n", arg);
-                tokenize(arg, token);
-                free(arg);
-                arg = NULL;
-                state = STATE_IDLE;
-            }
-            else if (input_cmd[i] == '"')
-                state = STATE_IN_DQUOTE;
-            else if (input_cmd[i] == '\'')
-                state = STATE_IN_SQUOTE;
-            else
-                arg[j++] = input_cmd[i];
-        }
-        i++;
-    }
-    if (arg != NULL)
-    {
-        arg[j] = '\0';
-        printf("extracked arg:%s \n", arg);
-        tokenize(arg, token);
-        free(arg);
-    }
-    
-    return;
+	int	i;
+
+	i = 0;
+	while (input_line[i])
+	{
+		if (data->state == STATE_IDLE && input_line[i] != ' ')
+			state_idle(data, input_line[i]);
+		else if (data->state == STATE_IN_DQUOTE)
+			state_double_quote(data, input_line[i]);
+		else if (data->state == STATE_IN_SQUOTE)
+			state_single_quoute(data, input_line[i]);
+		else if (data->state == STATE_NORMAL)
+			state_normal(data, input_line[i]);
+		i++;
+	}
+	return (last_state(data));
 }
 
-
-
-t_token *lexer(char *command_line)
+char	*lexer(t_token **token, char *input_line)
 {
-	t_token *token;
-	token = NULL;
-	split_line(command_line, &token);
-    print_list(token);
-	return token;   
+	t_lexer_data	data;
+	bool			quote_state;
+
+	state_data_init(&data, token, input_line);
+	quote_state = split_line(input_line, &data);
+	if (!quote_state)
+		return get_input_again(&data);
+	return (input_line);
 }

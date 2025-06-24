@@ -3,15 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/17 12:58:11 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/24 18:36:18 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
+
+typedef enum s_token_state
+{
+	STATE_NORMAL,
+	STATE_IN_DQUOTE,
+	STATE_IN_SQUOTE,
+    STATE_IDLE
+}		t_token_state;
 
 typedef enum s_token_type
 {
@@ -31,11 +39,32 @@ typedef struct s_token
 	struct s_token	*prev;
 }		t_token;
 
+typedef struct s_lexer_data
+{
+	t_token_state	state;
+	t_token_state	prev_state;
+	t_token			**token;
+	char			*token_value;
+	char			*input_line;
+	char			*history;
+	int				input_length;
+	int				value_idx;
+}		t_lexer_data;
 
-t_token	*lexer(char *command_line);
-void	insert_token(t_token **head, char *val, t_token_type token_type);
+char	*lexer(t_token **token, char *input_line);
+void	insert_token(t_token **token_head, t_token_type token_type, char *value);
 void	free_list(t_token **list);
 void	print_list(t_token *list);
 int		ft_num_of_tokens(t_token *list);
 t_token	*get_last_token(t_token *head);
+void	state_idle(t_lexer_data *data, char ch);
+void	state_normal(t_lexer_data *data, char ch);
+void    tokenize(t_lexer_data *data, t_token **token);
+void	state_double_quote(t_lexer_data *data, char ch);
+void	state_single_quoute(t_lexer_data *data, char ch);
+bool	last_state(t_lexer_data *data);
+char	*get_input(bool quote_state);
+char	*get_input_again(t_lexer_data *data);
+bool	split_line(char *input_line, t_lexer_data *data);
+char	*get_input_again(t_lexer_data *data);
 #endif

@@ -3,55 +3,47 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+         #
+#    By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/06/24 09:13:18 by kayraakbas       ###   ########.fr        #
+#    Updated: 2025/06/24 20:45:36 by omakbas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Program name
 NAME = minishell
 
-# Compiler and compilation flags
 CC = cc
 CFLAGS = 
 LDFLAGS = -lreadline
 
-# Build files and directories
 SRC_PATH = ./srcs/
 OBJ_PATH = ./objects/
 INC_PATH = ./includes/
 
-# Source files (manually listed)
 SRC = main.c \
-      input/input_handler.c \
 	  lexer/lexer.c \
+	  lexer/lexer_state.c \
 	  lexer/token_utils.c \
+	  lexer/input.c \
 	  parser/parser.c \
 	  parser/parser_utils.c \
 	  parser/syntax_check.c \
 	  signals/signal.c \
 	  
-# Object files generation
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 OBJ = $(SRC:.c=.o)
 OBJS = $(addprefix $(OBJ_PATH), $(OBJ))
 
-# Include directories
 INC = -I $(INC_PATH) -I $(LIBFT_PATH)
 
-# Libft configuration
 LIBFT_PATH = ./libft/
 LIBFT = $(LIBFT_PATH)libft.a
 
 
 MAKEFLAGS += --silent
 
-# Main rule
 all: $(OBJ_PATH) $(LIBFT) $(NAME)
 
-# Objects directory rule - creates all necessary subdirectories
 $(OBJ_PATH):
 	@mkdir -p $(OBJ_PATH)
 	@mkdir -p $(OBJ_PATH)/input
@@ -63,36 +55,30 @@ $(OBJ_PATH):
 	@mkdir -p $(OBJ_PATH)/utils
 	@mkdir -p $(OBJ_PATH)/signals
 
-# Objects compilation rule
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	echo "🔷 Compiling $<..."
 	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
-# Program linking rule
 $(NAME): $(OBJS)
 	echo "✅ Building $(NAME)..."
 	$(CC) $(CFLAGS) $(OBJS) -o $@ $(INC) $(LIBFT) $(LDFLAGS)
 
-# Libft compilation rule
 $(LIBFT):
 	echo "✅ Building libft..."
 	$(MAKE) -C $(LIBFT_PATH)
 
-# Clean object files
 clean:
 	echo "🧹Cleaning object files..."
 	rm -rf $(OBJ_PATH)
 	$(MAKE) -C $(LIBFT_PATH) clean
 	echo "✅ Cleaning completed!"
 
-# Clean everything
 fclean: clean
 	echo "🧹 Full cleaning is in progress..."
 	rm -f $(NAME)
 	$(MAKE) -C $(LIBFT_PATH) fclean
 	echo "✅ Full cleaning completed!"
 
-# Rebuild everything
 re: fclean all
 
 .PHONY: all clean fclean re
