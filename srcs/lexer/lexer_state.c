@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_state.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/24 21:17:34 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/06/25 00:11:27 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,24 @@ void	state_single_quoute(t_lexer_data *data, char ch)
 		data->token_value[data->value_idx++] = ch;
 }
 
-void	last_state(t_lexer_data *data)
+bool	last_state(t_lexer_data *data)
 {
 	if (data->token_value != NULL)
 	{
+		data->token_value[data->value_idx] = '\0';
 		if (data->state == STATE_NORMAL)
 		{
-			data->token_value[data->value_idx] = '\0';
 			tokenize(data, data->token);
+			return (true);
 		}
 		else
-			printf("Hatalı input\n");
-		// Burada false döndür, "sldkfeslf tokenize free'Le execute gitme sonra yeni input al
+		{
+			free(data->token_value);
+			if (data->state == STATE_IN_DQUOTE)
+				ft_putstr_fd("Quotation error, missing double quote (\")\n", 2);
+			else
+				ft_putstr_fd("Quotation error, missing single quote (\')\n", 2);
+			return (false);
+		}
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/24 21:12:18 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/06/24 23:37:50 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,12 @@ void	tokenize(t_lexer_data *data, t_token **token)
 	insert_token(token, token_type, data->token_value);
 }
 
-void	split_line(char *input_line, t_lexer_data *data)
+static bool	split_line(char *input_line, t_lexer_data *data)
 {
 	int	i;
 
 	i = 0;
+	data->i = &i;
 	while (input_line[i])
 	{
 		if (data->state == STATE_IDLE && input_line[i] != ' ')
@@ -68,13 +69,17 @@ void	split_line(char *input_line, t_lexer_data *data)
 			state_normal(data, input_line[i]);
 		i++;
 	}
-	last_state(data);
+	return (last_state(data));
 }
 
-void	lexer(t_token **token, char *input_line)
+bool	lexer(t_token **token, char *input_line)
 {
 	t_lexer_data	data;
+	bool			check_lexer;
 
 	state_data_init(&data, token, input_line);
-	split_line(input_line, &data);
+	check_lexer = split_line(input_line, &data);
+	if (!check_lexer)
+		free_token(token);
+	return (check_lexer);
 }

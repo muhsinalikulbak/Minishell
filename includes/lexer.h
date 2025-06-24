@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/24 21:15:28 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/06/24 23:37:19 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,12 @@ typedef struct s_lexer_data
 	char			*history;
 	int				input_length;
 	int				value_idx;
+	int				*i;
 }		t_lexer_data;
 
-void	lexer(t_token **token, char *input_line);
+bool	lexer(t_token **token, char *input_line);
 void	insert_token(t_token **token_head, t_token_type token_type, char *value);
-void	free_list(t_token **list);
+void	free_token(t_token **list);
 void	print_list(t_token *list);
 int		ft_num_of_tokens(t_token *list);
 t_token	*get_last_token(t_token *head);
@@ -62,7 +63,6 @@ void	state_normal(t_lexer_data *data, char ch);
 void    tokenize(t_lexer_data *data, t_token **token);
 void	state_double_quote(t_lexer_data *data, char ch);
 void	state_single_quoute(t_lexer_data *data, char ch);
-void	last_state(t_lexer_data *data);
+bool	last_state(t_lexer_data *data);
 char	*get_input();
-void	split_line(char *input_line, t_lexer_data *data);
 #endif

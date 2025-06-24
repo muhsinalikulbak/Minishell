@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/21 22:38:31 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/25 00:10:20 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,13 @@ void insert_token(t_token **token_head, t_token_type token_type, char *value)
 	}
 }
 
-void free_list(t_token **token_head)
+void free_token(t_token **token_head)
 {
 	t_token *current;
 	t_token *next;
 
 	if (!token_head || !*token_head)
-	{
-		printf("List is empty can not be freed\n");
 		return;
-	}
 	current = *token_head;
 	while (current != NULL)
 	{
@@ -88,24 +85,4 @@ void print_list(t_token *list)
 		ptr = ptr->next; 
 	}
 	printf("\n");
-}
-
-int ft_num_of_tokens(t_token *list)
-{
-	t_token *ptr;
-	int len;
-	if(list == NULL)
-	{
-		perror("list is not exist. num_of_tokens: N/A\n");
-		return 0;
-	}
-	ptr = list;
-	len = 0;
-	while (ptr)
-	{
-		ptr = ptr->next;
-		len++;
-	}
-	printf("lenght of tokens: %d\n", len);
-	return (len);
 }
