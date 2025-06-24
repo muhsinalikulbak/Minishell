@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/17 19:19:55 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/06/23 13:20:39 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,29 @@
 
 int	main(int argc, char **argv, char **env)
 {
+	char		*history;
 	char		*line;
+	t_token		*token;
 	t_pipeline	pipelines;
 
 	(void)argc;
 	(void)argv;
 	while (true)
 	{
-		line = get_input();
-		if (!line)
+		line = get_input(true);
+		if (line && *line)
 		{
-			printf("exit\n");
-			break ;
+			token = NULL;
+			history = lexer(&token, line);
+			add_history(history); 
+			print_list(token);
+			free_list(&token);
+			// pipelines.commands = parser(token);
+			// if (pipelines.commands != NULL)
+			// {
+				
+			// }
 		}
-		pipelines.commands = parser(lexer(line));
-		if (pipelines.commands != NULL)
-		{
-			
-		}
-		free(line);
 	}
+	free(history);
 }
