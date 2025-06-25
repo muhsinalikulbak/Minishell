@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/25 01:25:51 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/25 19:16:14 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ typedef struct s_lexer_data
 bool	lexer(t_token **token, char *input_line);
 void	insert_token(t_token **token_head, t_token_type token_type, char *value);
 void	free_token(t_token **list);
-void	print_list(t_token *list);
-int		ft_num_of_tokens(t_token *list);
 t_token	*get_last_token(t_token *head);
+int		ft_num_of_tokens(t_token *list);
+void	print_token_list(t_token *list);
 void	state_idle(t_lexer_data *data, char ch);
 void	state_normal(t_lexer_data *data, char ch);
 void    tokenize(t_lexer_data *data, t_token **token);

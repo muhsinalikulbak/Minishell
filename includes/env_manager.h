@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_manager.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/01 23:13:58 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/25 21:18:14 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,20 @@
 # define ENV_MANAGER_H
 
 
+typedef struct s_node
+{
+	char			*content;
+    char            *key;
+	struct s_node	*next;
+}	t_map;
 
 
-
-
+t_map	*create_map(char *key, char *content);
+void	ft_map_add_back(t_map **map, t_map *new);
+t_map	*ft_maplast(t_map *map);
+int	    ft_mapsize(t_map *map);
+void    print_map(t_map *map);
+t_map   *mat_to_map(char **mat);
+void    free_map(t_map *map);
 
 #endif
