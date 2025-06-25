@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/25 23:54:06 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/26 01:44:45 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,6 @@ static bool	set_quote(t_lexer_data *data, char ch)
 
 static bool	check_redir(t_lexer_data *data)
 {
-	return true;
-}
-
-static bool	tokenize_word(t_lexer_data *data)
-{
-	data->token_value[data->value_idx] = '\0';
-	tokenize(data, data->token);
-	data->token_value = NULL;
-	data->prev_state = data->state;
-	data->state = STATE_IDLE;
 	return (true);
 }
 
@@ -47,7 +37,7 @@ static bool	tokenize_pipe(t_lexer_data *data)
 		free(data->token_value);
 	else
 		tokenize(data, data->token);
-	data->token_value = "|";
+	data->token_value = ft_strdup("|");
 	tokenize(data, data->token);
 	data->token_value = NULL;
 	data->prev_state = data->state;
@@ -67,7 +57,10 @@ bool	check_operator(t_lexer_data *data)
 		else if (ch == '|')
 			return (tokenize_pipe(data));
 		else if (ch == ' ')
-			return (tokenize_word(data));
+		{
+			state_normal(data, ch);
+			return (true);
+		}
 		else if (ch == '<' || ch == '>')
 			return (check_redir(data));
 		else
