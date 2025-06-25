@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/25 02:03:41 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/25 19:50:57 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,14 @@ static bool	tokenize_pipe(t_lexer_data *data)
 	data->token_value = NULL;
 	data->prev_state = data->state;
 	data->state = STATE_IDLE;
-	(*data->i)--;
 	return (true);
 }
 
 bool	check_operator(t_lexer_data *data)
 {
 	char	ch;
-	
-	ch = data->input_line[(*data->i)++];
+
+	ch = data->input_line[(*data->i)];
 	while (ch != '\0')
 	{
 		if (ch == '\'' || ch == '\"')
@@ -58,17 +57,16 @@ bool	check_operator(t_lexer_data *data)
 			data->token_value = NULL;
 			data->prev_state = data->state;
 			data->state = STATE_IDLE;
-			(*data->i)--;
 			return (true);
 		}
 		// else if (ch != '<' && ch != '>')
 		// {
-		// 	check_redir(data, ch);	
+		// 	check_redir(data, ch);
 		// }
 		else
 			data->token_value[data->value_idx++] = ch;
-		ch = data->input_line[(*data->i)++];
+		ch = data->input_line[++(*data->i)];
 	}
+	(*data->i)--;
 	return (true);
-	
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/25 01:26:46 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/25 17:23:11 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,22 +75,16 @@ void	state_single_quoute(t_lexer_data *data, char ch)
 
 bool	last_state(t_lexer_data *data)
 {
-	if (data->token_value != NULL)
+	data->token_value[data->value_idx] = '\0';
+	if (data->state == STATE_NORMAL)
 	{
-		data->token_value[data->value_idx] = '\0';
-		if (data->state == STATE_NORMAL)
-		{
-			tokenize(data, data->token);
-			return (true);
-		}
-		else
-		{
-			free(data->token_value);
-			if (data->state == STATE_IN_DQUOTE)
-				ft_putstr_fd("Quotation error, missing double quote (\")\n", 2);
-			else
-				ft_putstr_fd("Quotation error, missing single quote (\')\n", 2);
-			return (false);
-		}
+		tokenize(data, data->token);
+		return (true);
 	}
+	free(data->token_value);
+	if (data->state == STATE_IN_DQUOTE)
+		ft_putstr_fd("Quotation error, missing double quote (\")\n", 2);
+	else
+		ft_putstr_fd("Quotation error, missing single quote (\')\n", 2);
+	return (false);
 }
