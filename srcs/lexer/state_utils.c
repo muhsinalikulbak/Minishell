@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/25 21:48:20 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/06/25 23:54:06 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,14 @@ static bool	tokenize_word(t_lexer_data *data)
 
 static bool	tokenize_pipe(t_lexer_data *data)
 {
-	if (*(data->i) != 0 && data->input_line[(*data->i) - 1] != ' ')
-	{
-		data->token_value[data->value_idx] = '\0';
-		tokenize(data, data->token);
-	}
-	else
+	int	len;
+
+	data->token_value[data->value_idx] = '\0';
+	len = ft_strlen(data->token_value);
+	if (len == 0)
 		free(data->token_value);
+	else
+		tokenize(data, data->token);
 	data->token_value = "|";
 	tokenize(data, data->token);
 	data->token_value = NULL;

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/25 00:10:20 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/25 23:55:24 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void free_token(t_token **token_head)
 	while (current != NULL)
 	{
 		next = current->next;
-		free(current->value);
+		if (current->type != TOKEN_PIPE)
+			free(current->value);
 		free(current);
 		current = next;
 	}
