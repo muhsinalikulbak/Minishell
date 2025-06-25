@@ -6,7 +6,7 @@
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/25 19:50:57 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/06/25 21:48:20 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,31 @@ static bool	set_quote(t_lexer_data *data, char ch)
 	return (true);
 }
 
-// static bool	check_redir(t_lexer_data *data, char ch)
-// {
-// 	// kontrol yapılıcak
-// }
+static bool	check_redir(t_lexer_data *data)
+{
+	return true;
+}
 
-static bool	tokenize_pipe(t_lexer_data *data)
+static bool	tokenize_word(t_lexer_data *data)
 {
 	data->token_value[data->value_idx] = '\0';
 	tokenize(data, data->token);
-	data->token_value = ft_strdup("|");
+	data->token_value = NULL;
+	data->prev_state = data->state;
+	data->state = STATE_IDLE;
+	return (true);
+}
+
+static bool	tokenize_pipe(t_lexer_data *data)
+{
+	if (*(data->i) != 0 && data->input_line[(*data->i) - 1] != ' ')
+	{
+		data->token_value[data->value_idx] = '\0';
+		tokenize(data, data->token);
+	}
+	else
+		free(data->token_value);
+	data->token_value = "|";
 	tokenize(data, data->token);
 	data->token_value = NULL;
 	data->prev_state = data->state;
@@ -51,18 +66,9 @@ bool	check_operator(t_lexer_data *data)
 		else if (ch == '|')
 			return (tokenize_pipe(data));
 		else if (ch == ' ')
-		{
-			data->token_value[data->value_idx] = '\0';
-			tokenize(data, data->token);
-			data->token_value = NULL;
-			data->prev_state = data->state;
-			data->state = STATE_IDLE;
-			return (true);
-		}
-		// else if (ch != '<' && ch != '>')
-		// {
-		// 	check_redir(data, ch);
-		// }
+			return (tokenize_word(data));
+		else if (ch == '<' || ch == '>')
+			return (check_redir(data));
 		else
 			data->token_value[data->value_idx++] = ch;
 		ch = data->input_line[++(*data->i)];
