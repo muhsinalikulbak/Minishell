@@ -35,7 +35,6 @@ t_map *mat_to_map(char **mat)
             
         i++;
     }
-    print_map(head);
     return head;
 }
 
@@ -110,24 +109,38 @@ void print_map(t_map *map)
 
 void free_map(t_map *map)
 {
-	t_map *head;
-    t_map *tmp;
-	if (!map)
+    t_map *current;
+    t_map *next;
+    
+    if (!map)
+    {
+        printf("Empty token map\n");
+        return;
+    }
+    
+    current = map;
+    while (current)
+    {
+        next = current->next;
+        free(current->content);
+        free(current->key);
+        free(current);
+        current = next;
+    }
+}
+
+bool is_key_exist(t_map *env_list, char* key)
+{
+	t_map *ptr;
+	int len;
+
+	ptr = env_list;
+	len = ft_strlen(key);
+	while(ptr)
 	{
-		printf("Empty token map\n");
-		return;
+		if (ft_strncmp(ptr->key, key, len) == false)
+			return false;
+		ptr = ptr->next;
 	}
-	head = map;
-	while (head)
-	{   
-        while (tmp->next)
-            tmp = tmp->next;
-        free(tmp->content);
-        free(tmp->key);
-        free(tmp);
-        if (!head)
-            tmp = head; 
-	}
-    tmp = NULL;
-    head = NULL;
+	return true;
 }

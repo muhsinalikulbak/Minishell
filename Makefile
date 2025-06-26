@@ -6,14 +6,14 @@
 #    By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/06/25 21:19:45 by omakbas          ###   ########.fr        #
+#    Updated: 2025/06/26 20:56:14 by omakbas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = 
+CFLAGS = -g
 LDFLAGS = -lreadline
 
 SRC_PATH = ./srcs/

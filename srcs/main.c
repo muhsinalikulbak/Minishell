@@ -6,7 +6,7 @@
 /*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/25 21:44:27 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/06/26 20:54:26 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,18 @@ int	main(int argc, char **argv, char **env)
 	char		*line;
 	t_token		*token;
 	t_pipeline	pipelines;
+	t_map		*map;
+	
 
 	(void)argc;
 	(void)argv;
-	(void)env;
 	signal_setup();
-	//mat_to_map(env);
+	map = mat_to_map(env);
+	export(&map, 0, 0, false);
+	export(&map, "prova", NULL, true);
+	export(&map, 0, 0, false);
+	free(map);
+	
 	while (true)
 	{
 		line = get_input();  // Remove the 'true' parameter

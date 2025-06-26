@@ -6,7 +6,7 @@
 /*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/25 21:18:14 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/06/26 17:42:13 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int	    ft_mapsize(t_map *map);
 void    print_map(t_map *map);
 t_map   *mat_to_map(char **mat);
 void    free_map(t_map *map);
+bool is_key_exist(t_map *env_list, char* key);
 
 #endif
