@@ -6,13 +6,11 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/26 01:43:56 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/26 10:26:32 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 int	main(int argc, char **argv, char **env)
 {
@@ -25,7 +23,7 @@ int	main(int argc, char **argv, char **env)
 	signal_setup();
 	while (true)
 	{
-		line = get_input(true);
+		line = get_input();
 		if (line && *line)
 		{
 			token = NULL;
