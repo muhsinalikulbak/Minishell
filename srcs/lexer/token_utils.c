@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/26 01:44:31 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/26 14:10:28 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,15 @@ void print_list(t_token *list)
 		printf("Empty token list\n");
 		return;
 	}
+	char **token_type = malloc(sizeof(char *) * 7);
+	token_type[0] = "TOKEN_WORD";
+	token_type[1] = "TOKEN_PIPE";
+	token_type[2] = "TOKEN_REDIR_IN";
+	token_type[3] = "TOKEN_REDIR_OUT";
+	token_type[4] = "TOKEN_APPEND";
+	token_type[5] = "TOKEN_HEREDOC";
+	token_type[6] = NULL;
+
 	ptr = list;
 	printf("TOKEN LIST:\n");
 	while (ptr)
@@ -80,7 +89,8 @@ void print_list(t_token *list)
 		write(1, "<", 1);
 		write(1, ptr->value, ft_strlen(ptr->value));
 		write(1, ">", 1);
-		write(1, " ", 1);
+		write(1, "Token type : ", 13);
+		printf("%s\n", token_type[ptr->type]);
 		ptr = ptr->next; 
 	}
 	printf("\n");
