@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   state.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/26 01:51:20 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/26 16:49:26 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	state_idle(t_lexer_data *data, char ch)
+void	state_idle(t_lexer_data *data)
 {
-	int	len;
+	int		len;
+	char	ch;
 
 	len = data->input_length;
 	data->state = STATE_NORMAL;
@@ -23,6 +24,8 @@ void	state_idle(t_lexer_data *data, char ch)
 		data->token_value = (char *)ft_calloc(len + 2, sizeof(char));
 		data->value_idx = 0;
 	}
+	past_space(data);
+	ch = data->input_line[*data->i];
 	if (ch == '"')
 		data->state = STATE_IN_DQUOTE;
 	else if (ch == '\'')
@@ -33,7 +36,7 @@ void	state_idle(t_lexer_data *data, char ch)
 
 void	state_normal(t_lexer_data *data, char ch)
 {
-	if (ch == ' ')
+	if (ch == ' ' || (ch >= 9 && ch <= 13))
 	{
 		data->token_value[data->value_idx] = '\0';
 		tokenize(data, data->token);
@@ -52,7 +55,7 @@ void	state_normal(t_lexer_data *data, char ch)
 		data->state = STATE_IN_SQUOTE;
 	}
 	else
-		check_operator(data);
+		check_operator(data);	
 }
 
 void	state_double_quote(t_lexer_data *data, char ch)
@@ -93,5 +96,7 @@ bool	last_state(t_lexer_data *data)
 			return (false);
 		}
 	}
+	if (get_token_count(*data->token) == 0)
+		return (false);
 	return (true);
 }
