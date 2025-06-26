@@ -6,7 +6,7 @@
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/26 10:26:32 by muhsin          ###   ########.fr       */
+/*   Updated: 2025/06/26 17:34:05 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	main(int argc, char **argv, char **env)
 		if (line && *line)
 		{
 			token = NULL;
+			add_history(line); 
 			if (!lexer(&token, line))
 				continue ;
-			add_history(line); 
 			print_list(token);
 			free_token(&token);
 			// pipelines.commands = parser(token);

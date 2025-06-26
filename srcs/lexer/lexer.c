@@ -6,7 +6,7 @@
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/25 17:55:06 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/06/26 15:56:24 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static bool	split_line(char *input_line, t_lexer_data *data)
 	data->i = &i;
 	while (input_line[i])
 	{
-		if (data->state == STATE_IDLE && input_line[i] != ' ')
-			state_idle(data, input_line[i]);
+		if (data->state == STATE_IDLE)
+			state_idle(data);
 		else if (data->state == STATE_IN_DQUOTE)
 			state_double_quote(data, input_line[i]);
 		else if (data->state == STATE_IN_SQUOTE)

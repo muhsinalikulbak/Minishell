@@ -6,7 +6,7 @@
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/26 14:19:19 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/06/26 17:31:03 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ bool	check_operator(t_lexer_data *data)
 			return (set_quote(data, ch));
 		else if (ch == '|')
 			return (tokenize_pipe(data));
-		else if (ch == ' ')
+		else if (ch == ' ' || (ch >= 9 && ch <= 13))
 		{
 			state_normal(data, ch);
 			return (true);
@@ -69,4 +69,22 @@ bool	check_operator(t_lexer_data *data)
 	}
 	(*data->i)--;
 	return (true);
+}
+
+void	past_space(t_lexer_data *data)
+{
+	char	ch;
+
+	ch = data->input_line[*data->i];
+	while (ch)
+	{
+		if (ch != ' ' && !(ch >= 9 && ch <= 13))
+			break ;
+		ch = data->input_line[++(*data->i)];
+	}
+	if (ch == '\0')
+	{
+		free(data->token_value);
+		data->token_value = NULL;
+	}	
 }
