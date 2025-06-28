@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+         #
+#    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/06/25 16:35:18 by omakbas          ###   ########.fr        #
+#    Updated: 2025/06/28 15:44:18 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,9 @@ SRC = main.c \
 	  parser/syntax_check.c \
 	  signals/signal.c \
 	  executor/builtins.c \
+	  utils/utils.c \
 	  
-SRCS = $(addprefix $(SRC_PATH), $(SRC))
+SRCS = $(addprefix $(SRC_PATH), $(SRC))	
 OBJ = $(SRC:.c=.o)
 OBJS = $(addprefix $(OBJ_PATH), $(OBJ))
 

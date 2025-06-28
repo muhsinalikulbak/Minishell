@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/26 15:56:24 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/06/28 15:43:14 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@ void	tokenize(t_lexer_data *data, t_token **token)
 		insert_token(token, TOKEN_WORD, data->token_value);
 		return ;
 	}
-	else if (ft_strncmp(data->token_value, "|", len) && len == 1)
+	else if (str_equal(data->token_value, "|"))
 		token_type = TOKEN_PIPE;
-	else if (ft_strncmp(data->token_value, "<", len) && len == 1)
+	else if (str_equal(data->token_value, "<"))
 		token_type = TOKEN_REDIR_IN;
-	else if (ft_strncmp(data->token_value, ">", len) && len == 1)
+	else if (str_equal(data->token_value, ">"))
 		token_type = TOKEN_REDIR_OUT;
-	else if (ft_strncmp(data->token_value, "<<", len) && len == 2)
+	else if (str_equal(data->token_value, "<<"))
 		token_type = TOKEN_HEREDOC;
-	else if (ft_strncmp(data->token_value, ">>", len) && len == 2)
+	else if (str_equal(data->token_value, ">>"))
 		token_type = TOKEN_APPEND;
 	else
 		token_type = TOKEN_WORD;

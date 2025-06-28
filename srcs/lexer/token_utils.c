@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/26 16:56:57 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/06/28 15:40:21 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void free_token(t_token **token_head)
 	t_token *current;
 	t_token *next;
 
+	if (get_token_count(*token_head) == 0)
+		return ;
 	if (!token_head || !*token_head)
 		return;
 	current = *token_head;
