@@ -6,14 +6,14 @@
 #    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/06/28 15:44:18 by muhsin           ###   ########.fr        #
+#    Updated: 2025/06/28 16:35:07 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = 
+CFLAGS = -g
 LDFLAGS = -lreadline
 
 SRC_PATH = ./srcs/

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/28 15:50:36 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/28 16:45:14 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,5 @@ void	past_space(t_lexer_data *data)
 	{
 		free(data->token_value);
 		data->token_value = NULL;
-	}	
+	}
 }

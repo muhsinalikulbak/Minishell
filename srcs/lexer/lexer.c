@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/28 15:47:58 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/28 16:47:55 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ static bool	split_line(char *input_line, t_lexer_data *data)
 		else if (data->state == STATE_IN_SQUOTE)
 			state_single_quoute(data, input_line[i]);
 		else if (data->state == STATE_NORMAL)
-			state_normal(data, input_line[i]);
+		{
+			if (!state_normal(data, input_line[i]))
+				return (false);
+		}
 		i++;
 	}
 	return (last_state(data));

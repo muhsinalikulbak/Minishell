@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/28 15:52:05 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/28 16:48:31 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,16 @@ bool	state_idle(t_lexer_data *data)
 		data->value_idx = 0;
 	}
 	past_space(data);
-	ch = data->input_line[*data->i];
-	if (ch == '"')
-		data->state = STATE_IN_DQUOTE;
-	else if (ch == '\'')
-		data->state = STATE_IN_SQUOTE;
-	else
-		return (check_operator(data));
+	(*data->i)--;
 	return (true);
 }
 
-void	state_normal(t_lexer_data *data, char ch)
+bool	state_normal(t_lexer_data *data, char ch)
 {
 	if (ch == ' ' || (ch >= 9 && ch <= 13))
 	{
 		data->token_value[data->value_idx] = '\0';
-		tokenize(data, data->token);
+		tokenize(data, data->token); //bool değeri kontrol 
 		data->token_value = NULL;
 		data->prev_state = STATE_NORMAL;
 		data->state = STATE_IDLE;
@@ -57,8 +51,9 @@ void	state_normal(t_lexer_data *data, char ch)
 		data->prev_state = data->state;
 		data->state = STATE_IN_SQUOTE;
 	}
-	else
-		check_operator(data);	
+	else if (!check_operator(data))
+		return (false);
+	return (true);
 }
 
 void	state_double_quote(t_lexer_data *data, char ch)
