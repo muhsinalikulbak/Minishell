@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/28 16:45:14 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/28 22:28:36 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,7 @@ static bool	set_quote(t_lexer_data *data, char ch)
 	return (true);
 }
 
-static bool	check_redir(t_lexer_data *data)
-{
-	return (true);
-}
-
-static bool	tokenize_pipe(t_lexer_data *data)
+static bool	tokenize_operator(t_lexer_data *data, char *operator)
 {
 	int	len;
 
@@ -37,7 +32,7 @@ static bool	tokenize_pipe(t_lexer_data *data)
 		free(data->token_value);
 	else
 		tokenize(data, data->token);
-	data->token_value = ft_strdup("|");
+	data->token_value = ft_strdup(operator);
 	if (data->token_value == NULL)
 		return (false);
 	data->prev_state = data->state;
@@ -45,6 +40,22 @@ static bool	tokenize_pipe(t_lexer_data *data)
 	tokenize(data, data->token);
 	data->token_value = NULL;
 	return (true);
+}
+
+static bool	check_redir(t_lexer_data *data)
+{
+	int		i;
+	char	*line;
+
+	line = data->input_line;
+	i = *data->i;
+	if (line[i] == '>' && line[i + 1] != '>' && line[i + 1] != '<')
+	{
+		tokenize_operator(data, ">");
+		return (true);
+	}
+	return true;
+	// else if (line[i])
 }
 
 bool	check_operator(t_lexer_data *data)
@@ -57,7 +68,7 @@ bool	check_operator(t_lexer_data *data)
 		if (ch == '\'' || ch == '\"')
 			return (set_quote(data, ch));
 		else if (ch == '|')
-			return (tokenize_pipe(data));
+			return (tokenize_operator(data, "|"));
 		else if (ch == ' ' || (ch >= 9 && ch <= 13))
 		{
 			state_normal(data, ch);

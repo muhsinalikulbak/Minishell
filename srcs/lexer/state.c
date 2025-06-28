@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/28 18:27:56 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/28 21:59:25 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,22 @@ bool	state_normal(t_lexer_data *data, char ch)
 
 void	state_double_quote(t_lexer_data *data, char ch)
 {
-	data->prev_state = data->state;
 	if (ch == '"')
+	{
+		data->prev_state = data->state;
 		data->state = STATE_NORMAL;
+	}
 	else
 		data->token_value[data->value_idx++] = ch;
 }
 
 void	state_single_quoute(t_lexer_data *data, char ch)
 {
-	data->prev_state = data->state;
 	if (ch == '\'')
+	{
+		data->prev_state = data->state;
 		data->state = STATE_NORMAL;
+	}
 	else
 		data->token_value[data->value_idx++] = ch;
 }

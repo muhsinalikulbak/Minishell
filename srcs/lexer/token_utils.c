@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/28 15:40:21 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/28 22:29:27 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void print_list(t_token *list)
     while (ptr)
     {
         printf("\033[1;34m[Token]\033[0m ");
-        printf("<%s>", ptr->value);
+        printf("\"%s\"", ptr->value);
         int token_len = (int)strlen(ptr->value) + 2;
         for (int i = 0; i < max_len + 2 - token_len; i++)
             putchar(' ');
