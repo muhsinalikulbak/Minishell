@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/28 15:43:14 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/28 15:47:58 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ static void	state_data_init(t_lexer_data *data, t_token **token, char *input)
 
 void	tokenize(t_lexer_data *data, t_token **token)
 {
-	int				len;
 	t_token_type	token_type;
 	t_token_state	prev_state;
 
-	len = ft_strlen(data->token_value);
 	prev_state = data->prev_state;
 	if (prev_state == STATE_IN_DQUOTE || prev_state == STATE_IN_SQUOTE)
 	{
@@ -60,7 +58,10 @@ static bool	split_line(char *input_line, t_lexer_data *data)
 	while (input_line[i])
 	{
 		if (data->state == STATE_IDLE)
-			state_idle(data);
+		{
+			if (!state_idle(data))
+				return (false);
+		}
 		else if (data->state == STATE_IN_DQUOTE)
 			state_double_quote(data, input_line[i]);
 		else if (data->state == STATE_IN_SQUOTE)

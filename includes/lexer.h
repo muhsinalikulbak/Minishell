@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/26 16:20:59 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/06/28 15:46:52 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	free_token(t_token **list);
 void	print_list(t_token *list);
 int		ft_num_of_tokens(t_token *list);
 t_token	*get_last_token(t_token *head);
-void	state_idle(t_lexer_data *data);
+bool	state_idle(t_lexer_data *data);
 void	state_normal(t_lexer_data *data, char ch);
 void    tokenize(t_lexer_data *data, t_token **token);
 void	state_double_quote(t_lexer_data *data, char ch);
@@ -67,5 +67,5 @@ bool	last_state(t_lexer_data *data);
 bool	check_operator(t_lexer_data *data);
 char	*get_input();
 void	past_space(t_lexer_data *data);
-int	get_token_count(t_token *token);
+int		get_token_count(t_token *token);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/26 17:31:03 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/06/28 15:50:36 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static bool	tokenize_pipe(t_lexer_data *data)
 	else
 		tokenize(data, data->token);
 	data->token_value = ft_strdup("|");
+	if (data->token_value == NULL)
+		return (false);
 	data->prev_state = data->state;
 	data->state = STATE_IDLE;
 	tokenize(data, data->token);
