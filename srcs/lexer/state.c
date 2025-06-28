@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/28 16:48:31 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/28 18:27:56 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 bool	state_idle(t_lexer_data *data)
 {
 	int		len;
-	char	ch;
 
 	len = data->input_length;
 	data->state = STATE_NORMAL;
