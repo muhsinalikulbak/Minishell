@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/30 00:51:16 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/30 01:09:40 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ static bool	check_redir(t_lexer_data *data)
 		(*data->i)++;
 		return (tokenize_operator(data, "<<"));
 	}
-	ft_putendl_fd("syntax error near unexpected token", 2);
+	if (line[i] != line[i + 1])
+		printf("syntax error near unexpected token (%c)\n", line[i + 1]);
+	else
+		printf("syntax error near unexpected token (%c)\n", line[i + 2]);
 	free(data->token_value);
 	return (false);
 }
