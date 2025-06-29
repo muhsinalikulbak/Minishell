@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 04:08:38 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/20 00:05:42 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/30 00:46:24 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ bool	syntax_check(t_token *token_list)
 {
 	if (!pipe_check(token_list))
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
+		ft_putendl_fd("bash: syntax error near unexpected token `|'", 2);
 		return (false);
 	}
 	if (!redirection_check(token_list))
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token\n", 2);
+		ft_putendl_fd("bash: syntax error near unexpected token\n", 2);
 	}
 	return (true);
 }

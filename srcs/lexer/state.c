@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/28 21:59:25 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/30 00:47:02 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ bool	last_state(t_lexer_data *data)
 		{
 			free(data->token_value);
 			if (data->state == STATE_IN_DQUOTE)
-				ft_putstr_fd("Quotation error, missing double quote (\")\n", 2);
+				ft_putendl_fd("Quotation error, missing double quote (\")", 2);
 			else
-				ft_putstr_fd("Quotation error, missing single quote (\')\n", 2);
+				ft_putendl_fd("Quotation error, missing single quote (\')", 2);
 			return (false);
 		}
 	}

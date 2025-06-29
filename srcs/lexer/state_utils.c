@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/28 22:28:36 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/30 00:51:16 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static bool	tokenize_operator(t_lexer_data *data, char *operator)
 		return (false);
 	data->prev_state = data->state;
 	data->state = STATE_IDLE;
-	tokenize(data, data->token);
+	tokenize(data, data->token); 
 	data->token_value = NULL;
 	return (true);
 }
@@ -50,18 +50,32 @@ static bool	check_redir(t_lexer_data *data)
 	line = data->input_line;
 	i = *data->i;
 	if (line[i] == '>' && line[i + 1] != '>' && line[i + 1] != '<')
+		return (tokenize_operator(data, ">"));
+	if (line[i] == '<' && line[i + 1] != '<' && line[i + 1] != '>')
+		return (tokenize_operator(data, "<"));
+	if (line[i] == '>' && line[i + 1] == '>' && line[i + 2] != '>'
+		&& line[i + 2] != '<')
 	{
-		tokenize_operator(data, ">");
-		return (true);
+		(*data->i)++;
+		return (tokenize_operator(data, ">>"));
 	}
-	return true;
-	// else if (line[i])
+	if (line[i] == '<' && line[i + 1] == '<' && line[i + 2] != '<'
+		&& line[i + 2] != '>')
+	{
+		(*data->i)++;
+		return (tokenize_operator(data, "<<"));
+	}
+	ft_putendl_fd("syntax error near unexpected token", 2);
+	free(data->token_value);
+	return (false);
 }
 
 bool	check_operator(t_lexer_data *data)
 {
 	char	ch;
+	t_token	*last_token;
 
+	last_token = get_last_token(*data->token);
 	ch = data->input_line[(*data->i)];
 	while (ch != '\0')
 	{
@@ -71,7 +85,7 @@ bool	check_operator(t_lexer_data *data)
 			return (tokenize_operator(data, "|"));
 		else if (ch == ' ' || (ch >= 9 && ch <= 13))
 		{
-			state_normal(data, ch);
+			(*data->i)--;
 			return (true);
 		}
 		else if (ch == '<' || ch == '>')
