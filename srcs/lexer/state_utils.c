@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/30 01:09:40 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/30 14:31:18 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ static bool	check_redir(t_lexer_data *data)
 bool	check_operator(t_lexer_data *data)
 {
 	char	ch;
-	t_token	*last_token;
+	//t_token	*last_token; anlık olarak kullanılmıyor
 
-	last_token = get_last_token(*data->token);
+	//last_token = get_last_token(*data->token); anlık olarak kullanılmıyor
 	ch = data->input_line[(*data->i)];
 	while (ch != '\0')
 	{

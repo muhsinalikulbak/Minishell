@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:01:14 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/30 00:03:50 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/30 14:33:42 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #define BUFFER_SIZE 4
-
+/* 
+işin bitince tekrar yoruma al
 static char	*ft_next(char	*buf)
 {
 	int		i;
@@ -115,7 +116,7 @@ static char	*get_next_line(int fd)
 		return (NULL);
 	}
 	return (line);
-}
+}*/
 
 char *get_input()
 {

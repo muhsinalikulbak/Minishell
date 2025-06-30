@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:52:32 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/21 21:42:10 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/30 14:34:32 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 t_cmd	*parser(t_token *token_list)
 {
 	t_cmd	*commands;
@@ -23,3 +23,4 @@ t_cmd	*parser(t_token *token_list)
 	// her pipe arası node olacak (t_cmd * olarak) 
 	return (commands);
 }
+*/

@@ -1,7 +1,9 @@
 #include "minishell.h"
 
+
 void echo(char *str)
 {
+    (void) str;
     printf("str\n");
 }
 void cd(char *path)
