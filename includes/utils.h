@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/28 15:41:53 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/30 22:11:57 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define UTILS_H
 
 bool	str_equal(char *str1, char* str2);
+int		get_exit_code(void);
+void	set_exit_code(int status);
+
 
 
 

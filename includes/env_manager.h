@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_manager.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/26 17:42:13 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/06/30 17:38:22 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ typedef struct s_node
 {
 	char			*content;
     char            *key;
+	bool			is_file;
 	struct s_node	*next;
 }	t_map;
 

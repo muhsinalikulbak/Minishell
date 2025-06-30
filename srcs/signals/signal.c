@@ -3,31 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:03:40 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/26 14:03:00 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/06/30 15:23:42 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <readline/readline.h>
+#include <readline/history.h>
+
 static void    ctrls(int sig)
 {
-	if (sig == SIGINT)
-	{
-		write(2, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
+    if (sig == SIGINT)
+    {
+        write(2, "\n", 1);
+        rl_replace_line("", 0);
+        rl_on_new_line();
+        rl_redisplay();
+    }
 }
 
 void    handle_eof()
 {
-	exit(EXIT_FAILURE);
+    exit(EXIT_FAILURE);
 }
-
-
 
 void signal_setup()
 {

@@ -6,15 +6,22 @@
 #    By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/06/30 14:14:23 by kayraakbas       ###   ########.fr        #
+#    Updated: 2025/06/30 15:15:07 by kayraakbas       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+# Detect operating system
+UNAME_S := $(shell uname -s)
 
+# Common variables
+NAME = minishell
 CC = cc
-CFLAGS = -g
-LDFLAGS = -lreadline
+CFLAGS = -Wall -Wextra -Werror
+
+
+CFLAGS += -I/opt/homebrew/include -I/opt/homebrew/opt/readline/include
+LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline -lcurses
+READLINE_LIB = -lreadline
 
 SRC_PATH = ./srcs/
 OBJ_PATH = ./objects/
