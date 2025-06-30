@@ -6,7 +6,7 @@
 #    By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/06/30 15:15:07 by kayraakbas       ###   ########.fr        #
+#    Updated: 2025/07/01 00:06:05 by kayraakbas       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,12 @@ UNAME_S := $(shell uname -s)
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+LDFLAGS = -lreadline -lcurses
 
-
-CFLAGS += -I/opt/homebrew/include -I/opt/homebrew/opt/readline/include
-LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline -lcurses
-READLINE_LIB = -lreadline
+ifeq ($(UNAME_S), Darwin)
+	CFLAGS += -I/opt/homebrew/include -I/opt/homebrew/opt/readline/include
+	LDFLAGS += -L/opt/homebrew/opt/readline/lib
+endif
 
 SRC_PATH = ./srcs/
 OBJ_PATH = ./objects/
