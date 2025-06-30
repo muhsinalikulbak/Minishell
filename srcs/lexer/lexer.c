@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/24 23:37:50 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/28 16:47:55 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,24 @@ static void	state_data_init(t_lexer_data *data, t_token **token, char *input)
 
 void	tokenize(t_lexer_data *data, t_token **token)
 {
-	int				len;
 	t_token_type	token_type;
 	t_token_state	prev_state;
 
-	len = ft_strlen(data->token_value);
 	prev_state = data->prev_state;
 	if (prev_state == STATE_IN_DQUOTE || prev_state == STATE_IN_SQUOTE)
 	{
 		insert_token(token, TOKEN_WORD, data->token_value);
 		return ;
 	}
-	else if (ft_strncmp(data->token_value, "|", len) && len == 1)
+	else if (str_equal(data->token_value, "|"))
 		token_type = TOKEN_PIPE;
-	else if (ft_strncmp(data->token_value, "<", len) && len == 1)
+	else if (str_equal(data->token_value, "<"))
 		token_type = TOKEN_REDIR_IN;
-	else if (ft_strncmp(data->token_value, ">", len) && len == 1)
+	else if (str_equal(data->token_value, ">"))
 		token_type = TOKEN_REDIR_OUT;
-	else if (ft_strncmp(data->token_value, "<<", len) && len == 2)
+	else if (str_equal(data->token_value, "<<"))
 		token_type = TOKEN_HEREDOC;
-	else if (ft_strncmp(data->token_value, ">>", len) && len == 2)
+	else if (str_equal(data->token_value, ">>"))
 		token_type = TOKEN_APPEND;
 	else
 		token_type = TOKEN_WORD;
@@ -59,14 +57,20 @@ static bool	split_line(char *input_line, t_lexer_data *data)
 	data->i = &i;
 	while (input_line[i])
 	{
-		if (data->state == STATE_IDLE && input_line[i] != ' ')
-			state_idle(data, input_line[i]);
+		if (data->state == STATE_IDLE)
+		{
+			if (!state_idle(data))
+				return (false);
+		}
 		else if (data->state == STATE_IN_DQUOTE)
 			state_double_quote(data, input_line[i]);
 		else if (data->state == STATE_IN_SQUOTE)
 			state_single_quoute(data, input_line[i]);
 		else if (data->state == STATE_NORMAL)
-			state_normal(data, input_line[i]);
+		{
+			if (!state_normal(data, input_line[i]))
+				return (false);
+		}
 		i++;
 	}
 	return (last_state(data));

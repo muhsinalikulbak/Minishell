@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/25 02:03:41 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/06/30 01:09:40 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,53 +22,99 @@ static bool	set_quote(t_lexer_data *data, char ch)
 	return (true);
 }
 
-// static bool	check_redir(t_lexer_data *data, char ch)
-// {
-// 	// kontrol yapılıcak
-// }
-
-static bool	tokenize_pipe(t_lexer_data *data)
+static bool	tokenize_operator(t_lexer_data *data, char *operator)
 {
+	int	len;
+
 	data->token_value[data->value_idx] = '\0';
-	tokenize(data, data->token);
-	data->token_value = ft_strdup("|");
-	tokenize(data, data->token);
-	data->token_value = NULL;
+	len = ft_strlen(data->token_value);
+	if (len == 0)
+		free(data->token_value);
+	else
+		tokenize(data, data->token);
+	data->token_value = ft_strdup(operator);
+	if (data->token_value == NULL)
+		return (false);
 	data->prev_state = data->state;
 	data->state = STATE_IDLE;
-	(*data->i)--;
+	tokenize(data, data->token); 
+	data->token_value = NULL;
 	return (true);
+}
+
+static bool	check_redir(t_lexer_data *data)
+{
+	int		i;
+	char	*line;
+
+	line = data->input_line;
+	i = *data->i;
+	if (line[i] == '>' && line[i + 1] != '>' && line[i + 1] != '<')
+		return (tokenize_operator(data, ">"));
+	if (line[i] == '<' && line[i + 1] != '<' && line[i + 1] != '>')
+		return (tokenize_operator(data, "<"));
+	if (line[i] == '>' && line[i + 1] == '>' && line[i + 2] != '>'
+		&& line[i + 2] != '<')
+	{
+		(*data->i)++;
+		return (tokenize_operator(data, ">>"));
+	}
+	if (line[i] == '<' && line[i + 1] == '<' && line[i + 2] != '<'
+		&& line[i + 2] != '>')
+	{
+		(*data->i)++;
+		return (tokenize_operator(data, "<<"));
+	}
+	if (line[i] != line[i + 1])
+		printf("syntax error near unexpected token (%c)\n", line[i + 1]);
+	else
+		printf("syntax error near unexpected token (%c)\n", line[i + 2]);
+	free(data->token_value);
+	return (false);
 }
 
 bool	check_operator(t_lexer_data *data)
 {
 	char	ch;
-	
-	ch = data->input_line[(*data->i)++];
+	t_token	*last_token;
+
+	last_token = get_last_token(*data->token);
+	ch = data->input_line[(*data->i)];
 	while (ch != '\0')
 	{
 		if (ch == '\'' || ch == '\"')
 			return (set_quote(data, ch));
 		else if (ch == '|')
-			return (tokenize_pipe(data));
-		else if (ch == ' ')
+			return (tokenize_operator(data, "|"));
+		else if (ch == ' ' || (ch >= 9 && ch <= 13))
 		{
-			data->token_value[data->value_idx] = '\0';
-			tokenize(data, data->token);
-			data->token_value = NULL;
-			data->prev_state = data->state;
-			data->state = STATE_IDLE;
 			(*data->i)--;
 			return (true);
 		}
-		// else if (ch != '<' && ch != '>')
-		// {
-		// 	check_redir(data, ch);	
-		// }
+		else if (ch == '<' || ch == '>')
+			return (check_redir(data));
 		else
 			data->token_value[data->value_idx++] = ch;
-		ch = data->input_line[(*data->i)++];
+		ch = data->input_line[++(*data->i)];
 	}
+	(*data->i)--;
 	return (true);
-	
+}
+
+void	past_space(t_lexer_data *data)
+{
+	char	ch;
+
+	ch = data->input_line[*data->i];
+	while (ch)
+	{
+		if (ch != ' ' && !(ch >= 9 && ch <= 13))
+			break ;
+		ch = data->input_line[++(*data->i)];
+	}
+	if (ch == '\0')
+	{
+		free(data->token_value);
+		data->token_value = NULL;
+	}
 }

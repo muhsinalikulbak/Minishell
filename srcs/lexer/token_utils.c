@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/25 19:15:29 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/06/30 14:17:16 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void free_token(t_token **token_head)
 	t_token *current;
 	t_token *next;
 
+	if (get_token_count(*token_head) == 0)
+		return ;
 	if (!token_head || !*token_head)
 		return;
 	current = *token_head;
@@ -63,26 +65,63 @@ void free_token(t_token **token_head)
 		free(current);
 		current = next;
 	}
-	*token_head = NULL;
 }
 
 void print_token_list(t_token *list)
 {
-	t_token *ptr;
-	if (!list)
+    t_token *ptr;
+    if (!list)
+    {
+        printf("\033[1;31m[Error] Empty token list\033[0m\n");
+        return;
+    }
+
+    char *token_type[] = {
+        "TOKEN_WORD", 
+        "TOKEN_PIPE", 
+        "TOKEN_REDIR_IN", 
+        "TOKEN_REDIR_OUT", 
+        "TOKEN_APPEND", 
+        "TOKEN_HEREDOC", 
+        NULL
+    };
+
+    int max_len = 0;
+    ptr = list;
+    while (ptr)
+    {
+        int len = ft_strlen(ptr->value);
+        if (len > max_len)
+            max_len = len;
+        ptr = ptr->next;
+    }
+
+    ptr = list;
+    printf("\033[1;32m--- TOKEN LIST ---\033[0m\n");
+
+    while (ptr)
+    {
+        printf("\033[1;34m[Token]\033[0m ");
+        printf("\"%s\"", ptr->value);
+        int token_len = (int)strlen(ptr->value) + 2;
+        for (int i = 0; i < max_len + 2 - token_len; i++)
+            putchar(' ');
+        printf(" \033[1;36mType\033[0m: \033[1;33m%s\033[0m\n", token_type[ptr->type]);
+        ptr = ptr->next;
+    }
+
+    printf("\033[1;32m--- End of Token List ---\033[0m\n");
+}
+
+int	get_token_count(t_token *token)
+{
+	int	count;
+
+	count = 0;
+	while (token != NULL)
 	{
-		printf("Empty token list\n");
-		return;
+		count++;
+		token = token->next;
 	}
-	ptr = list;
-	printf("TOKEN LIST:\n");
-	while (ptr)
-	{
-		write(1, "<", 1);
-		write(1, ptr->value, ft_strlen(ptr->value));
-		write(1, ">", 1);
-		write(1, " ", 1);
-		ptr = ptr->next; 
-	}
-	printf("\n");
+	return (count);
 }

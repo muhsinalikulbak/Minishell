@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/26 20:54:26 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/06/30 14:12:50 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 int	main(int argc, char **argv, char **env)
 {
@@ -33,10 +31,11 @@ int	main(int argc, char **argv, char **env)
 	
 	while (true)
 	{
-		line = get_input();  // Remove the 'true' parameter
+		line = get_input();
 		if (line && *line)
 		{
 			token = NULL;
+			add_history(line); 
 			if (!lexer(&token, line))
 			{
 				free(line);  // Add this to prevent memory leak
