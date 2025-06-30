@@ -136,4 +136,4 @@ void ft_env(t_map *map)
 {
     print_map(map);
 }
-void exit();
+//void exit()
