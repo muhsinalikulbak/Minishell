@@ -1,14 +1,29 @@
 #include "minishell.h"
 
-t_map *mat_to_map(char **mat)
+void extract_key_content(char *str, char **key, char **content)
 {
-    int i;
     int j;
-    char *key;
-    char *content;
     int key_len;
     int content_len;
     int content_start;
+    
+    j = 0;
+    while (str[j] != '=')
+        j++;
+        
+    key_len = j;
+    *key = ft_substr(str, 0, key_len);
+    
+    content_len = ft_strlen(str) - key_len - 1;
+    content_start = key_len + 1;
+    *content = ft_substr(str, content_start, content_len);
+}
+
+t_map *mat_to_map(char **mat)
+{
+    int i;
+    char *key;
+    char *content;
     t_map *head;
     t_map *tmp;
 
@@ -16,15 +31,8 @@ t_map *mat_to_map(char **mat)
     i = 0;
     while (mat[i])
     {
-        j = 0;
-        key_len = 0;
-        while (mat[i][j] != '=')
-            j++;
-        key_len = j;
-        key = ft_substr(mat[i], 0, key_len);
-        content_len = ft_strlen(mat[i]) - key_len - 1;
-        content_start = key_len + 1;
-        content = ft_substr(mat[i], content_start, content_len);
+        extract_key_content(mat[i], &key, &content);
+        
         if (!head)
             head = create_map(key, content);
         else

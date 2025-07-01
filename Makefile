@@ -6,7 +6,7 @@
 #    By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/01 00:06:05 by kayraakbas       ###   ########.fr        #
+#    Updated: 2025/07/01 19:38:18 by kayraakbas       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,8 @@ SRC = main.c \
 	  signals/signal.c \
 	  executor/builtins.c \
 	  executor/map_utils.c \
+	  executor/builtins_utils.c \
+	  executor/export_utils.c \
 	  utils/utils.c \
 	  
 SRCS = $(addprefix $(SRC_PATH), $(SRC))	
