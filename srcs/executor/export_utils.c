@@ -73,9 +73,9 @@ static void print_and_track_key(t_map *map, char **printed_keys, int index)
         printed_keys[index] = ft_strdup(map->key);
     }
 }
-static void print_export(t_map **env_map_head, int size)
+void print_export(t_map **env_map_head, int size)
 {
-    t_map *ptr;
+    // t_map *ptr;  ŞU AN KULLANILMIYOR UNUSED HATASI ALIYOR
     t_map *smallest;
     char **printed_keys;
     int i;

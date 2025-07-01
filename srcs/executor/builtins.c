@@ -45,9 +45,9 @@ void export(t_map **env_map_head, char *var, char *key, bool is_set)
     size = ft_mapsize(*env_map_head);
 
     if(is_set)
-        set_var(*env_map_head, key, var);
+        set_var(env_map_head, key, var);
     else
-        print_export(*env_map_head, size);
+        print_export(env_map_head, size);
 }
 
 void ft_unset(t_map **env_map_head, char *key)

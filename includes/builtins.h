@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:17 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/01 19:25:50 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/02 01:18:54 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void ft_unset(t_map **env_map_head, char *key);
 void ft_env(t_map *map);
 void ft_exit();
 
-
-
+void set_var(t_map **env_map_head, char *key, char *var);
+void print_export(t_map **env_map_head, int size);
+int	ft_strcmp(char *s1, char *s2);
+void free_map_node(t_map *node);
+bool update_existing_var(t_map **env_map_head, char *key, char *var);
+bool is_key_in_array(char **array, char *key);
+void free_mat(char **mat, int size);
 #endif
