@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/30 14:11:31 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/02 01:37:21 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,5 @@ bool	check_operator(t_lexer_data *data);
 char	*get_input();
 void	past_space(t_lexer_data *data);
 int		get_token_count(t_token *token);
+void	print_redir_error(char *line, int i);
 #endif

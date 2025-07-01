@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+         #
+#    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/01 19:38:18 by kayraakbas       ###   ########.fr        #
+#    Updated: 2025/07/02 01:38:14 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ INC_PATH = ./includes/
 SRC = main.c \
 	  lexer/lexer.c \
 	  lexer/state.c \
-	  lexer/state_utils.c \
+	  lexer/check_operator.c \
+	  lexer/lexer_utils.c \
 	  lexer/token_utils.c \
 	  lexer/input.c \
 	  parser/parser.c \

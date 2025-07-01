@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_manager.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/01 19:58:53 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/02 01:24:58 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ int	    ft_mapsize(t_map *map);
 void    print_map(t_map *map);
 t_map   *mat_to_map(char **mat);
 void    free_map(t_map *map);
-bool is_key_exist(t_map *env_list, char* key);
+bool	is_key_exist(t_map *env_list, char* key);
 
 #endif

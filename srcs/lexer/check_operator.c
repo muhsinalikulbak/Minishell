@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   state_utils.c                                      :+:      :+:    :+:   */
+/*   check_operator.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/02 01:11:37 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/02 01:37:47 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,7 @@ static bool	check_redir(t_lexer_data *data)
 		(*data->i)++;
 		return (tokenize_operator(data, "<<"));
 	}
-	if (line[i] != line[i + 1])
-		printf("syntax error near unexpected token (%c)\n", line[i + 1]);
-	else
-		printf("syntax error near unexpected token (%c)\n", line[i + 2]);
+	print_redir_error(line, i);
 	free(data->token_value);
 	return (false);
 }
@@ -91,28 +88,14 @@ bool	check_operator(t_lexer_data *data)
 		}
 		else if (ch == '<' || ch == '>')
 			return (check_redir(data));
+		else if (ch == '$')
+		{
+			
+		}
 		else
 			data->token_value[data->value_idx++] = ch;
 		ch = data->input_line[++(*data->i)];
 	}
 	(*data->i)--;
 	return (true);
-}
-
-void	past_space(t_lexer_data *data)
-{
-	char	ch;
-
-	ch = data->input_line[*data->i];
-	while (ch)
-	{
-		if (ch != ' ' && !(ch >= 9 && ch <= 13))
-			break ;
-		ch = data->input_line[++(*data->i)];
-	}
-	if (ch == '\0')
-	{
-		free(data->token_value);
-		data->token_value = NULL;
-	}
 }
