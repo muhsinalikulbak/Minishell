@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/02 03:52:03 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/02 03:53:59 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ bool	check_dollar(t_lexer_data *data)
 		return (false);
 	punc_map_init(map);
 	i = *data->i;
+	line = data->input_line;
 	ch = line[i + 1];
 	if (map[(int)ch] || ch == ' ' || ch == '\0')
 	{
@@ -105,6 +106,7 @@ bool	check_dollar(t_lexer_data *data)
 	}
 	var[j] = '\0';
 	i--;
+	return (true);
 	//BURADA EXPAND EDİLİCEK
 }
 
