@@ -150,3 +150,21 @@ bool is_key_exist(t_map *env_list, char* key)
 	}
 	return false;
 }
+
+char *get_env_var_content(t_map *env_list, char* key)
+{
+	t_map *ptr;
+	char *content;
+
+	ptr = env_list;
+	while(ptr)
+	{
+		if (str_equal(ptr->key, key))
+		{
+			content = ptr->content;
+			return (content);
+		}
+		ptr = ptr->next;
+	}
+	return NULL;
+}

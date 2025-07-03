@@ -16,11 +16,13 @@ int	main(int argc, char **argv, char **env)
 {	
 	(void) argc;
 	(void) argv;
-	(void) env;
+
 	char		*line;
 	t_token		*token;
-	//t_pipeline	pipelines; anlık olarak kullanılmıyor 
-	//t_map		*map;
+	// t_pipeline	pipelines;
+
+	t_map		*map;
+	map = mat_to_map(env);
 	signal_setup();
 	while (true)
 	{
@@ -29,7 +31,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			token = NULL;
 			add_history(line); 
-			if (!lexer(&token, line))
+			if (!lexer(&token, line, map))
 			{
 				free(line);  // Add this to prevent memory leak
 				continue ;
