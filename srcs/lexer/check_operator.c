@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/02 01:37:47 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/03 02:54:15 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,34 @@ static bool	check_redir(t_lexer_data *data)
 	return (false);
 }
 
+bool	check_dollar(t_lexer_data *data)
+{
+	char	*var;
+	char	*line;
+	int		i;
+	int		j;
+
+	if (check_one_dollar(data))
+		return (true);
+	line = data->input_line;
+	i = (*data->i);
+	i++;
+	j = 0;
+	var = (char *)ft_calloc(data->input_length + 1, sizeof(char));
+	if (!var)
+		return (false);
+	while (line[i] && data->inv_map[(int)line[i]] == 0)
+	{
+		var[j] = line[i++];
+		j++;
+	}
+	var[j] = '\0';
+	// Bu kısımda env'de var değeri aranacak var ise malloc'da input_length + $var uzunluğu kadar yer açılıp önceki token ve var değeri içine yazılacak.
+	i--;
+	(*data->i) = i;	
+	return (true);
+}
+
 bool	check_operator(t_lexer_data *data)
 {
 	char	ch;
@@ -90,7 +118,8 @@ bool	check_operator(t_lexer_data *data)
 			return (check_redir(data));
 		else if (ch == '$')
 		{
-			
+			if (!check_dollar(data))
+				return (false);
 		}
 		else
 			data->token_value[data->value_idx++] = ch;

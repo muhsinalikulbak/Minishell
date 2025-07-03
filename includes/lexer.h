@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/02 01:37:21 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/03 02:44:32 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,29 @@ typedef struct s_lexer_data
 	char			*token_value;
 	char			*input_line;
 	char			*history;
+	int				*inv_map; // invalid chars map
 	int				input_length;
 	int				value_idx;
 	int				*i;
 }		t_lexer_data;
 
-bool	lexer(t_token **token, char *input_line);
-void	insert_token(t_token **token_head, t_token_type token_type, char *value);
-void	free_token(t_token **list);
 t_token	*get_last_token(t_token *head);
+char	*get_input();
 int		ft_num_of_tokens(t_token *list);
-void	print_token_list(t_token *list);
+int		get_token_count(t_token *token);
+bool	lexer(t_token **token, char *input_line);
 bool	state_idle(t_lexer_data *data);
 bool	state_normal(t_lexer_data *data, char ch);
+bool	last_state(t_lexer_data *data);
+bool	check_operator(t_lexer_data *data);
+void	insert_token(t_token **token_head, t_token_type token_type, char *value);
+void	free_token(t_token **list);
+void	print_token_list(t_token *list);
 void    tokenize(t_lexer_data *data, t_token **token);
 void	state_double_quote(t_lexer_data *data, char ch);
 void	state_single_quoute(t_lexer_data *data, char ch);
-bool	last_state(t_lexer_data *data);
-bool	check_operator(t_lexer_data *data);
-char	*get_input();
 void	past_space(t_lexer_data *data);
-int		get_token_count(t_token *token);
 void	print_redir_error(char *line, int i);
+void	init_inv_map(int *map);
+ bool	check_one_dollar(t_lexer_data *data);
 #endif
