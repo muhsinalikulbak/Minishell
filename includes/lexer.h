@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/02 03:12:38 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/03 02:44:32 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_lexer_data
 	char			*token_value;
 	char			*input_line;
 	char			*history;
+	int				*inv_map; // invalid chars map
 	int				input_length;
 	int				value_idx;
 	int				*i;
@@ -69,5 +70,6 @@ void	state_double_quote(t_lexer_data *data, char ch);
 void	state_single_quoute(t_lexer_data *data, char ch);
 void	past_space(t_lexer_data *data);
 void	print_redir_error(char *line, int i);
-void	punc_map_init(char *map);
+void	init_inv_map(int *map);
+ bool	check_one_dollar(t_lexer_data *data);
 #endif

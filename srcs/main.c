@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/02 01:11:19 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/03 02:51:20 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	main()
 	t_token		*token;
 	//t_pipeline	pipelines; anlık olarak kullanılmıyor 
 	//t_map		*map;
-	
 
 	while (true)
 	{
@@ -33,13 +32,13 @@ int	main()
 				continue ;
 			}
 			print_token_list(token);
+			free_token(&token);
 			// pipelines.commands = parser(token);
 			// if (pipelines.commands != NULL)
 			// {
 				
 			// }
 		}
-        free_token(&token);
 		free(line);  // Move this inside the loop to free each line
 	}
 }

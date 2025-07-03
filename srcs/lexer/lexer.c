@@ -6,13 +6,13 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/28 16:47:55 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/03 03:00:56 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	state_data_init(t_lexer_data *data, t_token **token, char *input)
+static bool	state_data_init(t_lexer_data *data, t_token **token, char *input)
 {
 	data->token = token;
 	data->token_value = NULL;
@@ -21,6 +21,11 @@ static void	state_data_init(t_lexer_data *data, t_token **token, char *input)
 	data->state = STATE_IDLE;
 	data->prev_state = STATE_NORMAL;
 	data->value_idx = 0;
+	data->inv_map = malloc(sizeof(int) * 256);
+	if (!data->inv_map)
+		return (false);
+	init_inv_map(data->inv_map);
+	return (true);
 }
 
 void	tokenize(t_lexer_data *data, t_token **token)
@@ -81,9 +86,11 @@ bool	lexer(t_token **token, char *input_line)
 	t_lexer_data	data;
 	bool			check_lexer;
 
-	state_data_init(&data, token, input_line);
+	if (!state_data_init(&data, token, input_line))
+		return (false);
 	check_lexer = split_line(input_line, &data);
 	if (!check_lexer)
 		free_token(token);
+	free(data.inv_map);
 	return (check_lexer);
 }

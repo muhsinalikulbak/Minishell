@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/02 03:53:59 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/03 02:54:15 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,41 +73,28 @@ static bool	check_redir(t_lexer_data *data)
 bool	check_dollar(t_lexer_data *data)
 {
 	char	*var;
-	char	*map;
 	char	*line;
-	char	ch;
 	int		i;
 	int		j;
 
-	if (get_last_token(*data->token)->type == TOKEN_HEREDOC)
-	{
-		data->token_value[data->value_idx++] = '$';
+	if (check_one_dollar(data))
 		return (true);
-	}
-	map = (char *)ft_calloc(256, 1); // state_init'de bunu initleyip struct'a verip, oradan kullanabilirim.
-	if (!map)
-		return (false);
-	punc_map_init(map);
-	i = *data->i;
 	line = data->input_line;
-	ch = line[i + 1];
-	if (map[(int)ch] || ch == ' ' || ch == '\0')
-	{
-		data->token_value[data->value_idx++] = '$';
-		free(map);
-		return (true);
-	}
+	i = (*data->i);
 	i++;
 	var = (char *)ft_calloc(data->input_length + 1, sizeof(char));
-	while (line[i] && map[(int)line[i]] == 0)
+	if (!var)
+		return (false);
+	while (line[i] && data->inv_map[(int)line[i]] == 0)
 	{
 		var[j] = line[i++];
 		j++;
 	}
 	var[j] = '\0';
+	// Bu kısımda env'de var değeri aranacak var ise malloc'da input_length + $var uzunluğu kadar yer açılıp önceki token ve var değeri içine yazılacak.
 	i--;
+	(*data->i) = i;	
 	return (true);
-	//BURADA EXPAND EDİLİCEK
 }
 
 bool	check_operator(t_lexer_data *data)
