@@ -110,10 +110,7 @@ bool	check_operator(t_lexer_data *data)
 		else if (ch == '|')
 			return (tokenize_operator(data, "|"));
 		else if (ch == ' ' || (ch >= 9 && ch <= 13))
-		{
-			(*data->i)--;
-			return (true);
-		}
+			return ((*data->i)--, true);
 		else if (ch == '<' || ch == '>')
 			return (check_redir(data));
 		else if (ch == '$')

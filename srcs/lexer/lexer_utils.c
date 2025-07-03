@@ -62,15 +62,13 @@ void	init_inv_map(int *map)
 	char	*line;
 	int		i;
 
-	if (!data || *data->token == NULL)
-		return (false);
-	if (get_last_token(*data->token)->type == TOKEN_HEREDOC)
+	i = (*data->i);
+	line = data->input_line;
+	if ((*data->token) && get_last_token(*data->token)->type == TOKEN_HEREDOC)
 	{
 		data->token_value[data->value_idx++] = '$';
 		return (true);
 	}
-	i = (*data->i);
-	line = data->input_line;
 	if (data->inv_map[(int)line[i + 1]] || line[i + 1] == '\0')
 	{
 		data->token_value[data->value_idx++] = '$';
@@ -78,3 +76,4 @@ void	init_inv_map(int *map)
 	}
 	return (false);
  }
+ 
