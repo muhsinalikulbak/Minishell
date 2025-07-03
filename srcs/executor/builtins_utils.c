@@ -63,7 +63,6 @@ bool update_existing_var(t_map **env_map_head, char *key, char *var)
         tmp->content = ft_strdup(var);
         return true;
     }
-    
     return false;
 }
 

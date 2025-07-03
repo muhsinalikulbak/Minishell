@@ -5,21 +5,25 @@ void echo(char *str)
     ft_putendl_fd(str, 0);
 }
 
-void cd(char *path)
+void cd(char *path, t_map **env_map_head)
 {    
     char *pwd;
+    char *old_pwd;
+    
     if (!path)
     {
         printf("bash: cd: missing argument\n");
         return;
     }
+    old_pwd = getcwd(NULL, 0);
+    export(env_map_head, old_pwd, "OLDPWD", true);
     if (chdir(path) == -1)
     {
         perror("bash: cd");
         return;
     }
     pwd = getcwd(NULL, 0);
-
+    export(env_map_head, pwd, "PWD", true);
     if (pwd)
     {
         printf("current dir: %s\n", pwd);

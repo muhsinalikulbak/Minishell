@@ -3,23 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/02 01:11:19 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/02 21:55:30 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main()
-{
+int	main(int argc, char **argv, char **env)
+{	
+	(void) argc;
+	(void) argv;
 	char		*line;
 	t_token		*token;
 	//t_pipeline	pipelines; anlık olarak kullanılmıyor 
-	//t_map		*map;
-	
+	t_map		*map;
 
+	map = mat_to_map(env);
+	print_map(map);
+	cd("..", &map);
+	print_map(map);
+	free_map(map);
 	while (true)
 	{
 		line = get_input();

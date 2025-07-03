@@ -140,15 +140,13 @@ void free_map(t_map *map)
 bool is_key_exist(t_map *env_list, char* key)
 {
 	t_map *ptr;
-	int len;
-
+	
 	ptr = env_list;
-	len = ft_strlen(key);
 	while(ptr)
 	{
-		if (ft_strncmp(ptr->key, key, len) == false)
-			return false;
+		if (ft_strcmp(ptr->key, key) == 0)
+			return true;
 		ptr = ptr->next;
 	}
-	return true;
+	return false;
 }
