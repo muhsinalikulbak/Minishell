@@ -82,6 +82,7 @@ bool	check_dollar(t_lexer_data *data)
 	line = data->input_line;
 	i = (*data->i);
 	i++;
+	j = 0;
 	var = (char *)ft_calloc(data->input_length + 1, sizeof(char));
 	if (!var)
 		return (false);
@@ -115,8 +116,11 @@ bool	check_operator(t_lexer_data *data)
 		}
 		else if (ch == '<' || ch == '>')
 			return (check_redir(data));
-		else if (ch == '$' && !check_dollar(data))
-			return (false);
+		else if (ch == '$')
+		{
+			if (!check_dollar(data))
+				return (false);
+		}
 		else
 			data->token_value[data->value_idx++] = ch;
 		ch = data->input_line[++(*data->i)];

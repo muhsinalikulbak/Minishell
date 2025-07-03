@@ -18,7 +18,7 @@ int	main()
 	t_token		*token;
 	//t_pipeline	pipelines; anlık olarak kullanılmıyor 
 	//t_map		*map;
-
+	signal_setup();
 	while (true)
 	{
 		line = get_input();
