@@ -20,7 +20,7 @@ int	main(int argc, char **argv, char **env)
 	char		*line;
 	t_token		*token;
 	//t_pipeline	pipelines; anlık olarak kullanılmıyor 
-	//t_map		*map;
+	//t_map		*map ;
 	signal_setup();
 	while (true)
 	{
