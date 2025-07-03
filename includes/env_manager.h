@@ -30,5 +30,7 @@ void    print_map(t_map *map);
 t_map   *mat_to_map(char **mat);
 void    free_map(t_map *map);
 bool	is_key_exist(t_map *env_list, char* key);
+char 	*get_env_var_content(t_map *env_list, char* key);
+
 
 #endif

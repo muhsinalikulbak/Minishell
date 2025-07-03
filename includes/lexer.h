@@ -44,6 +44,7 @@ typedef struct s_lexer_data
 	t_token_state	state;
 	t_token_state	prev_state;
 	t_token			**token;
+	t_map			*env_map;
 	char			*token_value;
 	char			*input_line;
 	char			*history;
@@ -57,7 +58,7 @@ t_token	*get_last_token(t_token *head);
 char	*get_input();
 int		ft_num_of_tokens(t_token *list);
 int		get_token_count(t_token *token);
-bool	lexer(t_token **token, char *input_line);
+bool	lexer(t_token **token, char *input_line, t_map *env_map);
 bool	state_idle(t_lexer_data *data);
 bool	state_normal(t_lexer_data *data, char ch);
 bool	last_state(t_lexer_data *data);

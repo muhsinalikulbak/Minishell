@@ -12,11 +12,12 @@
 
 #include "minishell.h"
 
-static bool	state_data_init(t_lexer_data *data, t_token **token, char *input)
+static bool	state_data_init(t_lexer_data *data, t_token **token, char *input, t_map *env_map_head)
 {
 	data->token = token;
 	data->token_value = NULL;
 	data->input_line = input;
+	data->env_map = env_map_head;
 	data->input_length = ft_strlen(input);
 	data->state = STATE_IDLE;
 	data->prev_state = STATE_NORMAL;
@@ -57,7 +58,6 @@ void	tokenize(t_lexer_data *data, t_token **token)
 static bool	split_line(char *input_line, t_lexer_data *data)
 {
 	int	i;
-
 	i = 0;
 	data->i = &i;
 	while (input_line[i])
@@ -81,12 +81,12 @@ static bool	split_line(char *input_line, t_lexer_data *data)
 	return (last_state(data));
 }
 
-bool	lexer(t_token **token, char *input_line)
+bool	lexer(t_token **token, char *input_line, t_map *env_map)
 {
 	t_lexer_data	data;
 	bool			check_lexer;
-
-	if (!state_data_init(&data, token, input_line))
+	
+	if (!state_data_init(&data, token, input_line, env_map))
 		return (false);
 	check_lexer = split_line(input_line, &data);
 	if (!check_lexer)

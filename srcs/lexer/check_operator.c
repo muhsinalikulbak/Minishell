@@ -74,6 +74,8 @@ bool	check_dollar(t_lexer_data *data)
 {
 	char	*var;
 	char	*line;
+	char	*expand;
+	char	*temp;
 	int		i;
 	int		j;
 
@@ -92,9 +94,31 @@ bool	check_dollar(t_lexer_data *data)
 		j++;
 	}
 	var[j] = '\0';
-	// Bu kısımda env'de var değeri aranacak var ise malloc'da input_length + $var uzunluğu kadar yer açılıp önceki token ve var değeri içine yazılacak.
-	i--;
-	(*data->i) = i;	
+	expand = get_env_var_content(data->env_map, var);
+	free(var);
+	if (expand == NULL)
+	{
+		(*data->i) = i;
+		printf("env variable yok frame = check_dolar\n");
+		return (true);
+	}
+	data->token_value[*data->i] = '\0';
+	temp = data->token_value;
+	data->token_value = (char *)ft_calloc(data->input_length + ft_strlen(expand), sizeof(char));
+	data->value_idx = 0;
+	j = 0;
+	while (temp[data->value_idx])
+	{
+		data->token_value[data->value_idx] = temp[data->value_idx];
+		data->value_idx++;
+	}
+	while (expand[j])
+	{
+		data->token_value[data->value_idx] = expand[j];
+		data->value_idx++;
+		j++;
+	}
+	(*data->i) = --i;
 	return (true);
 }
 
