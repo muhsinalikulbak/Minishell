@@ -16,6 +16,7 @@ int	main(int argc, char **argv, char **env)
 {	
 	(void) argc;
 	(void) argv;
+	(void) env;
 	char		*line;
 	t_token		*token;
 	//t_pipeline	pipelines; anlık olarak kullanılmıyor 
