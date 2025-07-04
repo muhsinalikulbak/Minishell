@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/30 14:16:54 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/04 19:25:49 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	state_normal(t_lexer_data *data, char ch)
 	if (ch == ' ' || (ch >= 9 && ch <= 13))
 	{
 		data->token_value[data->value_idx] = '\0';
-		tokenize(data, data->token); //bool değeri kontrol 
+		tokenizer(data, data->token); //bool değeri kontrol 
 		data->token_value = NULL;
 		data->prev_state = STATE_NORMAL;
 		data->state = STATE_IDLE;
@@ -84,7 +84,7 @@ bool	last_state(t_lexer_data *data)
 		data->token_value[data->value_idx] = '\0';
 		if (data->state == STATE_NORMAL)
 		{
-			tokenize(data, data->token);
+			tokenizer(data, data->token);
 			return (true);
 		}
 		else

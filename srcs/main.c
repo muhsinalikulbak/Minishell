@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/03 02:51:20 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/04 19:15:45 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **env)
 	while (true)
 	{
 		line = get_input();
-		if (line && *line)
+		if (line)
 		{
 			token = NULL;
 			add_history(line); 
@@ -43,7 +43,7 @@ int	main(int argc, char **argv, char **env)
 			// {
 				
 			// }
+			free(line);  // Move this inside the loop to free each line
 		}
-		free(line);  // Move this inside the loop to free each line
-	}
+	} 
 }

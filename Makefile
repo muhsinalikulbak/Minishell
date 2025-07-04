@@ -6,7 +6,7 @@
 #    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/03 02:57:48 by muhsin           ###   ########.fr        #
+#    Updated: 2025/07/04 19:27:07 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,9 @@ SRC = main.c \
 	  lexer/state.c \
 	  lexer/check_operator.c \
 	  lexer/lexer_utils.c \
-	  lexer/token_utils.c \
+	  lexer/tokenizer.c \
 	  lexer/input.c \
+	  lexer/expand_dollar.c \
 	  parser/parser.c \
 	  parser/parser_utils.c \
 	  parser/syntax_check.c \
