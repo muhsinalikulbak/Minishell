@@ -6,13 +6,31 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/03 03:00:56 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/04 19:29:16 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	state_data_init(t_lexer_data *data, t_token **token, char *input, t_map *env_map_head)
+static void	init_inv_map(int *map)
+{
+	int	ch;
+
+	ch = ' ';
+	while (ch <= '/')
+		map[ch++]++;
+	ch = ':';
+	while (ch <= '@')
+		map[ch++]++;
+	ch = '[';
+	while (ch <= '`')
+		map[ch++]++;
+	ch = '{';
+	while (ch <= '~')
+		map[ch++]++;
+}
+
+static bool	init_state_data(t_lexer_data *data, t_token **token, char *input, t_map *env_map_head)
 {
 	data->token = token;
 	data->token_value = NULL;
@@ -27,32 +45,6 @@ static bool	state_data_init(t_lexer_data *data, t_token **token, char *input, t_
 		return (false);
 	init_inv_map(data->inv_map);
 	return (true);
-}
-
-void	tokenize(t_lexer_data *data, t_token **token)
-{
-	t_token_type	token_type;
-	t_token_state	prev_state;
-
-	prev_state = data->prev_state;
-	if (prev_state == STATE_IN_DQUOTE || prev_state == STATE_IN_SQUOTE)
-	{
-		insert_token(token, TOKEN_WORD, data->token_value);
-		return ;
-	}
-	else if (str_equal(data->token_value, "|"))
-		token_type = TOKEN_PIPE;
-	else if (str_equal(data->token_value, "<"))
-		token_type = TOKEN_REDIR_IN;
-	else if (str_equal(data->token_value, ">"))
-		token_type = TOKEN_REDIR_OUT;
-	else if (str_equal(data->token_value, "<<"))
-		token_type = TOKEN_HEREDOC;
-	else if (str_equal(data->token_value, ">>"))
-		token_type = TOKEN_APPEND;
-	else
-		token_type = TOKEN_WORD;
-	insert_token(token, token_type, data->token_value);
 }
 
 static bool	split_line(char *input_line, t_lexer_data *data)
@@ -86,7 +78,7 @@ bool	lexer(t_token **token, char *input_line, t_map *env_map)
 	t_lexer_data	data;
 	bool			check_lexer;
 	
-	if (!state_data_init(&data, token, input_line, env_map))
+	if (!init_state_data(&data, token, input_line, env_map))
 		return (false);
 	check_lexer = split_line(input_line, &data);
 	if (!check_lexer)

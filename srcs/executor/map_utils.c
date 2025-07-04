@@ -137,7 +137,7 @@ void free_map(t_map *map)
     }
 }
 
-bool is_key_exist(t_map *env_list, char* key)
+bool	is_key_exist(t_map *env_list, char* key)
 {
 	t_map *ptr;
 	
@@ -151,20 +151,13 @@ bool is_key_exist(t_map *env_list, char* key)
 	return false;
 }
 
-char *get_env_var_content(t_map *env_list, char* key)
+char	*try_get_value(t_map *env, char* key)
 {
-	t_map *ptr;
-	char *content;
-
-	ptr = env_list;
-	while(ptr)
+	while(env)
 	{
-		if (str_equal(ptr->key, key))
-		{
-			content = ptr->content;
-			return (content);
-		}
-		ptr = ptr->next;
+		if (str_equal(env->key, key))
+			return (env->content);
+		env = env->next;
 	}
-	return NULL;
+	return (NULL);
 }

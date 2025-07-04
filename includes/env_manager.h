@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/02 01:24:58 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/04 15:27:22 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void    print_map(t_map *map);
 t_map   *mat_to_map(char **mat);
 void    free_map(t_map *map);
 bool	is_key_exist(t_map *env_list, char* key);
-char 	*get_env_var_content(t_map *env_list, char* key);
+char 	*try_get_value(t_map *env_list, char* key);
 
 
 #endif

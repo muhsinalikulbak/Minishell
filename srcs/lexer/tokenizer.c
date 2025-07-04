@@ -1,16 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_utils.c                                      :+:      :+:    :+:   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/06/30 14:17:16 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/04 20:10:12 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// implement lexical Analyser in pdf 
 
 #include "minishell.h"
 
@@ -23,7 +21,39 @@ t_token	*get_last_token(t_token *token_head)
 	return (token_head);
 }
 
-void insert_token(t_token **token_head, t_token_type token_type, char *value)
+int	get_token_count(t_token *token)
+{
+	int	count;
+
+	count = 0;
+	while (token != NULL)
+	{
+		count++;
+		token = token->next;
+	}
+	return (count);
+}
+
+void free_token(t_token **token_head)
+{
+	t_token *current;
+	t_token *next;
+
+	if (get_token_count(*token_head) == 0)
+		return ;
+	if (!token_head || !*token_head)
+		return;
+	current = *token_head;
+	while (current != NULL)
+	{
+		next = current->next;
+		free(current->value);
+		free(current);
+		current = next;
+	}
+}
+
+static void	insert_token(t_token **token_head, t_token_type token_type, char *value)
 {
 	t_token *new_token;
 	t_token	*last;
@@ -48,25 +78,35 @@ void insert_token(t_token **token_head, t_token_type token_type, char *value)
 	}
 }
 
-void free_token(t_token **token_head)
+void	tokenizer(t_lexer_data *data, t_token **token)
 {
-	t_token *current;
-	t_token *next;
+	t_token_type	token_type;
+	t_token_state	prev_state;
 
-	if (get_token_count(*token_head) == 0)
-		return ;
-	if (!token_head || !*token_head)
-		return;
-	current = *token_head;
-	while (current != NULL)
+	prev_state = data->prev_state;
+	if (prev_state == STATE_IN_DQUOTE || prev_state == STATE_IN_SQUOTE)
 	{
-		next = current->next;
-		free(current->value);
-		free(current);
-		current = next;
+		insert_token(token, TOKEN_WORD, data->token_value);
+		return ;
 	}
+	else if (str_equal(data->token_value, "|"))
+		token_type = TOKEN_PIPE;
+	else if (str_equal(data->token_value, "<"))
+		token_type = TOKEN_REDIR_IN;
+	else if (str_equal(data->token_value, ">"))
+		token_type = TOKEN_REDIR_OUT;
+	else if (str_equal(data->token_value, "<<"))
+		token_type = TOKEN_HEREDOC;
+	else if (str_equal(data->token_value, ">>"))
+		token_type = TOKEN_APPEND;
+	else
+		token_type = TOKEN_WORD;
+	insert_token(token, token_type, data->token_value);
 }
 
+
+
+// Bu en son silinecek
 void print_token_list(t_token *list)
 {
     t_token *ptr;
@@ -113,15 +153,3 @@ void print_token_list(t_token *list)
     printf("\033[1;32m--- End of Token List ---\033[0m\n");
 }
 
-int	get_token_count(t_token *token)
-{
-	int	count;
-
-	count = 0;
-	while (token != NULL)
-	{
-		count++;
-		token = token->next;
-	}
-	return (count);
-}

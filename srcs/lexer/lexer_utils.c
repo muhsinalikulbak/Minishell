@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 01:32:14 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/03 02:48:10 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/04 19:28:25 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,42 +38,3 @@ void	print_redir_error(char *line, int i)
 	else
 		ft_putendl_fd(&line[i + 2], 2);
 }
-
-void	init_inv_map(int *map)
-{
-	int	ch;
-
-	ch = ' ';
-	while (ch <= '/')
-		map[ch++]++;
-	ch = ':';
-	while (ch <= '@')
-		map[ch++]++;
-	ch = '[';
-	while (ch <= '`')
-		map[ch++]++;
-	ch = '{';
-	while (ch <= '~')
-		map[ch++]++;
-}
-
- bool	check_one_dollar(t_lexer_data *data)
- {
-	char	*line;
-	int		i;
-
-	i = (*data->i);
-	line = data->input_line;
-	if ((*data->token) && get_last_token(*data->token)->type == TOKEN_HEREDOC)
-	{
-		data->token_value[data->value_idx++] = '$';
-		return (true);
-	}
-	if (data->inv_map[(int)line[i + 1]] || line[i + 1] == '\0')
-	{
-		data->token_value[data->value_idx++] = '$';
-		return (true);
-	}
-	return (false);
- }
- 
