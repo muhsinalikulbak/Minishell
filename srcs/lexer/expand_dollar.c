@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:17:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/04 19:38:19 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/05 02:10:41 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,68 +19,58 @@ static bool	check_no_expand(t_lexer_data *data)
 
 	i = (*data->i);
 	line = data->input_line;
-	if ((*data->token) && get_last_token(*data->token)->type == TOKEN_HEREDOC)
+	if (data->token && *data->token && get_last_token(*data->token)->type == TOKEN_HEREDOC)
 	{
 		data->token_value[data->value_idx++] = '$';
 		return (true);
 	}
-	if (data->inv_map[(int)line[i + 1]] || line[i + 1] == '\0')
+	if (line[i] && (data->inv_map[(int)line[i + 1]] || line[i + 1] == '\0'))
 	{
 		data->token_value[data->value_idx++] = '$';
 		return (true);
 	}
 	return (false);
 }
- 
+
+static char	*get_value(t_lexer_data *data) // Burası bool döndürücek değer local adrese atanıcak
+{
+	char	*value;
+	char	*line;
+	char	*key;
+	int		j;
+
+	line = data->input_line;
+	j = ++(*data->i);
+	while (line[j] && data->inv_map[(int)line[j]] == 0)
+		j++;
+	key = ft_substr(data->input_line, *data->i, j - *data->i);
+	value = try_get_value(data->env_map, key);
+	free(key);
+	key = NULL;
+	*data->i = --j;
+	if (value == NULL)
+		return (NULL);
+	return (value); // BOOL döndür local adrese atama yap
+}
+
 bool	expand_dollar(t_lexer_data *data)
 {
-	char	*var;
-	char	*line;
-	char	*expand_value;
+	char	*value;
 	char	*temp;
-	int		i;
 	int		j;
 
 	if (check_no_expand(data))
 		return (true);
-	line = data->input_line;
-	i = (*data->i);
-	i++;
-	j = 0;
-	var = (char *)ft_calloc(data->input_length + 1, sizeof(char));
-	if (!var)
-		return (false);
-	while (line[i] && data->inv_map[(int)line[i]] == 0)
-	{
-		var[j] = line[i++];
-		j++;
-	}
-	var[j] = '\0';
-	expand_value = try_get_value(data->env_map, var);
-	free(var);
-	if (expand_value == NULL)
-	{
-		(*data->i) = i;
-		printf("env variable yok frame = check_dolar\n");
+	value = get_value(data);
+	if (value == NULL)
 		return (true);
-	}
 	data->token_value[data->value_idx] = '\0';
 	temp = data->token_value;
-	data->token_value = (char *)ft_calloc(data->input_length + ft_strlen(expand_value), sizeof(char) + 1);
-	data->value_idx = 0;
-	j = 0;
-	while (temp[data->value_idx])
-	{
-		data->token_value[data->value_idx] = temp[data->value_idx];
-		data->value_idx++;
-	}
-	free(temp);
-	while (expand_value[j])
-	{
-		data->token_value[data->value_idx] = expand_value[j];
-		data->value_idx++;
-		j++;
-	}
-	(*data->i) = i - 1;
-	return (true);
+	data->token_value = (char *)ft_calloc(data->input_length + ft_strlen(value) + 2, sizeof(char));
+	ft_memmove(data->token_value, temp, ft_strlen(temp));
+	data->value_idx = ft_strlen(temp);
+	j = -1;
+	while (value[++j])
+		data->token_value[data->value_idx++] = value[j];
+	return (free(temp), true);
 }
