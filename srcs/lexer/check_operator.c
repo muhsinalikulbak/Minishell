@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/04 03:23:25 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/04 15:34:46 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ bool	check_dollar(t_lexer_data *data)
 {
 	char	*var;
 	char	*line;
-	char	*expand;
+	char	*expand_value;
 	char	*temp;
 	int		i;
 	int		j;
@@ -94,9 +94,9 @@ bool	check_dollar(t_lexer_data *data)
 		j++;
 	}
 	var[j] = '\0';
-	expand = get_env_var_content(data->env_map, var);
+	expand_value = try_get_value(data->env_map, var);
 	free(var);
-	if (expand == NULL)
+	if (expand_value == NULL)
 	{
 		(*data->i) = i;
 		printf("env variable yok frame = check_dolar\n");
@@ -104,7 +104,7 @@ bool	check_dollar(t_lexer_data *data)
 	}
 	data->token_value[data->value_idx] = '\0';
 	temp = data->token_value;
-	data->token_value = (char *)ft_calloc(data->input_length + ft_strlen(expand), sizeof(char) + 1);
+	data->token_value = (char *)ft_calloc(data->input_length + ft_strlen(expand_value), sizeof(char) + 1);
 	data->value_idx = 0;
 	j = 0;
 	while (temp[data->value_idx])
@@ -113,9 +113,9 @@ bool	check_dollar(t_lexer_data *data)
 		data->value_idx++;
 	}
 	free(temp);
-	while (expand[j])
+	while (expand_value[j])
 	{
-		data->token_value[data->value_idx] = expand[j];
+		data->token_value[data->value_idx] = expand_value[j];
 		data->value_idx++;
 		j++;
 	}

@@ -25,6 +25,7 @@ void add_new_var(t_map **env_map_head, char *key, char *var)
     tmp = create_map(ft_strdup(key), ft_strdup(var));
     ft_map_add_back(env_map_head, tmp);
 }
+
 void set_var(t_map **env_map_head, char *key, char *var)
 {
     if (update_existing_var(env_map_head, key, var))
@@ -65,6 +66,7 @@ static t_map *find_smallest_unprinted_key(t_map **env_map_head, char **printed_k
     
     return smallest;
 }
+
 static void print_and_track_key(t_map *map, char **printed_keys, int index)
 {
     if (map)
@@ -73,6 +75,7 @@ static void print_and_track_key(t_map *map, char **printed_keys, int index)
         printed_keys[index] = ft_strdup(map->key);
     }
 }
+
 void print_export(t_map **env_map_head, int size)
 {
     // t_map *ptr;  ŞU AN KULLANILMIYOR UNUSED HATASI ALIYOR
