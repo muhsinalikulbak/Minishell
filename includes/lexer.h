@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/03 02:44:32 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/04 00:47:02 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,5 @@ void	state_single_quoute(t_lexer_data *data, char ch);
 void	past_space(t_lexer_data *data);
 void	print_redir_error(char *line, int i);
 void	init_inv_map(int *map);
- bool	check_one_dollar(t_lexer_data *data);
+ bool	check_no_expand(t_lexer_data *data);
 #endif

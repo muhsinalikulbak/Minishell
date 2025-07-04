@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 01:32:14 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/03 02:48:10 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/04 00:47:02 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	init_inv_map(int *map)
 		map[ch++]++;
 }
 
- bool	check_one_dollar(t_lexer_data *data)
+ bool	check_no_expand(t_lexer_data *data)
  {
 	char	*line;
 	int		i;

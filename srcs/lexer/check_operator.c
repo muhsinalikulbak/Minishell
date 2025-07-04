@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/03 02:54:15 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/04 03:23:25 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ bool	check_dollar(t_lexer_data *data)
 	int		i;
 	int		j;
 
-	if (check_one_dollar(data))
+	if (check_no_expand(data))
 		return (true);
 	line = data->input_line;
 	i = (*data->i);
@@ -102,9 +102,9 @@ bool	check_dollar(t_lexer_data *data)
 		printf("env variable yok frame = check_dolar\n");
 		return (true);
 	}
-	data->token_value[*data->i] = '\0';
+	data->token_value[data->value_idx] = '\0';
 	temp = data->token_value;
-	data->token_value = (char *)ft_calloc(data->input_length + ft_strlen(expand), sizeof(char));
+	data->token_value = (char *)ft_calloc(data->input_length + ft_strlen(expand), sizeof(char) + 1);
 	data->value_idx = 0;
 	j = 0;
 	while (temp[data->value_idx])
@@ -112,13 +112,14 @@ bool	check_dollar(t_lexer_data *data)
 		data->token_value[data->value_idx] = temp[data->value_idx];
 		data->value_idx++;
 	}
+	free(temp);
 	while (expand[j])
 	{
 		data->token_value[data->value_idx] = expand[j];
 		data->value_idx++;
 		j++;
 	}
-	(*data->i) = --i;
+	(*data->i) = i - 1;
 	return (true);
 }
 
