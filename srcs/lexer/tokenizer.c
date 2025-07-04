@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/04 19:30:44 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/04 20:10:12 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	tokenizer(t_lexer_data *data, t_token **token)
 
 
 
-
+// Bu en son silinecek
 void print_token_list(t_token *list)
 {
     t_token *ptr;
