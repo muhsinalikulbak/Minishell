@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/05 01:51:22 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/05 11:21:30 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	state_idle(t_lexer_data *data)
 	data->state = STATE_NORMAL;
 	if (data->token_value == NULL)
 	{
-		data->token_value = (char *)ft_calloc(len + 2, sizeof(char));
+		data->token_value = (char *)ft_calloc(len + 1, sizeof(char));
 		if (data->token_value == NULL)
 			return (false);
 		data->value_idx = 0;

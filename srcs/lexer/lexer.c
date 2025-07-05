@@ -6,13 +6,13 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/04 19:29:16 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/05 11:17:15 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	init_inv_map(int *map)
+static void	init_inv_map(char *map)
 {
 	int	ch;
 
@@ -40,7 +40,7 @@ static bool	init_state_data(t_lexer_data *data, t_token **token, char *input, t_
 	data->state = STATE_IDLE;
 	data->prev_state = STATE_NORMAL;
 	data->value_idx = 0;
-	data->inv_map = malloc(sizeof(int) * 256);
+	data->inv_map = (char *)ft_calloc(256, sizeof(char));
 	if (!data->inv_map)
 		return (false);
 	init_inv_map(data->inv_map);

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:17:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/05 02:10:41 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/05 11:21:36 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ bool	expand_dollar(t_lexer_data *data)
 		return (true);
 	data->token_value[data->value_idx] = '\0';
 	temp = data->token_value;
-	data->token_value = (char *)ft_calloc(data->input_length + ft_strlen(value) + 2, sizeof(char));
+	data->token_value = (char *)ft_calloc(data->input_length + ft_strlen(value) + 1, sizeof(char));
 	ft_memmove(data->token_value, temp, ft_strlen(temp));
 	data->value_idx = ft_strlen(temp);
 	j = -1;

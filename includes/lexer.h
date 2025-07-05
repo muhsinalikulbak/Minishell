@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/04 19:31:10 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/05 11:16:22 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_lexer_data
 	char			*token_value;
 	char			*input_line;
 	char			*history;
-	int				*inv_map; // invalid chars map
+	char			*inv_map; // invalid chars map
 	int				input_length;
 	int				value_idx;
 	int				*i;
