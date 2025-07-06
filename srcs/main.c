@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/04 19:15:45 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/07 00:23:01 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	main(int argc, char **argv, char **env)
 
 	char		*line;
 	t_token		*token;
-	// t_pipeline	pipelines;
 
 	t_map		*map;
 	map = mat_to_map(env);
@@ -38,11 +37,7 @@ int	main(int argc, char **argv, char **env)
 			}
 			print_token_list(token);
 			free_token(&token);
-			// pipelines.commands = parser(token);
-			// if (pipelines.commands != NULL)
-			// {
-				
-			// }
+
 			free(line);  // Move this inside the loop to free each line
 		}
 	} 

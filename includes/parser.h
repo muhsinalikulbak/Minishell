@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/22 14:11:38 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/07 00:22:40 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,18 @@ typedef enum e_error_type
 
 typedef struct s_redir
 {
+	t_token_state	state;		 // Burada filename'in state'i tutulacak. Örneğin "merhaba" ise DQ word olarak sayılacak.
 	t_token_type	type;        // REDIR_IN, REDIR_OUT, etc.
 	char            *filename;   // target file
 	struct s_redir  *next;
 }		t_redir;
 
-typedef struct s_cmd
+typedef struct s_pipeline
 {
 	char            **args;         // ["ls", "-la", NULL]
 	t_redir         *redirections;  // linked list of redirections
-	struct s_cmd    *next;          // next command in pipeline
+	struct t_pipeline    *next;          // next command in pipeline
 }		t_cmd;
-
-typedef struct s_pipeline
-{
-	t_cmd   *commands;      // first command in pipeline
-	int     cmd_count;      // number of commands
-}		t_pipeline;
 
 t_cmd	*parser(t_token *token_list);
 bool	syntax_check(t_token *token_list);
