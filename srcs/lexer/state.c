@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/05 11:21:30 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/06 04:10:49 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,21 @@ bool	state_normal(t_lexer_data *data, char ch)
 	return (true);
 }
 
-void	state_double_quote(t_lexer_data *data, char ch)
+bool	state_double_quote(t_lexer_data *data, char ch)
 {
 	if (ch == '"')
 	{
 		data->prev_state = data->state;
 		data->state = STATE_NORMAL;
 	}
+	else if (ch == '$')
+	{
+		if (!expand_dollar(data))
+			return (false);
+	}
 	else
 		data->token_value[data->value_idx++] = ch;
+	return (true);
 }
 
 void	state_single_quoute(t_lexer_data *data, char ch)
