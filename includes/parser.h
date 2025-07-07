@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/07 00:22:40 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/07 21:43:44 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,25 @@ typedef struct s_redir
 	struct s_redir  *next;
 }		t_redir;
 
-typedef struct s_pipeline
+typedef struct s_cmd
 {
 	char            **args;         // ["ls", "-la", NULL]
 	t_redir         *redirections;  // linked list of redirections
-	struct t_pipeline    *next;          // next command in pipeline
+	struct s_cmd    *next;          // next command in pipeline
 }		t_cmd;
+
 
 t_cmd	*parser(t_token *token_list);
 bool	syntax_check(t_token *token_list);
+void	print_parser(t_cmd *parsed_list);
+t_cmd	*new_cmd(t_token *start, t_token *end);
+char 	**create_arg_mat(int arg_count);
+t_redir *create_redirection(t_token *redir_token, t_token *file_token);
+void add_redirection_to_cmd(t_cmd *cmd, t_redir *redir);
+void free_redirections(t_redir *redirections);
+void print_redirections(t_redir *redirections);
+int count_word_tokens(t_token *start, t_token *end);
+bool is_redirection_token(t_token_type type);
+void free_commands(t_cmd *commands);
+
 #endif
