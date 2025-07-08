@@ -1,7 +1,7 @@
 .DS_Store
 a.out
 .vscode
-
+.idea
 #kayra macbook için
 /Users/kayraakbas/Desktop/minishell/Makefile
 /Users/kayraakbas/Desktop/minishell/includes/signals.h

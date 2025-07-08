@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:17:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/05 11:21:36 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/09 01:01:46 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,22 @@
 
 static bool	check_no_expand(t_lexer_data *data)
 {
-	char	*line;
-	int		i;
+	char			*line;
+	int				i;
+	t_token_type	last_type;
 
+	if (data->token && *data->token)
+	{
+		last_type = get_last_token(*data->token)->type;
+		if (last_type == TOKEN_HEREDOC)
+		{
+			data->token_value[data->value_idx++] = '$';
+			return (true);
+		}
+	}
+	// Bu kısımda $$ parent pid expand de	 eklenebilir
 	i = (*data->i);
 	line = data->input_line;
-	if (data->token && *data->token && get_last_token(*data->token)->type == TOKEN_HEREDOC)
-	{
-		data->token_value[data->value_idx++] = '$';
-		return (true);
-	}
 	if (line[i] && (data->inv_map[(int)line[i + 1]] || line[i + 1] == '\0'))
 	{
 		data->token_value[data->value_idx++] = '$';
@@ -41,7 +47,7 @@ static char	*get_value(t_lexer_data *data) // Burası bool döndürücek değer 
 
 	line = data->input_line;
 	j = ++(*data->i);
-	while (line[j] && data->inv_map[(int)line[j]] == 0)
+	while (line[j] && (data->inv_map[(int)line[j]] == 0 || line[j] == '_'))
 		j++;
 	key = ft_substr(data->input_line, *data->i, j - *data->i);
 	value = try_get_value(data->env_map, key);
