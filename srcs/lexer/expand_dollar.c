@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:17:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/09 01:01:46 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/09 01:29:23 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static bool	check_no_expand(t_lexer_data *data)
 			return (true);
 		}
 	}
-	// Bu kısımda $$ parent pid expand de	 eklenebilir
+	// Bu kısımda $$ parent pid expand de eklenebilir
 	i = (*data->i);
 	line = data->input_line;
 	if (line[i] && (data->inv_map[(int)line[i + 1]] || line[i + 1] == '\0'))
@@ -38,9 +38,8 @@ static bool	check_no_expand(t_lexer_data *data)
 	return (false);
 }
 
-static char	*get_value(t_lexer_data *data) // Burası bool döndürücek değer local adrese atanıcak
+static bool	get_value(t_lexer_data *data, char **value)
 {
-	char	*value;
 	char	*line;
 	char	*key;
 	int		j;
@@ -50,13 +49,12 @@ static char	*get_value(t_lexer_data *data) // Burası bool döndürücek değer 
 	while (line[j] && (data->inv_map[(int)line[j]] == 0 || line[j] == '_'))
 		j++;
 	key = ft_substr(data->input_line, *data->i, j - *data->i);
-	value = try_get_value(data->env_map, key);
+	if (!key)
+		return (false);
+	*value = try_get_value(data->env_map, key);
 	free(key);
-	key = NULL;
 	*data->i = --j;
-	if (value == NULL)
-		return (NULL);
-	return (value); // BOOL döndür local adrese atama yap
+	return (true);
 }
 
 bool	expand_dollar(t_lexer_data *data)
@@ -67,7 +65,8 @@ bool	expand_dollar(t_lexer_data *data)
 
 	if (check_no_expand(data))
 		return (true);
-	value = get_value(data);
+	if (!get_value(data, &value))
+		return (false);
 	if (value == NULL)
 		return (true);
 	data->token_value[data->value_idx] = '\0';
@@ -79,5 +78,6 @@ bool	expand_dollar(t_lexer_data *data)
 	j = -1;
 	while (value[++j])
 		data->token_value[data->value_idx++] = value[j];
-	return (free(temp), true);
+	free(temp);
+	return (true);
 }
