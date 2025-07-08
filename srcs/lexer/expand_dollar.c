@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:17:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/09 01:29:23 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/09 01:39:07 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,15 @@
 
 static bool	check_no_expand(t_lexer_data *data)
 {
-	char			*line;
-	int				i;
-	t_token_type	last_type;
+	t_token	*last;
+	char	*line;
+	int		i;
 
-	if (data->token && *data->token)
+	last = get_last_token(*data->token);
+	if (last && last->type == TOKEN_HEREDOC)
 	{
-		last_type = get_last_token(*data->token)->type;
-		if (last_type == TOKEN_HEREDOC)
-		{
-			data->token_value[data->value_idx++] = '$';
-			return (true);
-		}
+		data->token_value[data->value_idx++] = '$';
+		return (true);
 	}
 	// Bu kısımda $$ parent pid expand de eklenebilir
 	i = (*data->i);

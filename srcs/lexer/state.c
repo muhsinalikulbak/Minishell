@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/06 04:10:49 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/09 02:16:36 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ bool	state_normal(t_lexer_data *data, char ch)
 	if (ch == ' ' || (ch >= 9 && ch <= 13))
 	{
 		data->token_value[data->value_idx] = '\0';
-		tokenizer(data, data->token); //bool değeri kontrol 
+		if (!tokenizer(data, data->token))
+			return (false);
 		data->token_value = NULL;
 		data->prev_state = STATE_NORMAL;
 		data->state = STATE_IDLE;
@@ -87,11 +88,10 @@ bool	last_state(t_lexer_data *data)
 {
 	if (data->token_value != NULL)
 	{
-		data->token_value[data->value_idx] = '\0';
 		if (data->state == STATE_NORMAL)
 		{
-			tokenizer(data, data->token);
-			return (true);
+			data->token_value[data->value_idx] = '\0';
+			return (tokenizer(data, data->token));
 		}
 		else
 		{

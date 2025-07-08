@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/04 20:10:12 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/09 02:17:41 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,17 @@ void free_token(t_token **token_head)
 	}
 }
 
-static void	insert_token(t_token **token_head, t_token_type token_type, char *value)
+static bool	insert_token(t_token **token_head, t_token_type token_type, char *value)
 {
 	t_token *new_token;
 	t_token	*last;
 
 	new_token = malloc(sizeof(t_token));
-	if (new_token == NULL)
+	if (!new_token)
 	{
-		perror("failed to allocate new token - failed in insert_token func\n");
-		return;
+		free(value);
+		value = NULL;
+		return (false);
 	}
 	new_token->value = value;
 	new_token->type = token_type;
@@ -76,9 +77,10 @@ static void	insert_token(t_token **token_head, t_token_type token_type, char *va
 		last->next = new_token;
 		new_token->prev = last;
 	}
+	return (true);
 }
 
-void	tokenizer(t_lexer_data *data, t_token **token)
+bool	tokenizer(t_lexer_data *data, t_token **token)
 {
 	t_token_type	token_type;
 	t_token_state	prev_state;
@@ -86,8 +88,7 @@ void	tokenizer(t_lexer_data *data, t_token **token)
 	prev_state = data->prev_state;
 	if (prev_state == STATE_IN_DQUOTE || prev_state == STATE_IN_SQUOTE)
 	{
-		insert_token(token, TOKEN_WORD, data->token_value);
-		return ;
+		return (insert_token(token, TOKEN_WORD, data->token_value));
 	}
 	else if (str_equal(data->token_value, "|"))
 		token_type = TOKEN_PIPE;
@@ -101,7 +102,7 @@ void	tokenizer(t_lexer_data *data, t_token **token)
 		token_type = TOKEN_APPEND;
 	else
 		token_type = TOKEN_WORD;
-	insert_token(token, token_type, data->token_value);
+	return (insert_token(token, token_type, data->token_value));
 }
 
 

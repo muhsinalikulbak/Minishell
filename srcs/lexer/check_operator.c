@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/04 19:27:28 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/09 02:29:08 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,17 @@ static bool	tokenize_operator(t_lexer_data *data, char *operator)
 
 	data->token_value[data->value_idx] = '\0';
 	len = ft_strlen(data->token_value);
-	if (len == 0)
+	if (len == 0 && data->token_value)
 		free(data->token_value);
-	else
-		tokenizer(data, data->token);
+	else if (!tokenizer(data, data->token))
+		return (false);
 	data->token_value = ft_strdup(operator);
 	if (data->token_value == NULL)
 		return (false);
 	data->prev_state = data->state;
 	data->state = STATE_IDLE;
-	tokenizer(data, data->token); 
+	if (!tokenizer(data, data->token))
+		return (false);
 	data->token_value = NULL;
 	return (true);
 }
