@@ -82,8 +82,9 @@ int	main(int argc, char **argv, char **env)
 	map = mat_to_map(env);
 	signal_setup();
 
-	printf("Running parser test cases...\n");
-    test_parser(map);
+	// Çalışması için şimdilik yorum satrına alındı. ( MUHSİN )
+	// printf("Running parser test cases...\n");
+ //    test_parser(map);
 
 	
 	while (true)

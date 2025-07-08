@@ -66,7 +66,8 @@ bool	expand_dollar(t_lexer_data *data)
 		return (true);
 	data->token_value[data->value_idx] = '\0';
 	temp = data->token_value;
-	data->token_value = (char *)ft_calloc(data->input_length + ft_strlen(value) + 1, sizeof(char));
+	data->input_length += ft_strlen(value);
+	data->token_value = (char *)ft_calloc(data->input_length + 1, sizeof(char));
 	ft_memmove(data->token_value, temp, ft_strlen(temp));
 	data->value_idx = ft_strlen(temp);
 	j = -1;

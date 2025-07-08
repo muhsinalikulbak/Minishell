@@ -16,7 +16,7 @@ t_cmd	*parser(t_token *token_list)
 {
 	t_cmd	*cmd_head;
 	t_cmd	*cmd_ptr;
-	t_token *ptr;
+	// t_token *ptr; Şu an kullanılmıyor diye yorum satırına aldım.
 	t_token *head;
 	t_token *tail;
 
@@ -28,7 +28,7 @@ t_cmd	*parser(t_token *token_list)
 	
 	if (!syntax_check(token_list))
 		return (NULL);	
-	ptr = token_list;
+	// ptr = token_list; Şu an kullanılmıyor diye yorum satırına aldım.
 	head = token_list;
 	tail = token_list;
 	cmd_head = NULL;
