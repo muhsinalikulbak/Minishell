@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/09 02:12:25 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/09 02:57:59 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,20 @@ static void	init_inv_map(char *map)
 
 	ch = ' ';
 	while (ch <= '/')
-		map[ch++]++;
+		map[ch++] = 1;
 	ch = ':';
 	while (ch <= '@')
-		map[ch++]++;
+		map[ch++] = 1;
 	ch = '[';
 	while (ch <= '`')
-		map[ch++]++;
+		map[ch++] = 1;
 	ch = '{';
 	while (ch <= '~')
-		map[ch++]++;
+		map[ch++] = 1;
 }
 
-static bool	init_state_data(t_lexer_data *data, t_token **token, char *input, t_map *env_map_head)
+static bool	init_state_data(t_lexer_data *data, t_token **token,
+		char *input, t_map *env_map_head)
 {
 	data->token = token;
 	data->token_value = NULL;
@@ -50,9 +51,10 @@ static bool	init_state_data(t_lexer_data *data, t_token **token, char *input, t_
 static bool	split_line(char *input_line, t_lexer_data *data)
 {
 	int	i;
-	i = 0;
+
+	i = -1;
 	data->i = &i;
-	while (input_line[i])
+	while (input_line[++i])
 	{
 		if (data->state == STATE_IDLE)
 		{
@@ -71,7 +73,6 @@ static bool	split_line(char *input_line, t_lexer_data *data)
 			if (!state_normal(data, input_line[i]))
 				return (false);
 		}
-		i++;
 	}
 	return (last_state(data));
 }
@@ -80,7 +81,7 @@ bool	lexer(t_token **token, char *input_line, t_map *env_map)
 {
 	t_lexer_data	data;
 	bool			check_lexer;
-	
+
 	if (!init_state_data(&data, token, input_line, env_map))
 		return (false);
 	check_lexer = split_line(input_line, &data);

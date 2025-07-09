@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/09 02:17:41 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/09 02:48:32 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static bool	insert_token(t_token **token_head, t_token_type token_type, char *va
 	if (!new_token)
 	{
 		free(value);
-		value = NULL;
 		return (false);
 	}
 	new_token->value = value;
