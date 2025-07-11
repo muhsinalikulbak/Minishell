@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:17:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/09 01:39:07 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/12 02:08:27 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static bool	check_no_expand(t_lexer_data *data)
 		data->token_value[data->value_idx++] = '$';
 		return (true);
 	}
-	// Bu kısımda $$ parent pid expand de eklenebilir
 	i = (*data->i);
 	line = data->input_line;
 	if (line[i] && (data->inv_map[(int)line[i + 1]] || line[i + 1] == '\0'))
