@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/12 03:17:27 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/12 04:04:09 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ typedef struct s_redir
 	struct s_redir  *next;
 }		t_redir;
 
-typedef struct s_cmd
+typedef struct s_segment
 {
 	char            **args;         // ["ls", "-la", NULL]
 	t_redir         *redirections;  // linked list of redirections
 	struct s_cmd    *next;          // next command in pipeline
-}		t_cmd;
+}		t_segment;
 
 
-t_cmd	*parser(t_token *token);
+t_segment	*parser(t_token *token);
 bool	syntax_check(t_token *token);
 
 #endif

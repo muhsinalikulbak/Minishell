@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 04:08:38 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/12 03:25:52 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/12 03:57:18 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ static bool	check_redir_file(t_token *token, char **next_value)
 	t_token	*last;
 
 	last = get_last_token(token);
-	if (last->type == TOKEN_REDIR_IN || last->type == TOKEN_REDIR_OUT
-		|| last->type == TOKEN_HEREDOC || last->type == TOKEN_APPEND)
+	if (last->type >= 2 && last->type <= 5)
 		return (false); // Buradaki durumda unexpected token newline olacak.
 	while (token != NULL && token->next != NULL)
 	{
