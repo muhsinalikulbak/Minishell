@@ -6,7 +6,7 @@
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:52:32 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/12 22:01:32 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/12 22:08:17 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_redir	*create_redir(t_token *token)
 			redir[i].filename = ft_strdup(token->value);
 			if (!redir[i].filename)
 			{
-				// i - 1 'e kadar free'le 
+				// i  'e kadar free'le 
 				return (NULL);
 			}
 			redir[i].state = token->state;
@@ -108,13 +108,21 @@ t_segment	*parser(t_token *token)
 	{
 		if (!create_segment(token, segments[i]))
 		{
-			// i-1 ' e kadar free yap sonra segments'i free'le
+			// i ' e kadar free yap sonra segments'i free'le
 			// B
 		}
-		segments->segment_count = segment_count;
-		segments->redirections = create_redir(token);
+		if (redir_count_in_segment(token) == 0)
+			segments[i].redirections = NULL;
+		else
+		{
+			segments[i].redirections = create_redir(token);
+			if (!segments[i].redirections)
+			{
+					// segment free return NULL
+			}
+		}
+		segments[i].segment_count = segment_count;
 		i++;
 	}
-	
 	return (NULL);
 }
