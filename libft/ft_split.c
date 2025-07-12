@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 17:58:15 by mkulbak           #+#    #+#             */
-/*   Updated: 2024/10/28 21:36:11 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/12 14:07:17 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	**free_all(char **result)
+char	**free_all(char **result)
 {
 	int	i;
 

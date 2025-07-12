@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/12 04:04:09 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/12 13:46:58 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,18 @@ typedef enum e_error_type
 
 typedef struct s_redir
 {
+	t_redir 		*next;
+	char			*filename;   // target file
+	int				heredoc_fd;  // heredocları açtıktan sonra tek pipe'de birden fazla heredoc var ise öncekini kapa değeri -1 yap
 	t_token_state	state;		 // Burada filename'in state'i tutulacak. Örneğin "merhaba" ise DQ word olarak sayılacak.
 	t_token_type	type;        // REDIR_IN, REDIR_OUT, etc.
-	char            *filename;   // target file
-	int				heredoc_fd;  // heredocları açtıktan sonra tek pipe'de birden fazla heredoc var ise öncekini kapa değeri -1 yap
-	struct s_redir  *next;
 }		t_redir;
 
 typedef struct s_segment
 {
 	char            **args;         // ["ls", "-la", NULL]
 	t_redir         *redirections;  // linked list of redirections
-	struct s_cmd    *next;          // next command in pipeline
+	t_segment		*next;          // next command in pipeline
 }		t_segment;
 
 

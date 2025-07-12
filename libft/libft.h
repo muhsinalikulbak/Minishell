@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:21:41 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/25 19:32:07 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/07/12 14:07:35 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 char	*ft_itoa(int n);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
+char	**free_all(char **result);
 char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strrchr(const char *s, int c);

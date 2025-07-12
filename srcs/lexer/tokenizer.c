@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/12 02:53:17 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/12 14:40:03 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void free_token(t_token **token)
 	}
 }
 
-static bool	insert_token(t_token **token, t_token_type token_type, char *value)
+static bool	token_add_back(t_token **token, t_token_type token_type, char *value)
 {
 	t_token *new_token;
 	t_token	*last;
@@ -86,7 +86,7 @@ bool	tokenizer(t_lexer_data *data, t_token **token)
 	prev_state = data->prev_state;
 	if (prev_state == STATE_IN_DQUOTE || prev_state == STATE_IN_SQUOTE)
 	{
-		return (insert_token(token, TOKEN_WORD, data->token_value));
+		return (token_add_back(token, TOKEN_WORD, data->token_value));
 	}
 	else if (str_equal(data->token_value, "|"))
 		token_type = TOKEN_PIPE;
@@ -100,7 +100,7 @@ bool	tokenizer(t_lexer_data *data, t_token **token)
 		token_type = TOKEN_APPEND;
 	else
 		token_type = TOKEN_WORD;
-	return (insert_token(token, token_type, data->token_value));
+	return (token_add_back(token, token_type, data->token_value));
 }
 
 // Bu en son silinecek
