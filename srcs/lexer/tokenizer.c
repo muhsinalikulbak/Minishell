@@ -6,19 +6,19 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/12 02:02:29 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/12 02:53:17 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*get_last_token(t_token *token_head)
+t_token	*get_last_token(t_token *token)
 {	
-	if (token_head == NULL)
+	if (token == NULL)
 		return (NULL);
-	while (token_head->next != NULL)
-		token_head = token_head->next;
-	return (token_head);
+	while (token->next != NULL)
+		token = token->next;
+	return (token);
 }
 
 int	get_token_count(t_token *token)
@@ -34,27 +34,25 @@ int	get_token_count(t_token *token)
 	return (count);
 }
 
-void free_token(t_token **token_head)
+void free_token(t_token **token)
 {
-	t_token *current;
 	t_token *next;
 
-	if (get_token_count(*token_head) == 0)
+	if (get_token_count(*token) == 0)
 		return ;
-	if (!token_head || !*token_head)
+	if (!token || !*token)
 		return;
-	current = *token_head;
-	while (current != NULL)
+	while (*token != NULL)
 	{
-		next = current->next;
-		if (current->value)
-			free(current->value);
-		free(current);
-		current = next;
+		next = (*token)->next;
+		if ((*token)->value)
+			free((*token)->value);
+		free(*token);
+		*token = next;
 	}
 }
 
-static bool	insert_token(t_token **token_head, t_token_type token_type, char *value)
+static bool	insert_token(t_token **token, t_token_type token_type, char *value)
 {
 	t_token *new_token;
 	t_token	*last;
@@ -69,9 +67,9 @@ static bool	insert_token(t_token **token_head, t_token_type token_type, char *va
 	new_token->type = token_type;
 	new_token->next = NULL;
 	new_token->prev = NULL;
-	last = get_last_token(*token_head);
+	last = get_last_token(*token);
 	if (last == NULL)
-		*token_head = new_token;
+		*token = new_token;
 	else
 	{
 		last->next = new_token;

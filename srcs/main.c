@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/12 02:01:59 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/12 03:22:08 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **env)
 
 	char		*line;
 	t_token		*token;
-
+    t_cmd       *pipe_lines;
 	t_map		*map;
 	map = mat_to_map(env);
 	signal_setup();
@@ -31,15 +31,18 @@ int	main(int argc, char **argv, char **env)
 		{
 			token = NULL;
 			add_history(line); 
-			if (!lexer(&token, line, map))
+			if (lexer(&token, line, map)) // Lexerda syntax alırsa kendi içinde free_token yapıyor.
 			{
-				free(line);  // Add this to prevent memory leak
-				continue ;
+                pipe_lines = parser(token);
+                if (pipe_lines)
+                {
+                    // pipe_lines NULL değilse executa'a gidicek.
+                }
+                // Yoksa çıkıcak
+				print_token_list(token);
+                free_token(&token); // Parser'den geçsede geçmese de free_token yapılmalı.
 			}
-			print_token_list(token);
-			free_token(&token);
-
-			free(line);  // Move this inside the loop to free each line
+			free(line);
 		}
 	}
 }

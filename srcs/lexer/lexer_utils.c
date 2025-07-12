@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 01:32:14 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/04 19:28:25 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/12 03:15:38 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ void	print_redir_error(char *line, int i)
 		ft_putendl_fd(&line[i + 1], 2);
 	else
 		ft_putendl_fd(&line[i + 2], 2);
+	set_exit_code(2);
 }

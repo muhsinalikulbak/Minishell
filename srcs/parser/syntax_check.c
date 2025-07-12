@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 04:08:38 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/04 20:16:45 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/12 03:25:52 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static bool	check_redir_file(t_token *token, char **next_value)
 	last = get_last_token(token);
 	if (last->type == TOKEN_REDIR_IN || last->type == TOKEN_REDIR_OUT
 		|| last->type == TOKEN_HEREDOC || last->type == TOKEN_APPEND)
-		return (false);
+		return (false); // Buradaki durumda unexpected token newline olacak.
 	while (token != NULL && token->next != NULL)
 	{
 		*next_value = token->next->value;
@@ -66,12 +66,14 @@ bool	syntax_check(t_token *token_list)
 	if (!pipe_check(token_list))
 	{
 		ft_putendl_fd("syntax error near unexpected token `|'", 2);
+		set_exit_code(2);
 		return (false);
 	}
 	if (!check_redir_file(token_list, &next_value))
 	{
 		ft_putstr_fd("syntax error near unexpected token ", 2);
 		ft_putendl_fd(next_value, 2);
+		set_exit_code(2);
 		return (false);
 	}
 	return (true);
