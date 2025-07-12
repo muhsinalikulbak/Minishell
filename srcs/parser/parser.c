@@ -3,44 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:52:32 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/12 15:05:45 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/12 20:15:52 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	redir_count_in_segment(t_token *token)
-{
-	int	count;
-
-	count = 0;
-	while (token != NULL && token->type != TOKEN_PIPE)
-	{
-		if (token->type >= 2 && token->type <= 5)
-			count++;
-		token = token->next;
-	}
-	return (count);
-}
-
-static int	token_count_in_segment(t_token *token)
-{
-	int	count;
-
-	count = 0;
-	while (token != NULL && token->type != TOKEN_PIPE)
-	{
-		count++;
-		token = token->next;
-	}
-	return (count);
-}
-
 static t_segment	*create_segment(t_token *token)
-{	
+{
 	t_segment	*segment;
 	char		**args;
 	int			redir_count;
@@ -58,19 +31,22 @@ static t_segment	*create_segment(t_token *token)
 	{
 		args = malloc(sizeof(char *) * (cmd_count + 1));
 		if (!args)
-			return (NULL);
+			return (free(segment), NULL);
 		while (token != NULL && token->type != TOKEN_PIPE)
 		{
 			if (token->type == TOKEN_WORD)
 			{
 				args[k] = ft_strdup(token->value);
 				if (!args[k])
+				{
+					free(segment);
 					return (free_all(args));
+				}
 				k++;
 			}
 			else if (token->type >= 2 && token->type <= 5)
 				token = token->next;
-			token = token->next;
+				token = token->next;
 		}
 		args[k] = NULL;
 	}
@@ -78,7 +54,7 @@ static t_segment	*create_segment(t_token *token)
 	return (segment);
 }
 
-static t_token *next_pipe(t_token *token)
+static t_token	*next_pipe(t_token *token)
 {
 	while (token != NULL && token->type != TOKEN_PIPE)
 	{
@@ -87,28 +63,16 @@ static t_token *next_pipe(t_token *token)
 	return (token);
 }
 
-static t_segment *get_last_segment(t_segment *segment)
+t_redir	*create_redir(t_token *token)
 {
-	if (segment == NULL)
+	t_redir	*redir;
+	int		redir_count;
+
+	redir_count = redir_count_in_segment(token);
+	redir = malloc(sizeof(t_redir) * redir_count);
+	if (!redir)
 		return (NULL);
-	while (segment->next != NULL)
-	{
-		segment = segment->next;
-	}
-	return (segment);
-}
-
-static void	segment_add_back(t_segment **segments, t_segment *segment)
-{
-	t_segment *last;
-
-	if (*segments == NULL)
-	{
-		*segments = segment;
-		return ;
-	}
-	last = get_last_segment(*segments);
-	last->next = segment;
+	
 }
 
 t_segment	*parser(t_token *token)
@@ -124,14 +88,13 @@ t_segment	*parser(t_token *token)
 		segment = create_segment(token);
 		if (!segment)
 		{
-			// free_segments(segments);
+			free_segments(segments);
 			return (NULL);
 		}
+		segment->redirections = create_redir(token);
 		segment_add_back(&segments, segment);
 		// mevcuttaki segmenteki redirection'ları da al
 		token = next_pipe(token);
 	}
-
-
 	return (NULL);
 }
