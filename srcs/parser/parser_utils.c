@@ -6,7 +6,7 @@
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 01:18:39 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/12 19:39:47 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/12 20:44:20 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,53 +39,16 @@ int	token_count_in_segment(t_token *token)
 	return (count);
 }
 
-void	segment_add_back(t_segment **segments, t_segment *segment)
+int	get_segment_count(t_token *token)
 {
-	t_segment	*last;
+	int	count;
 
-	if (*segments == NULL)
+	count = 0;
+	while (token != NULL)
 	{
-		*segments = segment;
-		return ;
+		if (token->type == TOKEN_PIPE)
+			count++;
+		token = token->next;
 	}
-	last = get_last_segment(*segments);
-	last->next = segment;
-}
-
-t_segment	*get_last_segment(t_segment *segment)
-{
-	if (segment == NULL)
-		return (NULL);
-	while (segment->next != NULL)
-	{
-		segment = segment->next;
-	}
-	return (segment);
-}
-
-void	free_segments(t_segment *segments)
-{
-	t_segment	*next_segment;
-	t_redir		*next_redir;
-
-	if (segments == NULL)
-		return ;
-	while (segments)
-	{
-		next_segment = segments->next;
-		while (segments->redirections)
-		{
-			next_redir = segments->redirections->next;
-			if (segments->redirections->filename)
-				free(segments->redirections->filename);
-			if (segments->redirections->heredoc_fd != -1)
-				close(segments->redirections->heredoc_fd);
-			free(segments->redirections);
-			segments->redirections = next_redir;
-		}
-		if (segments->args)
-			free_all(segments->args);
-		free(segments);
-		segments = next_segment;
-	}
+	return (count + 1);
 }

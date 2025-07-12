@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/12 14:40:03 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/12 21:46:26 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void free_token(t_token **token)
 	}
 }
 
-static bool	token_add_back(t_token **token, t_token_type token_type, char *value)
+static bool	token_add_back(t_token **token, t_token_type token_type, char *value, t_token_state state)
 {
 	t_token *new_token;
 	t_token	*last;
@@ -63,6 +63,7 @@ static bool	token_add_back(t_token **token, t_token_type token_type, char *value
 		free(value);
 		return (false);
 	}
+	new_token->state = state;
 	new_token->value = value;
 	new_token->type = token_type;
 	new_token->next = NULL;
@@ -86,7 +87,7 @@ bool	tokenizer(t_lexer_data *data, t_token **token)
 	prev_state = data->prev_state;
 	if (prev_state == STATE_IN_DQUOTE || prev_state == STATE_IN_SQUOTE)
 	{
-		return (token_add_back(token, TOKEN_WORD, data->token_value));
+		return (token_add_back(token, TOKEN_WORD, data->token_value, data->prev_state));
 	}
 	else if (str_equal(data->token_value, "|"))
 		token_type = TOKEN_PIPE;
@@ -100,7 +101,7 @@ bool	tokenizer(t_lexer_data *data, t_token **token)
 		token_type = TOKEN_APPEND;
 	else
 		token_type = TOKEN_WORD;
-	return (token_add_back(token, token_type, data->token_value));
+	return (token_add_back(token, token_type, data->token_value, data->prev_state));
 }
 
 // Bu en son silinecek
