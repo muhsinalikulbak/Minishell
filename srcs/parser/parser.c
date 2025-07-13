@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:52:32 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/13 03:32:18 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/13 15:12:50 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ t_segment	*parser(t_token *token)
 		return (NULL);
 	if (!create_segment(token, segments, segment_count))
 		return (NULL);
+	return (segments);
 }

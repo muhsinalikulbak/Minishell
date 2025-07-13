@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/12 20:44:16 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/13 15:12:50 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,13 @@ typedef struct s_segment
 
 
 t_segment	*parser(t_token *token);
-bool		syntax_check(t_token *token);
 int			token_count_in_segment(t_token *token);
 int			redir_count_in_segment(t_token *token);
 int			get_segment_count(t_token *token);
+bool		syntax_check(t_token *token);
+void		free_segment(t_segment *segment, int end);
+void		free_redir(t_redir *redir, int end);
+t_token		*next_pipe(t_token *token);
+bool		create_segment(t_token *token, t_segment *segments, int segment_count);
+void		print_segment_list(t_segment *segments, int segment_count);
 #endif

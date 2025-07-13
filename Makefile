@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+         #
+#    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/07 21:45:14 by omakbas          ###   ########.fr        #
+#    Updated: 2025/07/13 03:30:38 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,9 @@ SRC = main.c \
 	  parser/parser.c \
 	  parser/parser_utils.c \
 	  parser/syntax_check.c \
+	  parser/free_segment.c \
+	  parser/segment_count.c \
+	  parser/create_segment.c \
 	  signals/signal.c \
 	  executor/builtins.c \
 	  executor/map_utils.c \
