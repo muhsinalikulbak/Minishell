@@ -1,24 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   segment_count.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/17 01:18:39 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/13 03:31:42 by muhsin           ###   ########.fr       */
+/*   Created: 2025/07/13 02:22:33 by muhsin            #+#    #+#             */
+/*   Updated: 2025/07/13 02:23:25 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*next_pipe(t_token *token)
+int	redir_count_in_segment(t_token *token)
 {
+	int	count;
+
+	count = 0;
 	while (token != NULL && token->type != TOKEN_PIPE)
 	{
+		if (token->type >= 2 && token->type <= 5)
+			count++;
 		token = token->next;
 	}
-	if (token != NULL)
+	return (count);
+}
+
+int	token_count_in_segment(t_token *token)
+{
+	int	count;
+
+	count = 0;
+	while (token != NULL && token->type != TOKEN_PIPE)
+	{
+		count++;
 		token = token->next;
-	return (token);
+	}
+	return (count);
+}
+
+int	get_segment_count(t_token *token)
+{
+	int	count;
+
+	count = 0;
+	while (token != NULL)
+	{
+		if (token->type == TOKEN_PIPE)
+			count++;
+		token = token->next;
+	}
+	return (count + 1);
 }
