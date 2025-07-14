@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/13 15:12:50 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/13 20:24:02 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 typedef struct s_redir
 {
-	char			*filename;   // target file
+	char			*filename;   // target file/ Burada char *delimiter için union kullanabilirim.
 	int				heredoc_fd;  // heredocları açtıktan sonra tek pipe'de birden fazla heredoc var ise öncekini kapa değeri -1 yap
 	t_token_state	state;		 // Burada filename'in state'i tutulacak. Örneğin "merhaba" ise DQ word olarak sayılacak.
 	t_token_type	type;        // REDIR_IN, REDIR_OUT, etc.

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 03:29:12 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/13 15:14:29 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/14 14:52:18 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,7 @@ static char **set_args(t_token *token, int cmd_count)
 		{
 			args[++i] = ft_strdup(token->value);
 			if (!args[i])
-			{
-				free_all(args);
-				return (NULL);
-			}
+				return (free_all(args));
 		}
 		else if (token->type >= 2 && token->type <= 5)
 			token = token->next;
