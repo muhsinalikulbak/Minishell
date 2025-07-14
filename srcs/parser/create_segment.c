@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 03:29:12 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/14 14:52:18 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/14 20:22:40 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,20 +103,14 @@ bool    create_segment(t_token *token, t_segment *segments, int segment_count)
 	while (++i < segment_count)
 	{
 		if (!create_args(token, &segments[i]))
-		{
-			free_segment(segments, i);
-			return (false);
-		}
+			return (free_segment(segments, i));
 		if (redir_count_in_segment(token) == 0)
 			segments[i].redirections = NULL;
 		else
 		{
 			segments[i].redirections = create_redir(token);
 			if (!segments[i].redirections)
-			{
-				free_segment(segments, i + 1);
-				return (false);
-			}
+				return (free_segment(segments, i + 1));
 		}
 		segments[i].segment_count = segment_count;
 		token = next_pipe(token);

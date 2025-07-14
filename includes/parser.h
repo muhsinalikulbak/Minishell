@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/13 20:24:02 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/14 20:22:20 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int			token_count_in_segment(t_token *token);
 int			redir_count_in_segment(t_token *token);
 int			get_segment_count(t_token *token);
 bool		syntax_check(t_token *token);
-void		free_segment(t_segment *segment, int end);
+bool		free_segment(t_segment *segment, int end);
 void		free_redir(t_redir *redir, int end);
 t_token		*next_pipe(t_token *token);
 bool		create_segment(t_token *token, t_segment *segments, int segment_count);
