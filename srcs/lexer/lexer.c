@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/09 02:57:59 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/14 23:30:00 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ bool	lexer(t_token **token, char *input_line, t_map *env_map)
 		return (false);
 	check_lexer = split_line(input_line, &data);
 	if (!check_lexer)
-		free_token(token);
+		free_token(*token);
 	free(data.inv_map);
 	return (check_lexer);
 }

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:37:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/04 19:50:17 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/14 22:40:57 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,20 @@ static int current_exit_code(int *exit_code)
 	current = *exit_code;
 	return (current);
 }
+
 void	set_exit_code(int status)
 {
 	current_exit_code(&status);
 }
+
 int	get_exit_code()
 {
 	return (current_exit_code(NULL));
+}
+
+bool	close_pipefd(int pipefd[])
+{
+	close(pipefd[0]);
+	close(pipefd[1]);
+	return (false);
 }

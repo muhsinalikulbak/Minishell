@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/14 14:01:02 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/14 23:43:32 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ int	main(int argc, char **argv, char **env)
 	t_token		*token;
     t_segment	*segments;
 	t_map		*map;
-	map = mat_to_map(env);
+	map = mat_to_map(env); // Bu program çalıştığı sürece sürekli kalıyor. CTRL+D atılırsa map yüzünden leak yenebilir.
 	signal_setup();
 
 	while (true)
 	{
-		line = get_input();
+		line = get_input(false);
 		if (line)
 		{
 			token = NULL;
@@ -41,8 +41,7 @@ int	main(int argc, char **argv, char **env)
                     // pipe_lines NULL değilse executa'a gidicek.
 					free_segment(segments, segments->segment_count);
                 }
-                // Yoksa çıkıcak
-                free_token(&token); // Parser'den geçsede geçmese de free_token yapılmalı.
+				free_token(token);
 			}
 			free(line);
 		}

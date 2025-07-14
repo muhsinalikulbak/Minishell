@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/12 21:46:26 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/14 23:27:53 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,19 @@ int	get_token_count(t_token *token)
 	return (count);
 }
 
-void free_token(t_token **token)
+void free_token(t_token *token)
 {
 	t_token *next;
 
-	if (get_token_count(*token) == 0)
+	if (get_token_count(token) == 0 || !token)
 		return ;
-	if (!token || !*token)
-		return;
-	while (*token != NULL)
+	while (token != NULL)
 	{
-		next = (*token)->next;
-		if ((*token)->value)
-			free((*token)->value);
-		free(*token);
-		*token = next;
+		next = token->next;
+		if (token->value)
+			free(token->value);
+		free(token);
+		token = next;
 	}
 }
 

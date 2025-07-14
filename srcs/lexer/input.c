@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:01:14 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/30 14:33:42 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/14 22:47:52 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,13 +118,16 @@ static char	*get_next_line(int fd)
 	return (line);
 }*/
 
-char *get_input()
+char *get_input(bool is_heredoc)
 {
 	char *line;
 	// Leak bakmak için burayı aç readlien'ı kapat ve maindeki sonsuz while loop'u kaldır
 	// write(1, "minishell~$ ", 12);
 	// line = get_next_line(STDIN_FILENO);
-	line = readline("minishell~$ ");
+	if (is_heredoc)
+		line = readline("> ");
+	else
+		line = readline("minishell~$ ");
 	if (!line)
 		handle_eof();
 	return (line);
