@@ -6,26 +6,16 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/13 20:04:47 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/14 15:20:00 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-typedef union u_data
-{
-	int i;
-	char *str;
-}	t_data;
+extern int value; // lexer.c 'de tanımlı bir global değişken
 
 int main (int argc, char **argv, char **env)
 {
-  
-	t_data data;
-	data.i = 25;
-	data.str = "Merhaba";
-	printf("%s\n",data.str);
-	printf("%d\n",data.i);
-    return 0;
+	print(value);
 }

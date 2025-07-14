@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/14 18:30:48 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/14 15:19:38 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,5 @@ void syntax_chck(char **tokenized_cmd);
 void scan(char *input_cmd, t_command cmd);
 bool anlayse(char *cmd, t_command simple_cmd);
 void insert_Argument(t_token token, t_command cmd);
+void print(int val);
 #endif
