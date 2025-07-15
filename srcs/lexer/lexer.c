@@ -12,24 +12,6 @@
 
 #include "minishell.h"
 
-static void	init_inv_map(char *map)
-{
-	int	ch;
-
-	ch = ' ';
-	while (ch <= '/')
-		map[ch++] = 1;
-	ch = ':';
-	while (ch <= '@')
-		map[ch++] = 1;
-	ch = '[';
-	while (ch <= '`')
-		map[ch++] = 1;
-	ch = '{';
-	while (ch <= '~')
-		map[ch++] = 1;
-}
-
 static bool	init_state_data(t_lexer_data *data, t_token **token,
 		char *input, t_map *env_map_head)
 {
@@ -41,10 +23,6 @@ static bool	init_state_data(t_lexer_data *data, t_token **token,
 	data->state = STATE_IDLE;
 	data->prev_state = STATE_NORMAL;
 	data->value_idx = 0;
-	data->inv_map = (char *)ft_calloc(256, sizeof(char));
-	if (!data->inv_map)
-		return (false);
-	init_inv_map(data->inv_map);
 	return (true);
 }
 
@@ -87,6 +65,5 @@ bool	lexer(t_token **token, char *input_line, t_map *env_map)
 	check_lexer = split_line(input_line, &data);
 	if (!check_lexer)
 		free_token(*token);
-	free(data.inv_map);
 	return (check_lexer);
 }

@@ -49,7 +49,6 @@ typedef struct s_lexer_data
 	char			*token_value;
 	char			*input_line;
 	char			*history;
-	char			*inv_map; // invalid chars map
 	int				input_length;
 	int				value_idx;
 	int				*i;

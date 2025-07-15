@@ -26,7 +26,7 @@ static bool	check_no_expand(t_lexer_data *data)
 	}
 	i = (*data->i);
 	line = data->input_line;
-	if (line[i] && (data->inv_map[(int)line[i + 1]] || line[i + 1] == '\0'))
+	if (line[i] && (!ft_isalnum(line[i + 1]) || line[i + 1] == '\0'))
 	{
 		data->token_value[data->value_idx++] = '$';
 		return (true);
@@ -42,7 +42,7 @@ static bool	get_value(t_lexer_data *data, char **value)
 
 	line = data->input_line;
 	j = ++(*data->i);
-	while (line[j] && (data->inv_map[(int)line[j]] == 0 || line[j] == '_'))
+	while (line[j] && (ft_isalnum(line[j]) || line[j] == '_'))
 		j++;
 	key = ft_substr(data->input_line, *data->i, j - *data->i);
 	if (!key)
