@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:52:32 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/14 23:44:02 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/16 13:19:11 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_segment	*parser(t_token *token)
 		return (NULL);
 	if (!create_segment(token, segments, segment_count))
 		return (NULL);
-	if (!heredoc(segments))
+	if (!heredoc_init(segments))
 		return (NULL);
 	return (segments);
 }

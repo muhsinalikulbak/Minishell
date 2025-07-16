@@ -6,13 +6,20 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:13:32 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/15 00:08:12 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/16 13:20:19 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	no_expand_heredoc(t_redir *redir)
+static bool	write_pipefd(char *line, int pipefd[])
+{
+	write(pipefd[1], line, ft_strlen(line));
+	write(pipefd[1], "\n", 1);
+	free(line);
+}
+
+static bool	heredoc_raw(t_redir *redir)
 {
 	int		pipefd[2];
 	char	*delimiter;
@@ -26,9 +33,7 @@ static bool	no_expand_heredoc(t_redir *redir)
 	delimiter = redir->filename;
 	while (!str_equal(delimiter, line))
 	{
-		write(pipefd[1], line, ft_strlen(line));
-		write(pipefd[1], "\n", 1);
-		free(line);
+		write_pipefd(line, pipefd);
 		line = get_input(true);
 		if (!line)
 			return (close_pipefd(pipefd));
@@ -39,7 +44,12 @@ static bool	no_expand_heredoc(t_redir *redir)
 	return (true);
 }
 
-static bool	expand_heredoc(t_redir *redir) // Expand'de $'lı line gelirse expand edilicek ama delimiter ile karşılaştırılmayacak
+static char	*create_key(char *line)
+{
+
+}
+
+static bool	heredoc_expand(t_redir *redir) // Expand'de $'lı line gelirse expand edilicek ama delimiter ile karşılaştırılmayacak
 {
 	int		pipefd[2];
 	char	*delimiter;
@@ -53,12 +63,17 @@ static bool	expand_heredoc(t_redir *redir) // Expand'de $'lı line gelirse expan
 	delimiter = redir->filename;
 	while (!str_equal(delimiter, line))
 	{
-		/* code */
+		line = get_input(true);
+		if (!line)
+			return (close_pipefd(pipefd));
 	}
+	free(line);
+	close(pipefd[1]);
+	redir->heredoc_fd = pipefd[0];
 	return (true);
 }
 
-static bool	set_heredoc(t_redir *redir)
+static bool	heredoc_scan(t_redir *redir)
 {
 	int	i;
 
@@ -69,10 +84,10 @@ static bool	set_heredoc(t_redir *redir)
 		{
 			if (redir[i].state >= 1 && redir[i].state <= 2)
 			{
-				if (!no_expand_heredoc(&redir[i]))
+				if (!heredoc_expand(&redir[i]))
 					return (false);
 			}
-			else if (!expand_heredoc(&redir[i]))
+			else if (!heredoc_raw(&redir[i]))
 				return (false);
 		}
 		i++;
@@ -80,7 +95,7 @@ static bool	set_heredoc(t_redir *redir)
 	return (true);
 }
 
-bool    heredoc(t_segment *segments)
+bool    heredoc_init(t_segment *segments)
 {
 	int		i;
 	t_redir	*redir;
@@ -91,7 +106,7 @@ bool    heredoc(t_segment *segments)
 		redir = segments[i].redirections;
 		if (redir)
 		{
-			if (!set_heredoc(redir))
+			if (!heredoc_scan(redir))
 				return (false);
 		}
 		i++;
