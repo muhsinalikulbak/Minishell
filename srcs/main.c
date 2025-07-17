@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/17 17:29:30 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/17 23:11:29 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int argc, char **argv, char **env)
                 if (segments)
                 {
                     print_segment_list(segments, segments->segment_count);
+                    print_heredoc_data(segments);
                     // pipe_lines NULL değilse executa'a gidicek.
 					free_segment(segments, segments->segment_count);
                 }

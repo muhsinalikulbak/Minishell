@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/17 17:21:26 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/17 23:55:21 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ void		free_redir(t_redir *redir, int end);
 t_token		*next_pipe(t_token *token);
 bool		create_segment(t_token *token, t_segment *segments, int segment_count);
 void		print_segment_list(t_segment *segments, int segment_count);
+bool		check_no_expand_for_heredoc(char *line, int i);
+void		write_pipefd(char *line, int pipefd[]);
 bool		heredoc_init(t_segment *segments);
 bool		heredoc_finishing(char *line, int pipefd[], int *fd);
-void		write_pipefd(char *line, int pipefd[]);
+void		print_heredoc_data(t_segment *segments);
 #endif

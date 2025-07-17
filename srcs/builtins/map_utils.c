@@ -153,7 +153,9 @@ bool	is_key_exist(t_map *env_list, char* key)
 
 char	*try_get_value(char* key)
 {
-    t_map   *env = get_env_map(NULL);
+    t_map	*env;
+
+	env = get_env_map(NULL);
 	while(env)
 	{
 		if (str_equal(env->key, key))

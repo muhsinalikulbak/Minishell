@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:17:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/17 04:34:28 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/17 17:42:41 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static bool	get_value_for_token(t_lexer_data *data, char **value)
 	key = ft_substr(data->input_line, *data->i, j - *data->i);
 	if (!key)
 		return (false);
-	*value = try_get_value(data->env_map, key);
+	*value = try_get_value(key);
 	free(key);
 	*data->i = --j;
 	return (true);
