@@ -6,7 +6,7 @@
 #    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/13 03:30:38 by muhsin           ###   ########.fr        #
+#    Updated: 2025/07/17 23:56:12 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,11 +42,14 @@ SRC = main.c \
 	  parser/free_segment.c \
 	  parser/segment_count.c \
 	  parser/create_segment.c \
+	  parser/heredoc.c \
+	  parser/heredoc_utils.c \
 	  signals/signal.c \
-	  executor/builtins.c \
-	  executor/map_utils.c \
-	  executor/builtins_utils.c \
-	  executor/export_utils.c \
+	  builtins/builtins.c \
+	  builtins/map_utils.c \
+	  builtins/builtins_utils.c \
+	  builtins/export_utils.c \
+	  builtins/env_manager.c \
 	  utils/utils.c \
 	  
 SRCS = $(addprefix $(SRC_PATH), $(SRC))	

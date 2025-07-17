@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 02:23:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/13 18:51:51 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/14 20:23:03 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	free_redir(t_redir *redir, int end)
 	free(redir);
 }
 
-void	free_segment(t_segment *segment, int end)
+bool	free_segment(t_segment *segment, int end)
 {
 	int	i;
 
@@ -42,4 +42,5 @@ void	free_segment(t_segment *segment, int end)
 		i++;
 	}
 	free(segment);
+	return (false);
 }

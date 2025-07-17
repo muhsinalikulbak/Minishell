@@ -6,13 +6,13 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:17:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/13 18:09:50 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/17 17:42:41 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	check_no_expand(t_lexer_data *data)
+static bool	check_no_expand_for_token(t_lexer_data *data)
 {
 	t_token	*last;
 	char	*line;
@@ -26,7 +26,7 @@ static bool	check_no_expand(t_lexer_data *data)
 	}
 	i = (*data->i);
 	line = data->input_line;
-	if (line[i] && (data->inv_map[(int)line[i + 1]] || line[i + 1] == '\0'))
+	if (line[i + 1] != '_' && (!ft_isalnum(line[i + 1]) || !line[i + 1]))
 	{
 		data->token_value[data->value_idx++] = '$';
 		return (true);
@@ -34,7 +34,7 @@ static bool	check_no_expand(t_lexer_data *data)
 	return (false);
 }
 
-static bool	get_value(t_lexer_data *data, char **value)
+static bool	get_value_for_token(t_lexer_data *data, char **value)
 {
 	char	*line;
 	char	*key;
@@ -42,12 +42,12 @@ static bool	get_value(t_lexer_data *data, char **value)
 
 	line = data->input_line;
 	j = ++(*data->i);
-	while (line[j] && (data->inv_map[(int)line[j]] == 0 || line[j] == '_'))
+	while (line[j] && (ft_isalnum(line[j]) || line[j] == '_'))
 		j++;
 	key = ft_substr(data->input_line, *data->i, j - *data->i);
 	if (!key)
 		return (false);
-	*value = try_get_value(data->env_map, key);
+	*value = try_get_value(key);
 	free(key);
 	*data->i = --j;
 	return (true);
@@ -59,9 +59,9 @@ bool	expand_dollar(t_lexer_data *data)
 	char	*temp;
 	int		j;
 
-	if (check_no_expand(data))
+	if (check_no_expand_for_token(data))
 		return (true);
-	if (!get_value(data, &value))
+	if (!get_value_for_token(data, &value))
 		return (false);
 	if (value == NULL)
 		return (true);

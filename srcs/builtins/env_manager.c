@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   env_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/01 23:04:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/17 17:03:20 by muhsin           ###   ########.fr       */
+/*   Created: 2025/07/17 17:20:07 by muhsin            #+#    #+#             */
+/*   Updated: 2025/07/17 22:58:31 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "minishell.h"
 
-bool	str_equal(char *str1, char* str2);
-int		get_exit_code(void);
-void	set_exit_code(int status);
-bool	close_pipefd(int pipefd[]);
+t_map	*get_env_map(char **env)
+{
+	static t_map	*env_map = NULL;
 
-
-
-
-
-
-#endif
+	if (!env_map && env)
+		env_map = mat_to_map(env);
+	return (env_map);
+}

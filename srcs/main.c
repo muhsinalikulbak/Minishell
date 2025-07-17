@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/13 15:12:50 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/17 23:11:29 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,29 @@ int	main(int argc, char **argv, char **env)
 	char		*line;
 	t_token		*token;
     t_segment	*segments;
-	t_map		*map;
-	map = mat_to_map(env);
+	
+	get_env_map(env); // İlk çağrıda env'i oluştur ve static'de sakla
 	signal_setup();
 
 	while (true)
 	{
-		line = get_input();
+		line = get_input(false);
 		if (line)
 		{
 			token = NULL;
 			add_history(line);
-			if (lexer(&token, line, map)) // Lexerda syntax alırsa kendi içinde free_token yapıyor.
+			if (lexer(&token, line)) // Lexerda syntax alırsa kendi içinde free_token yapıyor.
 			{
 				print_token_list(token);
                 segments = parser(token);
                 if (segments)
                 {
                     print_segment_list(segments, segments->segment_count);
+                    print_heredoc_data(segments);
                     // pipe_lines NULL değilse executa'a gidicek.
 					free_segment(segments, segments->segment_count);
                 }
-                // Yoksa çıkıcak
-                free_token(&token); // Parser'den geçsede geçmese de free_token yapılmalı.
+				free_token(token);
 			}
 			free(line);
 		}

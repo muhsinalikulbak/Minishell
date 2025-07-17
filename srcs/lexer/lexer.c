@@ -6,45 +6,21 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/09 02:57:59 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/17 17:36:48 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	init_inv_map(char *map)
-{
-	int	ch;
-
-	ch = ' ';
-	while (ch <= '/')
-		map[ch++] = 1;
-	ch = ':';
-	while (ch <= '@')
-		map[ch++] = 1;
-	ch = '[';
-	while (ch <= '`')
-		map[ch++] = 1;
-	ch = '{';
-	while (ch <= '~')
-		map[ch++] = 1;
-}
-
-static bool	init_state_data(t_lexer_data *data, t_token **token,
-		char *input, t_map *env_map_head)
+static bool	init_state_data(t_lexer_data *data, t_token **token, char *input)
 {
 	data->token = token;
 	data->token_value = NULL;
 	data->input_line = input;
-	data->env_map = env_map_head;
 	data->input_length = ft_strlen(input);
 	data->state = STATE_IDLE;
 	data->prev_state = STATE_NORMAL;
 	data->value_idx = 0;
-	data->inv_map = (char *)ft_calloc(256, sizeof(char));
-	if (!data->inv_map)
-		return (false);
-	init_inv_map(data->inv_map);
 	return (true);
 }
 
@@ -77,16 +53,15 @@ static bool	split_line(char *input_line, t_lexer_data *data)
 	return (last_state(data));
 }
 
-bool	lexer(t_token **token, char *input_line, t_map *env_map)
+bool	lexer(t_token **token, char *input_line)
 {
 	t_lexer_data	data;
 	bool			check_lexer;
 
-	if (!init_state_data(&data, token, input_line, env_map))
+	if (!init_state_data(&data, token, input_line))
 		return (false);
 	check_lexer = split_line(input_line, &data);
 	if (!check_lexer)
-		free_token(token);
-	free(data.inv_map);
+		free_token(*token);
 	return (check_lexer);
 }

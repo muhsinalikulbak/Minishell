@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/16 00:52:32 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/17 17:21:20 by muhsin           ###   ########.fr       */
+/*   Created: 2025/07/17 02:45:19 by muhsin            #+#    #+#             */
+/*   Updated: 2025/07/17 21:30:36 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_segment	*parser(t_token *token)
+void	write_pipefd(char *line, int pipefd[])
 {
-	t_segment	*segments;
-	int			segment_count;
+	write(pipefd[1], line, ft_strlen(line));
+	write(pipefd[1], "\n", 1);
+	free(line);
+}
 
-	if (!syntax_check(token))
-		return (NULL);
-	segment_count = get_segment_count(token);
-	segments = malloc(sizeof(t_segment) * segment_count);
-	if (!segments)
-		return (NULL);
-	if (!create_segment(token, segments, segment_count))
-		return (NULL);
-	if (!heredoc_init(segments))
-		return (NULL);
-	return (segments);
+bool	heredoc_finishing(char *line, int pipefd[], int *fd)
+{
+	free(line);
+	close(pipefd[1]);
+	*fd = pipefd[0];
+	return (true);
+}
+bool	check_no_expand_for_heredoc(char *line, int i)
+{
+	if (line[i + 1] != '_' && (!ft_isalnum(line[i + 1]) || !line[i + 1]))
+		return (false);
+	return (true);
 }

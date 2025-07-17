@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 03:29:12 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/13 15:14:29 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/17 03:16:56 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static t_redir	*create_redir(t_token *token)
 	i = 0;
 	while (token != NULL && token->type != TOKEN_PIPE)
 	{
-		if (token->type >= 2 && token->type <= 5)
+		if (token->type != TOKEN_WORD) // PIPE VE WORD DEĞİLSE REDİRECTİONDUR
 		{
 			if (!set_redir(token, redir, redir_count, i))
 				return (NULL);
@@ -68,12 +68,9 @@ static char **set_args(t_token *token, int cmd_count)
 		{
 			args[++i] = ft_strdup(token->value);
 			if (!args[i])
-			{
-				free_all(args);
-				return (NULL);
-			}
+				return (free_all(args));
 		}
-		else if (token->type >= 2 && token->type <= 5)
+		else // PIPE VE WORD DEĞİLSE REDİRECTİONDUR
 			token = token->next;
 		token = token->next;
 	}
@@ -106,20 +103,14 @@ bool    create_segment(t_token *token, t_segment *segments, int segment_count)
 	while (++i < segment_count)
 	{
 		if (!create_args(token, &segments[i]))
-		{
-			free_segment(segments, i);
-			return (false);
-		}
+			return (free_segment(segments, i));
 		if (redir_count_in_segment(token) == 0)
 			segments[i].redirections = NULL;
 		else
 		{
 			segments[i].redirections = create_redir(token);
 			if (!segments[i].redirections)
-			{
-				free_segment(segments, i + 1);
-				return (false);
-			}
+				return (free_segment(segments, i + 1));
 		}
 		segments[i].segment_count = segment_count;
 		token = next_pipe(token);
