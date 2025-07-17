@@ -6,19 +6,17 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:52:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/14 23:30:00 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/17 17:36:48 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	init_state_data(t_lexer_data *data, t_token **token,
-		char *input, t_map *env_map_head)
+static bool	init_state_data(t_lexer_data *data, t_token **token, char *input)
 {
 	data->token = token;
 	data->token_value = NULL;
 	data->input_line = input;
-	data->env_map = env_map_head;
 	data->input_length = ft_strlen(input);
 	data->state = STATE_IDLE;
 	data->prev_state = STATE_NORMAL;
@@ -55,12 +53,12 @@ static bool	split_line(char *input_line, t_lexer_data *data)
 	return (last_state(data));
 }
 
-bool	lexer(t_token **token, char *input_line, t_map *env_map)
+bool	lexer(t_token **token, char *input_line)
 {
 	t_lexer_data	data;
 	bool			check_lexer;
 
-	if (!init_state_data(&data, token, input_line, env_map))
+	if (!init_state_data(&data, token, input_line))
 		return (false);
 	check_lexer = split_line(input_line, &data);
 	if (!check_lexer)

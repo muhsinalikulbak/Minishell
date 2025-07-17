@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/17 04:59:09 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/17 17:21:26 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_segment
 }		t_segment;
 
 
-t_segment	*parser(t_token *token, t_map *map);
+t_segment	*parser(t_token *token);
 int			token_count_in_segment(t_token *token);
 int			redir_count_in_segment(t_token *token);
 int			get_segment_count(t_token *token);

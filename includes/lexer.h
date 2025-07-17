@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/14 23:29:10 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/17 17:29:18 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_lexer_data
 	t_token_state	state;
 	t_token_state	prev_state;
 	t_token			**token;
-	t_map			*env_map;
 	char			*token_value;
 	char			*input_line;
 	char			*history;
@@ -57,7 +56,7 @@ typedef struct s_lexer_data
 t_token	*get_last_token(t_token *head);
 char	*get_input(bool is_heredoc);
 int		get_token_count(t_token *token);
-bool	lexer(t_token **token, char *input_line, t_map *env_map);
+bool	lexer(t_token **token, char *input_line);
 bool	state_idle(t_lexer_data *data);
 bool	state_normal(t_lexer_data *data, char ch);
 bool	last_state(t_lexer_data *data);

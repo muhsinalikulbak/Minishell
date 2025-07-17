@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:13:32 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/17 16:34:17 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/17 17:30:12 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static bool check_no_expand_for_heredoc(char *line, int i)
 	return (true);
 }
 
-static char	*get_value_for_heredoc(char *line, char *expand_line, int i, t_map *map)
+static char	*get_value_for_heredoc(char *line, char *expand_line, int i)
 {
 	int		j;
 	char	*key;
@@ -31,7 +31,7 @@ static char	*get_value_for_heredoc(char *line, char *expand_line, int i, t_map *
 	key = ft_substr(line, i, j - i);
 	if (!key)
 		return (free(line), NULL);
-	value = try_get_value(map, key);
+	value = try_get_value(key);
 	free(key);
 	temp = expand_line;
 	expand_line = (char *)ft_calloc(ft_strlen())

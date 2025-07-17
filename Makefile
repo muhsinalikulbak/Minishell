@@ -6,7 +6,7 @@
 #    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/17 16:44:20 by muhsin           ###   ########.fr        #
+#    Updated: 2025/07/17 17:04:34 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC = main.c \
 	  builtins/map_utils.c \
 	  builtins/builtins_utils.c \
 	  builtins/export_utils.c \
+	  builtins/env_manager.c \
 	  utils/utils.c \
 	  
 SRCS = $(addprefix $(SRC_PATH), $(SRC))	
