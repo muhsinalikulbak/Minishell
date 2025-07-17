@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/16 02:41:35 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/17 04:59:09 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_segment
 }		t_segment;
 
 
-t_segment	*parser(t_token *token);
+t_segment	*parser(t_token *token, t_map *map);
 int			token_count_in_segment(t_token *token);
 int			redir_count_in_segment(t_token *token);
 int			get_segment_count(t_token *token);
@@ -41,4 +41,6 @@ t_token		*next_pipe(t_token *token);
 bool		create_segment(t_token *token, t_segment *segments, int segment_count);
 void		print_segment_list(t_segment *segments, int segment_count);
 bool		heredoc_init(t_segment *segments);
+bool		heredoc_finishing(char *line, int pipefd[], int *fd);
+void		write_pipefd(char *line, int pipefd[]);
 #endif

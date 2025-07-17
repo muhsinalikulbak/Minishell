@@ -6,7 +6,7 @@
 #    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/14 23:17:16 by muhsin           ###   ########.fr        #
+#    Updated: 2025/07/17 03:48:26 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRC = main.c \
 	  parser/segment_count.c \
 	  parser/create_segment.c \
 	  parser/heredoc.c \
+	  parser/heredoc_utils.c \
 	  signals/signal.c \
 	  executor/builtins.c \
 	  executor/map_utils.c \

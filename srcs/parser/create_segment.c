@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 03:29:12 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/14 20:22:40 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/17 03:16:56 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static t_redir	*create_redir(t_token *token)
 	i = 0;
 	while (token != NULL && token->type != TOKEN_PIPE)
 	{
-		if (token->type >= 2 && token->type <= 5)
+		if (token->type != TOKEN_WORD) // PIPE VE WORD DEĞİLSE REDİRECTİONDUR
 		{
 			if (!set_redir(token, redir, redir_count, i))
 				return (NULL);
@@ -70,7 +70,7 @@ static char **set_args(t_token *token, int cmd_count)
 			if (!args[i])
 				return (free_all(args));
 		}
-		else if (token->type >= 2 && token->type <= 5)
+		else // PIPE VE WORD DEĞİLSE REDİRECTİONDUR
 			token = token->next;
 		token = token->next;
 	}
