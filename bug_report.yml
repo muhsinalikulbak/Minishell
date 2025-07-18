@@ -1,0 +1,55 @@
+name: 🐞 Bug Report
+description: Bir hata bildir
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Teşekkürler, bir bug bildiriyorsun. Lütfen aşağıdaki formu doldur.
+  - type: input
+    id: summary
+    attributes:
+      label: Hata Özeti
+      description: Kısa ve net bir özet yaz.
+      placeholder: Örn. "malloc hatası sonrası shell çöküyor"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Hatanın Oluşma Adımları
+      description: Hatanın nasıl tekrarlandığını detaylı anlat.
+      placeholder: |
+        1. `./minishell` başlat
+        2. `cat < yok_dosya` yaz
+        3. Shell çöküyor
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Beklenen Davranış
+      description: Hata olmasaydı ne olurdu?
+      placeholder: Örn. Shell hata verip prompta dönmeliydi
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Hata Çıktısı / Log
+      description: Terminalde gördüğün çıktı (mümkünse kod bloğu olarak).
+      placeholder: |
+        ```bash
+        malloc error at ./src/utils.c:42
+        Segmentation fault (core dumped)
+        ```
+
+  - type: input
+    id: system
+    attributes:
+      label: Ortam Bilgileri
+      description: İşletim sistemi, shell, commit hash (varsa)
+      placeholder: "Ubuntu 22.04, bash, commit: 4fd3c1e"
+
