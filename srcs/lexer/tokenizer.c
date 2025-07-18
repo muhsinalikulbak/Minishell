@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/14 23:27:53 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/18 17:42:21 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ static bool	token_add_back(t_token **token, t_token_type token_type, char *value
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
 	{
-		free(value);
-		return (false);
+		ft_putendl_fd("memory allocation failed", 2);
+		return (free(value), false);
 	}
 	new_token->state = state;
 	new_token->value = value;

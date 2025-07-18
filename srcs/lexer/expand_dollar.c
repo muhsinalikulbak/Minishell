@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:17:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/17 17:42:41 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/18 17:42:09 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ static bool	get_value_for_token(t_lexer_data *data, char **value)
 		j++;
 	key = ft_substr(data->input_line, *data->i, j - *data->i);
 	if (!key)
+	{
+		ft_putendl_fd("memory allocation failed", 2);
 		return (false);
+	}
 	*value = try_get_value(key);
 	free(key);
 	*data->i = --j;
@@ -69,11 +72,15 @@ bool	expand_dollar(t_lexer_data *data)
 	temp = data->token_value;
 	data->input_length += ft_strlen(value);
 	data->token_value = (char *)ft_calloc(data->input_length + 1, sizeof(char));
+	if (!data->token_value)
+	{
+		ft_putendl_fd("memory allocation failed", 2);
+		return (free(temp), false);
+	}
 	ft_memmove(data->token_value, temp, ft_strlen(temp));
 	data->value_idx = ft_strlen(temp);
 	j = -1;
 	while (value[++j])
 		data->token_value[data->value_idx++] = value[j];
-	free(temp);
-	return (true);
+	return (free(temp), true);
 }
