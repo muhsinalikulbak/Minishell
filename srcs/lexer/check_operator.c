@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/09 02:29:08 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/18 17:41:58 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ static bool	tokenize_operator(t_lexer_data *data, char *operator)
 		return (false);
 	data->token_value = ft_strdup(operator);
 	if (data->token_value == NULL)
+	{
+		ft_putendl_fd("memory allocation failed", 2);
 		return (false);
+	}
 	data->prev_state = data->state;
 	data->state = STATE_IDLE;
 	if (!tokenizer(data, data->token))

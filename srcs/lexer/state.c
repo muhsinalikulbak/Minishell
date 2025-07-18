@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/09 02:16:36 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/18 17:41:47 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ bool	state_idle(t_lexer_data *data)
 	{
 		data->token_value = (char *)ft_calloc(len + 1, sizeof(char));
 		if (data->token_value == NULL)
+		{
+			ft_putendl_fd("memory allocation failed", 2);
 			return (false);
+		}
 		data->value_idx = 0;
 	}
 	past_space(data);
