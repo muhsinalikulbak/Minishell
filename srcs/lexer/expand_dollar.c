@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:17:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/18 17:42:09 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/18 21:34:37 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ static bool	get_value_for_token(t_lexer_data *data, char **value)
 
 	line = data->input_line;
 	j = ++(*data->i);
+	if (ft_isdigit(line[j]))
+	{
+		*value = "";
+		return (true);
+	}
 	while (line[j] && (ft_isalnum(line[j]) || line[j] == '_'))
 		j++;
 	key = ft_substr(data->input_line, *data->i, j - *data->i);

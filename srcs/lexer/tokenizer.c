@@ -6,14 +6,14 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/18 17:42:21 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/18 18:04:07 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_token	*get_last_token(t_token *token)
-{	
+{
 	if (token == NULL)
 		return (NULL);
 	while (token->next != NULL)
@@ -34,9 +34,9 @@ int	get_token_count(t_token *token)
 	return (count);
 }
 
-void free_token(t_token *token)
+void	free_token(t_token *token)
 {
-	t_token *next;
+	t_token	*next;
 
 	if (get_token_count(token) == 0 || !token)
 		return ;
@@ -50,9 +50,10 @@ void free_token(t_token *token)
 	}
 }
 
-static bool	token_add_back(t_token **token, t_token_type token_type, char *value, t_token_state state)
+static bool	token_add_back(t_token **token, t_token_type token_type,
+		char *value, t_token_state state)
 {
-	t_token *new_token;
+	t_token	*new_token;
 	t_token	*last;
 
 	new_token = malloc(sizeof(t_token));
@@ -85,7 +86,8 @@ bool	tokenizer(t_lexer_data *data, t_token **token)
 	prev_state = data->prev_state;
 	if (prev_state == STATE_IN_DQUOTE || prev_state == STATE_IN_SQUOTE)
 	{
-		return (token_add_back(token, TOKEN_WORD, data->token_value, data->prev_state));
+		return (token_add_back(token, TOKEN_WORD,
+				data->token_value, data->prev_state));
 	}
 	else if (str_equal(data->token_value, "|"))
 		token_type = TOKEN_PIPE;
@@ -99,7 +101,8 @@ bool	tokenizer(t_lexer_data *data, t_token **token)
 		token_type = TOKEN_APPEND;
 	else
 		token_type = TOKEN_WORD;
-	return (token_add_back(token, token_type, data->token_value, data->prev_state));
+	return (token_add_back(token, token_type, data->token_value,
+			data->prev_state));
 }
 
 // Bu en son silinecek

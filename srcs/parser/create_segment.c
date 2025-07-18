@@ -6,13 +6,13 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 03:29:12 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/18 17:36:58 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/18 18:05:37 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool set_redir(t_token *token, t_redir *redir, int redir_count, int i)
+static bool	set_redir(t_token *token, t_redir *redir, int redir_count, int i)
 {
 	redir[i].heredoc_fd = -1;
 	redir[i].type = token->type;
@@ -53,7 +53,7 @@ static t_redir	*create_redir(t_token *token)
 	return (redir);
 }
 
-static char **set_args(t_token *token, int cmd_count)
+static char	**set_args(t_token *token, int cmd_count)
 {
 	char	**args;
 	int		i;
@@ -95,7 +95,7 @@ static bool	create_args(t_token *token, t_segment *segment)
 	return (true);
 }
 
-bool    create_segment(t_token *token, t_segment *segments, int segment_count)
+bool	create_segment(t_token *token, t_segment *segments, int segment_count)
 {
 	int	i;
 

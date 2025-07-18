@@ -6,7 +6,7 @@
 #    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/17 23:56:12 by muhsin           ###   ########.fr        #
+#    Updated: 2025/07/18 18:30:23 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,10 +37,9 @@ SRC = main.c \
 	  lexer/input.c \
 	  lexer/expand_dollar.c \
 	  parser/parser.c \
-	  parser/parser_utils.c \
 	  parser/syntax_check.c \
 	  parser/free_segment.c \
-	  parser/segment_count.c \
+	  parser/segment_utils.c \
 	  parser/create_segment.c \
 	  parser/heredoc.c \
 	  parser/heredoc_utils.c \

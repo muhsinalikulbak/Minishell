@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 02:45:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/17 21:30:36 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/18 18:07:39 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ bool	heredoc_finishing(char *line, int pipefd[], int *fd)
 	*fd = pipefd[0];
 	return (true);
 }
+
 bool	check_no_expand_for_heredoc(char *line, int i)
 {
 	if (line[i + 1] != '_' && (!ft_isalnum(line[i + 1]) || !line[i + 1]))

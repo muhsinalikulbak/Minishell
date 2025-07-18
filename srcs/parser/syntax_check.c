@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 04:08:38 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/12 03:57:18 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/18 17:58:56 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	check_redir_file(t_token *token, char **next_value)
 
 	last = get_last_token(token);
 	if (last->type >= 2 && last->type <= 5)
-		return (false); // Buradaki durumda unexpected token newline olacak.
+		return (false); // Buradaki durumda unexpected token newline olacak. SADECE BU KISMI FONKSİYONA ALABİLİRİM
 	while (token != NULL && token->next != NULL)
 	{
 		*next_value = token->next->value;
