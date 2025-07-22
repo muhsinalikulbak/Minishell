@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/17 23:55:21 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/22 19:40:49 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_redir
 	t_token_state	state;		 // Burada filename'in state'i tutulacak. Örneğin "merhaba" ise DQ word olarak sayılacak.
 	t_token_type	type;        // REDIR_IN, REDIR_OUT, etc.
 	int				redir_count;
+	bool			is_ambiguous;
 }		t_redir;
 
 typedef struct s_segment
@@ -27,6 +28,8 @@ typedef struct s_segment
 	char            **args;         // ["ls", "-la", NULL]
 	t_redir         *redirections;  // array of redirections
 	int				segment_count;
+	char			*cmd_path;
+	bool			is_builtin;
 }		t_segment;
 
 
