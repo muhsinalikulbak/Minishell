@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 02:22:33 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/18 18:30:18 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/18 21:58:48 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	redir_count_in_segment(t_token *token)
 	count = 0;
 	while (token != NULL && token->type != TOKEN_PIPE)
 	{
-		if (token->type >= 2 && token->type <= 5)
+		if (token->type >= TOKEN_REDIR_IN && token->type <= TOKEN_HEREDOC)
 			count++;
 		token = token->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 03:29:12 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/18 18:05:37 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/18 21:57:16 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static t_redir	*create_redir(t_token *token)
 		{
 			if (!set_redir(token, redir, redir_count, i))
 				return (NULL);
-			token = token->next;
 			i++;
 		}
 		token = token->next;

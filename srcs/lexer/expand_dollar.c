@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:17:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/18 21:34:37 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/22 14:29:02 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ static bool	get_value_for_token(t_lexer_data *data, char **value)
 		return (false);
 	}
 	*value = try_get_value(key);
-	free(key);
+	if (*value == NULL)
+		data->is_ambiguous = true;
 	*data->i = --j;
-	return (true);
+	return (free(key), true);
 }
 
 bool	expand_dollar(t_lexer_data *data)
