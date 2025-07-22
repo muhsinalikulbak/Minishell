@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:52:32 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/22 22:38:57 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/23 01:52:35 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ t_segment	*parser(t_token *token)
 	segments = segment(token);
 	if (!segments)
 		return (NULL);
-	
+	if (!find_cmd(segments))
+	{
+		free_segment(segments, segments->segment_count);
+		return (NULL);
+	}
 	return (segments);
 }

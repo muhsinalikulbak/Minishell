@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/23 00:41:24 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/23 01:51:05 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,5 @@ void		write_pipefd(char *line, int pipefd[]);
 bool		heredoc_init(t_segment *segments);
 bool		heredoc_finishing(char *line, int pipefd[], int *fd);
 void		print_heredoc_data(t_segment *segments);
+bool		find_cmd(t_segment *segments);
 #endif

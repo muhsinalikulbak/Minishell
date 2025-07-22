@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:39:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/23 01:45:25 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/23 01:55:33 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static char	*path_access_control(char **full_path, char *slash_cmd)
 static char	*find_path(char *cmd, char *env_path)
 {
 	char	**full_path;
-	char	*env_path;
 	char	*slash_cmd;
 
 	if (access(cmd, F_OK) == 0)
@@ -79,7 +78,7 @@ bool	path_is_available(t_segment *segment)
 	if (!try_get_value("PATH"))
 	{
 		if (access(segment->args[0], F_OK) == 0)
-			segment->cmd_path = ft_strdup(segment->args[0]);
+			segment->cmd_path = ft_strdup(segment->args[0]); // Burada kontrol sıkıntısı var
 		segment->is_unset_env_path = false;
 		return (false);
 	}
@@ -107,8 +106,10 @@ bool	find_cmd(t_segment *segments)
 				path = find_path(segments[i].args[0], try_get_value("PATH"));
 				if (!path)
 					return (false);
+				segments[i].cmd_path = path;
 			}
 		}
 		i++;
 	}
+	return (true);
 }
