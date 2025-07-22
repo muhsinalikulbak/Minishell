@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/22 19:40:49 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/23 00:41:24 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_segment
 	int				segment_count;
 	char			*cmd_path;
 	bool			is_builtin;
+	bool			is_unset_env_path;
 }		t_segment;
 
 

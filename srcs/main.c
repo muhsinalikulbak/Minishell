@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/17 23:11:29 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/22 21:43:42 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,19 @@ int	main(int argc, char **argv, char **env)
 			if (lexer(&token, line)) // Lexerda syntax alırsa kendi içinde free_token yapıyor.
 			{
 				print_token_list(token);
-                segments = parser(token);
-                if (segments)
-                {
-                    print_segment_list(segments, segments->segment_count);
-                    print_heredoc_data(segments);
-                    // pipe_lines NULL değilse executa'a gidicek.
-					free_segment(segments, segments->segment_count);
-                }
-				free_token(token);
+				if (syntax_check(token))
+				{
+					segments = parser(token);
+					if (segments)
+					{
+						print_segment_list(segments, segments->segment_count);
+						print_heredoc_data(segments);
+						// pipe_lines NULL değilse executa'a gidicek.
+						free_segment(segments, segments->segment_count);
+					}
+				}
+				else
+					free_token(token);
 			}
 			free(line);
 		}

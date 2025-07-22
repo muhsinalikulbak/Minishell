@@ -54,7 +54,7 @@ void export(t_map **env_map_head, char *var, char *key, bool is_set)
         print_export(env_map_head, size);
 }
 
-void ft_unset(t_map **env_map_head, char *key)
+void unset(t_map **env_map_head, char *key)
 {
     t_map *current;
     t_map *prev;
@@ -82,7 +82,7 @@ void ft_unset(t_map **env_map_head, char *key)
     }
     printf("bash: unset: %s: not found\n", key);
 }
-void ft_env(t_map *map)
+void env(t_map *map)
 {
     print_map(map); 
 }
