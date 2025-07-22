@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/18 18:04:07 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/22 14:23:50 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ void	free_token(t_token *token)
 	}
 }
 
-static bool	token_add_back(t_token **token, t_token_type token_type,
-		char *value, t_token_state state)
+static bool	token_add_back(t_lexer_data *data, t_token_type token_type)
 {
 	t_token	*new_token;
 	t_token	*last;
@@ -60,16 +59,17 @@ static bool	token_add_back(t_token **token, t_token_type token_type,
 	if (!new_token)
 	{
 		ft_putendl_fd("memory allocation failed", 2);
-		return (free(value), false);
+		return (free(data->token_value), false);
 	}
-	new_token->state = state;
-	new_token->value = value;
+	new_token->state = data->prev_state;
+	new_token->value = data->token_value;
 	new_token->type = token_type;
+	new_token->is_ambiguous = data->is_ambiguous;
 	new_token->next = NULL;
 	new_token->prev = NULL;
-	last = get_last_token(*token);
+	last = get_last_token(*data->token);
 	if (last == NULL)
-		*token = new_token;
+		*data->token = new_token;
 	else
 	{
 		last->next = new_token;
@@ -78,7 +78,7 @@ static bool	token_add_back(t_token **token, t_token_type token_type,
 	return (true);
 }
 
-bool	tokenizer(t_lexer_data *data, t_token **token)
+bool	tokenizer(t_lexer_data *data)
 {
 	t_token_type	token_type;
 	t_token_state	prev_state;
@@ -86,8 +86,7 @@ bool	tokenizer(t_lexer_data *data, t_token **token)
 	prev_state = data->prev_state;
 	if (prev_state == STATE_IN_DQUOTE || prev_state == STATE_IN_SQUOTE)
 	{
-		return (token_add_back(token, TOKEN_WORD,
-				data->token_value, data->prev_state));
+		return (token_add_back(data, TOKEN_WORD));
 	}
 	else if (str_equal(data->token_value, "|"))
 		token_type = TOKEN_PIPE;
@@ -101,8 +100,7 @@ bool	tokenizer(t_lexer_data *data, t_token **token)
 		token_type = TOKEN_APPEND;
 	else
 		token_type = TOKEN_WORD;
-	return (token_add_back(token, token_type, data->token_value,
-			data->prev_state));
+	return (token_add_back(data, token_type));
 }
 
 // Bu en son silinecek

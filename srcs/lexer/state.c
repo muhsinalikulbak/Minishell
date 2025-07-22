@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/18 17:41:47 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/22 15:04:50 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ bool	state_idle(t_lexer_data *data)
 
 	len = data->input_length;
 	data->state = STATE_NORMAL;
+	data->is_ambiguous = false;
 	if (data->token_value == NULL)
 	{
 		data->token_value = (char *)ft_calloc(len + 1, sizeof(char));
@@ -38,7 +39,7 @@ bool	state_normal(t_lexer_data *data, char ch)
 	if (ch == ' ' || (ch >= 9 && ch <= 13))
 	{
 		data->token_value[data->value_idx] = '\0';
-		if (!tokenizer(data, data->token))
+		if (!tokenizer(data))
 			return (false);
 		data->token_value = NULL;
 		data->prev_state = STATE_NORMAL;
@@ -94,7 +95,7 @@ bool	last_state(t_lexer_data *data)
 		if (data->state == STATE_NORMAL)
 		{
 			data->token_value[data->value_idx] = '\0';
-			return (tokenizer(data, data->token));
+			return (tokenizer(data));
 		}
 		else
 		{
@@ -106,6 +107,11 @@ bool	last_state(t_lexer_data *data)
 			return (false);
 		}
 	}
+	// Eğer en son pipe token yapıldıysa token_value = NULL oluyor
+	// O yüzden aşağıda token sayısını kontrol ediyorum.
+	// Token 0 değilse sorun yok true döner.
+	// Token 0 ise prompt girilmiş ama token oluşturulamamıştır.
+
 	if (get_token_count(*data->token) == 0)
 		return (false);
 	return (true);
