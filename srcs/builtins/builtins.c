@@ -6,51 +6,13 @@
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 16:46:23 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/23 17:40:24 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/23 19:39:34 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	write_echo(char **args, int i, bool is_newline, int fd)
-{
-	while (args[i])
-	{
-		if (is_newline)
-			ft_putendl_fd(args[i], fd);
-		else
-			ft_putstr_fd(args[i], fd);
-		i++;
-	}
-}
-
-void echo(char **args, int fd)
-{
-	bool	is_newline;
-	int		i;
-	int		j;
-
-	i = 1;
-	is_newline = true;
-	while (args[i])
-	{
-		j = 0;
-		if (args[i][j] == '-' && ft_strlen(args[i]) > 1)
-		{
-			j++;
-			while (args[i][j] && args[i][j] == 'n')
-				j++;
-		}
-		if (!args[i][j])
-			is_newline = false;
-		else
-			break ;
-		i++;
-	}
-	write_echo(args, i, is_key_exist, fd);
-}
-
-void cd(char *path, t_map **env_map_head)
+void	cd(char *path, t_map **env_map_head)
 {    
 	char *pwd;
 	char *old_pwd;
@@ -61,6 +23,7 @@ void cd(char *path, t_map **env_map_head)
 		return;
 	}
 	old_pwd = getcwd(NULL, 0);
+	// Eğer PWD ya da OLDPWD unset edildiyse herhangi bir güncelleme yapılmayacak.
 	export(env_map_head, old_pwd, "OLDPWD", true);
 	if (chdir(path) == -1)
 	{
