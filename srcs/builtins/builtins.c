@@ -1,92 +1,141 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/23 16:46:23 by mkulbak           #+#    #+#             */
+/*   Updated: 2025/07/23 17:40:24 by mkulbak          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void echo(char *str)
+void	write_echo(char **args, int i, bool is_newline, int fd)
 {
-    ft_putendl_fd(str, 0);
+	while (args[i])
+	{
+		if (is_newline)
+			ft_putendl_fd(args[i], fd);
+		else
+			ft_putstr_fd(args[i], fd);
+		i++;
+	}
+}
+
+void echo(char **args, int fd)
+{
+	bool	is_newline;
+	int		i;
+	int		j;
+
+	i = 1;
+	is_newline = true;
+	while (args[i])
+	{
+		j = 0;
+		if (args[i][j] == '-' && ft_strlen(args[i]) > 1)
+		{
+			j++;
+			while (args[i][j] && args[i][j] == 'n')
+				j++;
+		}
+		if (!args[i][j])
+			is_newline = false;
+		else
+			break ;
+		i++;
+	}
+	write_echo(args, i, is_key_exist, fd);
 }
 
 void cd(char *path, t_map **env_map_head)
 {    
-    char *pwd;
-    char *old_pwd;
-    
-    if (!path)
-    {
-        printf("bash: cd: missing argument\n");
-        return;
-    }
-    old_pwd = getcwd(NULL, 0);
-    export(env_map_head, old_pwd, "OLDPWD", true);
-    if (chdir(path) == -1)
-    {
-        perror("bash: cd");
-        return;
-    }
-    pwd = getcwd(NULL, 0);
-    export(env_map_head, pwd, "PWD", true);
-    if (pwd)
-    {
-        printf("current dir: %s\n", pwd);
-        free(pwd);
-    }
-    else
-        perror("bash: getcwd");
+	char *pwd;
+	char *old_pwd;
+
+	if (!path)
+	{
+		printf("bash: cd: missing argument\n");
+		return;
+	}
+	old_pwd = getcwd(NULL, 0);
+	export(env_map_head, old_pwd, "OLDPWD", true);
+	if (chdir(path) == -1)
+	{
+		perror("bash: cd");
+		return;
+	}
+	pwd = getcwd(NULL, 0);
+	export(env_map_head, pwd, "PWD", true);
+	if (pwd)
+	{
+		printf("current dir: %s\n", pwd);
+		free(pwd);
+	}
+	else
+		perror("bash: getcwd");
 }
+
 void pwd(char *pwd)
 {
-    pwd = getcwd(NULL, 0);
-    printf("pwd: %s\n",pwd);
-    free(pwd);
+	pwd = getcwd(NULL, 0);
+	printf("%s\n",pwd);
+	free(pwd);
 }
 
+// export args'yi alıcak, çünkü birden fazla değişken eklenebilir ya da değişkenle birlikte değerleri de eklenebilir >>>> "export a b  c=3 e f=4 gibi"
 void export(t_map **env_map_head, char *var, char *key, bool is_set)
 {
-    int size;
+	int size;
 
-    if (!env_map_head || !*env_map_head)
-        return;
+	if (!env_map_head || !*env_map_head)
+		return;
 
-    size = ft_mapsize(*env_map_head);
+	size = ft_mapsize(*env_map_head);
 
-    if(is_set)
-        set_var(env_map_head, key, var);
-    else
-        print_export(env_map_head, size);
+	if(is_set)
+		set_var(env_map_head, key, var);
+	else
+		print_export(env_map_head, size);
 }
 
 void unset(t_map **env_map_head, char *key)
 {
-    t_map *current;
-    t_map *prev;
+	t_map *current;
+	t_map *prev;
 
-    if (!env_map_head || !*env_map_head || !key)
-        return;
+	if (!env_map_head || !*env_map_head || !key)
+		return;
 
-    current = *env_map_head;
-    prev = NULL;
+	current = *env_map_head;
+	prev = NULL;
 
-    while (current)
-    {
-        if (ft_strcmp(current->key, key) == 0)
-        {
-            if (prev)
-                prev->next = current->next;
-            else
-                *env_map_head = current->next;
-            free_map_node(current);
-            printf("bash: unset: %s: successfully removed\n", key);
-            return;
-        }
-        prev = current;
-        current = current->next;
-    }
-    printf("bash: unset: %s: not found\n", key);
+	while (current)
+	{
+		if (ft_strcmp(current->key, key) == 0)
+		{
+			if (prev)
+				prev->next = current->next;
+			else
+				*env_map_head = current->next;
+			free_map_node(current);
+			printf("bash: unset: %s: successfully removed\n", key);
+			return;
+		}
+		prev = current;
+		current = current->next;
+	}
+	printf("bash: unset: %s: not found\n", key);
 }
-void env(t_map *map)
+
+void env()
 {
-    print_map(map); 
+	print_map(get_env_map(NULL)); 
 }
-void ft_exit()
+
+void ft_exit(char **args)
 {
-    exit(get_exit_code());
+	exit(get_exit_code());
 }

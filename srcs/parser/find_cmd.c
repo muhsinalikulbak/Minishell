@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:39:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/23 01:55:33 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/23 16:04:47 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,20 +72,6 @@ static char	*find_path(char *cmd, char *env_path)
 	return (path_access_control(full_path, slash_cmd));
 }
 
-// BUNA gerek olmayabilir. Direk ENV_PATH Olmadığı için cmd_path'i null yapıp command not found yollayabilirim.
-bool	path_is_available(t_segment *segment)
-{
-	if (!try_get_value("PATH"))
-	{
-		if (access(segment->args[0], F_OK) == 0)
-			segment->cmd_path = ft_strdup(segment->args[0]); // Burada kontrol sıkıntısı var
-		segment->is_unset_env_path = false;
-		return (false);
-	}
-	return (true);
-}
-
-
 // Builtin true ise builtindir
 // Builtin değilse ve cmd_path NULL ise ama env_path varsa command not found
 // Builtin değilse ve cmd_path NULL ise ve env_paty yok ise (yani false) No such file or directory
@@ -101,7 +87,7 @@ bool	find_cmd(t_segment *segments)
 		{
 			if (find_builtin(segments[i].args[0]))
 				segments[i].is_builtin = true;
-			else if (path_is_available(&segments[i]))
+			else if (try_get_value("PATH"))
 			{
 				path = find_path(segments[i].args[0], try_get_value("PATH"));
 				if (!path)
