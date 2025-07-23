@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:17 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/02 21:52:02 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/23 18:26:19 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 #include "env_manager.h"
 
-
-void echo(char *str);
-void cd(char *path, t_map **env_map_head);
-void pwd(char *pwd);
-void export(t_map **env_map_head, char *var, char *key, bool is_set);
-void ft_unset(t_map **env_map_head, char *key);
-void ft_env(t_map *map);
-void ft_exit();
+void	write_echo(char **args, int i, bool is_newline, int fd);
+void	echo(char **args, int fd);
+void	cd(char *path, t_map **env_map_head);
+void	pwd(char *pwd);
+void	export(t_map **env_map_head, char *var, char *key, bool is_set);
+void	unset(t_map **env_map_head, char *key);
+void	env(void);
+void    ft_exit(char **args);
 
 void set_var(t_map **env_map_head, char *key, char *var);
 void print_export(t_map **env_map_head, int size);

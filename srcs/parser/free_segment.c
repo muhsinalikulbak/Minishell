@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 02:23:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/18 18:06:27 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/22 21:30:18 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ bool	free_segment(t_segment *segment, int end)
 		if (segment[i].redirections)
 			free_redir(segment[i].redirections,
 				segment[i].redirections->redir_count);
+		if (segment[i].cmd_path)
+				free(segment[i].cmd_path);
 		i++;
 	}
 	free(segment);

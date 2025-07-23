@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/17 23:55:21 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/23 16:04:56 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_redir
 	t_token_state	state;		 // Burada filename'in state'i tutulacak. Örneğin "merhaba" ise DQ word olarak sayılacak.
 	t_token_type	type;        // REDIR_IN, REDIR_OUT, etc.
 	int				redir_count;
+	bool			is_ambiguous;
 }		t_redir;
 
 typedef struct s_segment
@@ -27,6 +28,8 @@ typedef struct s_segment
 	char            **args;         // ["ls", "-la", NULL]
 	t_redir         *redirections;  // array of redirections
 	int				segment_count;
+	char			*cmd_path;
+	bool			is_builtin;
 }		t_segment;
 
 
@@ -45,4 +48,5 @@ void		write_pipefd(char *line, int pipefd[]);
 bool		heredoc_init(t_segment *segments);
 bool		heredoc_finishing(char *line, int pipefd[], int *fd);
 void		print_heredoc_data(t_segment *segments);
+bool		find_cmd(t_segment *segments);
 #endif

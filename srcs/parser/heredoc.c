@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:13:32 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/22 15:08:57 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/23 16:31:40 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static bool	heredoc(char *delimiter, int *fd, bool is_it_expandable)
 	line = get_input(true);
 	if (!line)
 		return (close_pipefd(pipefd));
-	while (!str_equal(delimiter, line))
+	while (!str_equal(delimiter, line)) // Buradaki loop true olacak, delimiter kontrolü loop içinde yapılıcak.
 	{
 		if (is_it_expandable && ft_strchr(line, '$'))
 		{
@@ -123,6 +123,9 @@ bool	heredoc_init(t_segment *segments)
 	}
 	return (true);
 }
+
+
+
 
 
 
