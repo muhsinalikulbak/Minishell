@@ -45,7 +45,13 @@ SRC = main.c \
 	  parser/heredoc_utils.c \
 	  parser/find_cmd.c \
 	  signals/signal.c \
-	  builtins/builtins.c \
+	  builtins/echo.c \
+	  builtins/cd.c \
+	  builtins/pwd.c \
+	  builtins/export.c \
+	  builtins/unset.c \
+	  builtins/env.c \
+	  builtins/exit.c \
 	  builtins/map_utils.c \
 	  builtins/builtins_utils.c \
 	  builtins/export_utils.c \

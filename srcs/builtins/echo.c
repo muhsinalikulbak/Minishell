@@ -58,5 +58,5 @@ void echo(char **args, int fd)
 			break ;
 		i++;
 	}
-	write_echo(args, i, is_key_exist, fd);
+	write_echo(args, i, is_newline, fd);
 }

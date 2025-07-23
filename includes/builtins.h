@@ -22,9 +22,11 @@ void	pwd(char *pwd);
 void	export(t_map **env_map_head, char *var, char *key, bool is_set);
 void	unset(t_map **env_map_head, char *key);
 void	env(void);
-void    ft_exit(char **args);
+void	ft_exit(char **args);
 
-void set_var(t_map **env_map_head, char *key, char *var);
+// Export utils functions
+bool validate_key(char *key);
+void add_new_var(t_map **env_map_head, char *key, char *var);
 void print_export(t_map **env_map_head, int size);
 int	ft_strcmp(char *s1, char *s2);
 void free_map_node(t_map *node);
