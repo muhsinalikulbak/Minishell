@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 03:29:12 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/18 21:57:16 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/24 01:18:01 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static bool	set_redir(t_token *token, t_redir *redir, int redir_count, int i)
 		free_redir(redir, i);
 		return (false);
 	}
+	redir[i].is_ambiguous = token->is_ambiguous;
 	redir[i].state = token->state;
 	return (true);
 }
@@ -84,6 +85,8 @@ static bool	create_args(t_token *token, t_segment *segment)
 
 	redir_count = redir_count_in_segment(token);
 	cmd_count = token_count_in_segment(token) - (redir_count * 2);
+	segment->is_builtin = false;
+	segment->cmd_path = NULL;
 	segment->args = NULL;
 	if (cmd_count > 0)
 	{
@@ -116,6 +119,14 @@ bool	create_segment(t_token *token, t_segment *segments, int segment_count)
 	}
 	return (true);
 }
+
+
+
+
+
+
+
+
 
 // Bu en son silinecek - test için
 void print_segment_list(t_segment *segments, int segment_count)
