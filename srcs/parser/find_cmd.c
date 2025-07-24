@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:39:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/23 16:04:47 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/24 01:30:31 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,6 @@ static char	*find_path(char *cmd, char *env_path)
 	return (path_access_control(full_path, slash_cmd));
 }
 
-// Builtin true ise builtindir
-// Builtin değilse ve cmd_path NULL ise ama env_path varsa command not found
-// Builtin değilse ve cmd_path NULL ise ve env_paty yok ise (yani false) No such file or directory
 bool	find_cmd(t_segment *segments)
 {
 	int		i;

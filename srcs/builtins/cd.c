@@ -6,13 +6,13 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/24 01:20:00 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/24 01:39:45 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cd(char *path, t_map **env_map_head)
+void    cd(char **args, t_map **env_map_head)
 {    
 	char *pwd;
 	char *old_pwd;

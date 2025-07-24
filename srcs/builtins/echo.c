@@ -3,36 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:27:55 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/23 19:43:41 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/24 01:38:30 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	write_echo(char **args, int i, bool is_newline, int fd)
+static void	write_args(char **args, int i, bool is_newline, int fd)
 {
 	while (args[i])
 	{
-		if (is_newline)
-		{
-			if (str_equal(args[i], "$?"))
-				ft_putnbr_fd(get_exit_code(), fd);
-			else
-				ft_putstr_fd(args[i], fd);
-			write(fd, "\n", 1);
-		}
+		if (str_equal(args[i], "$?"))
+			ft_putnbr_fd(get_exit_code(), fd);
 		else
-		{
-			if (str_equal(args[i], "$?"))
-				ft_putnbr_fd(get_exit_code(), fd);
-			else
-				ft_putstr_fd(args[i], fd);
-		}
+			ft_putstr_fd(args[i], fd);
+		if (args[i + 1])
+			ft_putstr_fd(" ", fd);
 		i++;
 	}
+	if (is_newline)
+		write(fd, "\n", 1);
 }
 
 void echo(char **args, int fd)
@@ -58,5 +51,5 @@ void echo(char **args, int fd)
 			break ;
 		i++;
 	}
-	write_echo(args, i, is_newline, fd);
+	write_args(args, i, is_newline, fd);
 }
