@@ -6,7 +6,7 @@
 #    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/23 01:50:55 by muhsin           ###   ########.fr        #
+#    Updated: 2025/07/24 01:28:52 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,13 @@ SRC = main.c \
 	  parser/heredoc_utils.c \
 	  parser/find_cmd.c \
 	  signals/signal.c \
-	  builtins/builtins.c \
+	  builtins/echo.c \
+	  builtins/cd.c \
+	  builtins/pwd.c \
+	  builtins/export.c \
+	  builtins/unset.c \
+	  builtins/env.c \
+	  builtins/exit.c \
 	  builtins/map_utils.c \
 	  builtins/builtins_utils.c \
 	  builtins/export_utils.c \

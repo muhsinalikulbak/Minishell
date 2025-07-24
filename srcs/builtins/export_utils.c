@@ -26,28 +26,6 @@ void add_new_var(t_map **env_map_head, char *key, char *var)
     ft_map_add_back(env_map_head, tmp);
 }
 
-void set_var(t_map **env_map_head, char *key, char *var)
-{
-    if (update_existing_var(env_map_head, key, var))
-        return;
-    
-    if (!key)
-    {
-        printf("bash: %s not found\n", var);
-        set_exit_code(130);
-        return;
-    }
-    
-    if (!validate_key(key))
-    {
-        printf("bash: export: '%s': not a valid identifier\n", key);
-        set_exit_code(130);
-        return;
-    }
-    
-    add_new_var(env_map_head, key, var);
-}
-
 static t_map *find_smallest_unprinted_key(t_map **env_map_head, char **printed_keys)
 {
     t_map *ptr;

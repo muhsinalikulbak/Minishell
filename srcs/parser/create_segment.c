@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 03:29:12 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/23 00:43:48 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/24 01:18:01 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ static bool	create_args(t_token *token, t_segment *segment)
 	segment->is_builtin = false;
 	segment->cmd_path = NULL;
 	segment->args = NULL;
-	segment->is_unset_env_path = true;
 	if (cmd_count > 0)
 	{
 		segment->args = set_args(token, cmd_count);
