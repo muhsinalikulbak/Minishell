@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:27:55 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/24 01:38:30 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/24 22:08:48 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	write_args(char **args, int i, bool is_newline, int fd)
 		write(fd, "\n", 1);
 }
 
-void echo(char **args, int fd)
+void echo(char **args, int fd, bool is_child)
 {
 	bool	is_newline;
 	int		i;
@@ -36,6 +36,7 @@ void echo(char **args, int fd)
 
 	i = 1;
 	is_newline = true;
+	(void)is_child;
 	while (args[i])
 	{
 		j = 0;

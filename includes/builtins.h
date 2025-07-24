@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:17 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/24 01:32:16 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/24 22:09:45 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 #include "env_manager.h"
 
-void	echo(char **args, int fd);
-void	cd(char *path, t_map **env_map_head);
-void	pwd(char *pwd);
-void	export(t_map **env_map_head, char *var, char *key, bool is_set);
-void	unset(t_map **env_map_head, char *key);
-void	env(void);
+void	echo(char **args, int fd, bool is_child);
+void	cd(char **args, t_map **env_map_head, bool is_child);
+void	pwd(char *pwd, bool is_child);
+void	export(t_map **env_map_head, char *var, char *key, bool is_set, bool is_child);
+void	unset(t_map **env_map_head, char *key, bool is_child);
+void	env(bool is_child);
 void	ft_exit(char **args);
 
 // Export utils functions

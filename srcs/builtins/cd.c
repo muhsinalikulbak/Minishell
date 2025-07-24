@@ -3,35 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/24 01:39:45 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/24 21:18:09 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    cd(char **args, t_map **env_map_head)
-{    
+static bool	cd_control(char **args)
+{
+	if (!args[1])
+	{
+		ft_putendl_fd("bash: cd: missing argument\n", 2);
+		return (false);
+	}
+	else if (args[2])
+	{
+		ft_putendl_fd("cd: too many arguments\n", 2);
+		return (false);
+	}
+	return (true);
+}
+
+void	cd(char **args, t_map **env_map_head, bool is_child)
+{   
 	char *pwd;
 	char *old_pwd;
 
-	if (!path)
-	{
-		printf("bash: cd: missing argument\n");
-		return;
-	}
+	if (!cd_control(args))
+		return ;
 	old_pwd = getcwd(NULL, 0);
 	// Eğer PWD ya da OLDPWD unset edildiyse herhangi bir güncelleme yapılmayacak.
-	export(env_map_head, old_pwd, "OLDPWD", true);
-	if (chdir(path) == -1)
+	export(env_map_head, old_pwd, "OLDPWD", true, is_child); // Burada double free durumu olabilir. Dikkat et.
+	if (chdir(args[1]) == -1)
 	{
-		perror("bash: cd");
+		perror("cd : ");
 		return;
 	}
 	pwd = getcwd(NULL, 0);
-	export(env_map_head, pwd, "PWD", true);
+	export(env_map_head, pwd, "PWD", true, is_child); // Aynı şekilde burda da
 	if (pwd)
 	{
 		printf("current dir: %s\n", pwd);

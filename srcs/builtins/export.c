@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/24 01:28:57 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/24 22:06:42 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ static void set_var(t_map **env_map_head, char *key, char *var)
 }
 
 // export args'yi alıcak, çünkü birden fazla değişken eklenebilir ya da değişkenle birlikte değerleri de eklenebilir >>>> "export a b  c=3 e f=4 gibi"
-void export(t_map **env_map_head, char *var, char *key, bool is_set)
+// export türkçe karakteri variable olarak almıyor bu kontrol de yapılacak.
+// is_child true olursa işlem bittikten sonra  ya da çıkıştan hemen önce segment ve t_map freelenecek.
+void export(t_map **env_map_head, char *var, char *key, bool is_set, bool is_child)
 {
 	int size;
 

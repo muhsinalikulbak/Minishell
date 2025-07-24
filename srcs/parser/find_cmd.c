@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:39:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/24 01:30:31 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/24 20:53:58 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static char	*find_path(char *cmd, char *env_path)
 	char	**full_path;
 	char	*slash_cmd;
 
-	if (access(cmd, F_OK) == 0)
+	if (access(cmd, F_OK) == 0) // Burada f_ok ve f_x kontrolü yaparak dosya var , yok, var ve izni yok gibi ayrımları flag ile işaretleyebilirim.
 		return (ft_strdup(cmd));
 	slash_cmd = ft_strjoin("/", cmd);
 	if (!slash_cmd)
