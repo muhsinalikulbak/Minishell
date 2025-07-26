@@ -6,13 +6,11 @@
 /*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:13:32 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/26 19:22:45 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/07/26 20:52:38 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 static void heredoc_child_signal_setup(void)
 {
@@ -40,7 +38,6 @@ static void	heredoc_restore_signals(void)
 {
 	// Restore original signal handlers after heredoc
 	// This should call your main signal_setup() function
-    g_signal_received = 0;
 	signal_setup();
 }
 
@@ -99,10 +96,14 @@ static bool	heredoc_child_process(char *delimiter, int pipefd[2], bool is_it_exp
 	close(pipefd[0]);
 
 	line = get_input(true);
+    
 	if (!line)
 	{
-		close(pipefd[1]);
-		exit(0); // EOF (Ctrl-D)
+        ft_putstr_fd("bash: warning: here-document delimited by end-of-file (wanted `", 2);
+        ft_putstr_fd(delimiter, 2);
+        ft_putendl_fd("')", 2);
+        close(pipefd[1]);
+        exit(0);
 	}
 
 	while (!str_equal(delimiter, line))
