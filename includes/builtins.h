@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:17 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/24 22:09:45 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/26 14:21:00 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 
 void	echo(char **args, int fd, bool is_child);
 void	cd(char **args, t_map **env_map_head, bool is_child);
-void	pwd(char *pwd, bool is_child);
+void	pwd(bool is_child);
 void	export(t_map **env_map_head, char *var, char *key, bool is_set, bool is_child);
 void	unset(t_map **env_map_head, char *key, bool is_child);
-void	env(bool is_child);
+void	env(char **args, bool is_child);
 void	ft_exit(char **args);
 
 // Export utils functions

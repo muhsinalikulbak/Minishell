@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/24 21:18:09 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/26 14:30:24 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ static bool	cd_control(char **args)
 	if (!args[1])
 	{
 		ft_putendl_fd("bash: cd: missing argument\n", 2);
+		set_exit_code(1);
 		return (false);
 	}
 	else if (args[2])
 	{
 		ft_putendl_fd("cd: too many arguments\n", 2);
+		set_exit_code(1);
 		return (false);
 	}
 	return (true);

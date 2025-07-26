@@ -6,7 +6,7 @@
 #    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/24 01:28:52 by muhsin           ###   ########.fr        #
+#    Updated: 2025/07/26 14:19:29 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ UNAME_S := $(shell uname -s)
 # Common variables
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS =  -g
 LDFLAGS = -lreadline -lcurses
 
 ifeq ($(UNAME_S), Darwin)

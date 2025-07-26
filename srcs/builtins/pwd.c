@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/24 20:56:21 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/26 14:19:17 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void pwd(char *pwd, bool is_child)
+void pwd(bool is_child)
 {
+	char	*pwd;
+
 	pwd = getcwd(NULL, 0);
 	printf("%s\n",pwd);
 	free(pwd);
