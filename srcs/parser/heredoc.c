@@ -3,14 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:13:32 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/23 16:31:40 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/26 19:22:45 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+
+static void heredoc_child_signal_setup(void)
+{
+    struct sigaction sa;
+    sa.sa_handler = SIG_DFL; // Default: terminate on SIGINT/SIGQUIT
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGINT, &sa, NULL);
+    sigaction(SIGQUIT, &sa, NULL);
+}
+
+static void	heredoc_parent_signal_setup(void)
+{
+	struct sigaction sa;
+	
+	// Ignore SIGINT/SIGQUIT in parent during heredoc collection
+	sa.sa_handler = SIG_IGN;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+}
+
+static void	heredoc_restore_signals(void)
+{
+	// Restore original signal handlers after heredoc
+	// This should call your main signal_setup() function
+    g_signal_received = 0;
+	signal_setup();
+}
 
 static char	*get_value_for_heredoc(char *line, int *i)
 {
@@ -56,32 +88,110 @@ static bool	heredoc_expand(char *line, int pipefd[])
 	return (true);
 }
 
-static bool	heredoc(char *delimiter, int *fd, bool is_it_expandable)
+static bool	heredoc_child_process(char *delimiter, int pipefd[2], bool is_it_expandable)
 {
-	int		pipefd[2];
 	char	*line;
 
-	if (pipe(pipefd) == -1)
-		return (false);
+	// Setup signal handlers for child process
+	heredoc_child_signal_setup();
+	
+	// Close read end in child
+	close(pipefd[0]);
+
 	line = get_input(true);
 	if (!line)
-		return (close_pipefd(pipefd));
-	while (!str_equal(delimiter, line)) // Buradaki loop true olacak, delimiter kontrolü loop içinde yapılıcak.
+	{
+		close(pipefd[1]);
+		exit(0); // EOF (Ctrl-D)
+	}
+
+	while (!str_equal(delimiter, line))
 	{
 		if (is_it_expandable && ft_strchr(line, '$'))
 		{
 			if (!heredoc_expand(line, pipefd))
-				return (close_pipefd(pipefd));
+			{
+				close(pipefd[1]);
+				exit(1);
+			}
 			write(pipefd[1], "\n", 1);
 			free(line);
 		}
 		else
 			write_pipefd(line, pipefd);
+		
 		line = get_input(true);
 		if (!line)
-			return (close_pipefd(pipefd));
+		{
+			close(pipefd[1]);
+			exit(0); // EOF (Ctrl-D)
+		}
 	}
-	return (heredoc_finishing(line, pipefd, fd));
+	
+	free(line);
+	close(pipefd[1]);
+	exit(0);
+}
+
+static bool	heredoc(char *delimiter, int *fd, bool is_it_expandable)
+{
+	int		pipefd[2];
+	pid_t	child_pid;
+	int		status;
+
+	if (pipe(pipefd) == -1)
+		return (false);
+
+	// Setup parent signal handling (ignore signals during heredoc)
+	heredoc_parent_signal_setup();
+
+	child_pid = fork();
+	if (child_pid == -1)
+	{
+		close(pipefd[0]);
+		close(pipefd[1]);
+		return (false);
+	}
+
+	if (child_pid == 0)
+	{
+		// Child process - collect heredoc input
+		heredoc_child_process(delimiter, pipefd, is_it_expandable);
+		// Should never reach here
+		exit(1);
+	}
+	else
+	{
+		// Parent process - wait for child
+		close(pipefd[1]); // Close write end in parent
+		
+		// Wait for child to complete
+		waitpid(child_pid, &status, 0);
+		
+		// Restore original signal handlers
+		heredoc_restore_signals();
+		
+		// Check if child was killed by signal
+		if (WIFSIGNALED(status))
+		{
+			// Child was interrupted (Ctrl-C, etc.)
+			close(pipefd[0]);
+			*fd = -1;
+			return (true);
+		}
+		
+		// Check if child exited with error
+		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+		{
+			close(pipefd[0]);
+			*fd = -1;
+			return (false);
+		}
+		
+		// Success - return read end of pipe
+		*fd = pipefd[0];
+		return (true);
+	}
 }
 
 static bool	heredoc_scan(t_redir *redir)
@@ -123,13 +233,6 @@ bool	heredoc_init(t_segment *segments)
 	}
 	return (true);
 }
-
-
-
-
-
-
-
 
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:37:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/17 17:14:10 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/26 13:57:31 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	get_exit_code()
 	return (current_exit_code(NULL));
 }
 
-bool	close_pipefd(int pipefd[])
+bool	close_pipefd(int pipefd[2])
 {
 	close(pipefd[0]);
 	close(pipefd[1]);

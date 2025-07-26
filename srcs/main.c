@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/22 21:43:42 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/26 18:10:40 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,17 @@ int	main(int argc, char **argv, char **env)
 	
 	get_env_map(env); // İlk çağrıda env'i oluştur ve static'de sakla
 	signal_setup();
-
+	
 	while (true)
 	{
 		line = get_input(false);
+		
+		if (g_signal_received == SIGINT)
+        {
+            g_signal_received = 0;
+            continue;
+        }
+		
 		if (line)
 		{
 			token = NULL;
@@ -50,5 +57,7 @@ int	main(int argc, char **argv, char **env)
 			}
 			free(line);
 		}
+		else 
+			handle_eof();
 	}
 }

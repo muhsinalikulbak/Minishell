@@ -155,7 +155,7 @@ char	*try_get_value(char* key)
 {
     t_map	*env;
 
-	env = get_env_map(NULL);
+	env = get_env_map(NULL);// env map static olsa bile değiştirlmiş map i alamaz  (cmm)
 	while(env)
 	{
 		if (str_equal(env->key, key))

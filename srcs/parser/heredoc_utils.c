@@ -3,27 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 02:45:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/18 18:07:39 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/26 18:11:18 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	write_pipefd(char *line, int pipefd[])
+void	write_pipefd(char *line, int pipefd[2])
 {
 	write(pipefd[1], line, ft_strlen(line));
 	write(pipefd[1], "\n", 1);
 	free(line);
 }
 
-bool	heredoc_finishing(char *line, int pipefd[], int *fd)
+bool	heredoc_finishing(char *line, int pipefd[2], int *fd)
 {
+	(void) fd;
 	free(line);
 	close(pipefd[1]);
-	*fd = pipefd[0];
+	// Don't touch pipefd[0] - parent will handle it
 	return (true);
 }
 

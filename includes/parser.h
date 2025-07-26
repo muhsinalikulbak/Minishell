@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/23 16:04:56 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/26 18:10:13 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ t_token		*next_pipe(t_token *token);
 bool		create_segment(t_token *token, t_segment *segments, int segment_count);
 void		print_segment_list(t_segment *segments, int segment_count);
 bool		check_no_expand_for_heredoc(char *line, int i);
-void		write_pipefd(char *line, int pipefd[]);
+void		write_pipefd(char *line, int pipefd[2]);
 bool		heredoc_init(t_segment *segments);
-bool		heredoc_finishing(char *line, int pipefd[], int *fd);
+bool		heredoc_finishing(char *line, int pipefd[2], int *fd);
 void		print_heredoc_data(t_segment *segments);
 bool		find_cmd(t_segment *segments);
 #endif
