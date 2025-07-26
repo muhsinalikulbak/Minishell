@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:13:32 by muhsin            #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/07/26 20:52:38 by omakbas          ###   ########.fr       */
+=======
+/*   Updated: 2025/07/26 19:32:01 by mkulbak          ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,11 +152,7 @@ static bool	heredoc(char *delimiter, int *fd, bool is_it_expandable)
 
 	child_pid = fork();
 	if (child_pid == -1)
-	{
-		close(pipefd[0]);
-		close(pipefd[1]);
-		return (false);
-	}
+		return (close_pipefd(pipefd));
 
 	if (child_pid == 0)
 	{

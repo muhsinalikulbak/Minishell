@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/26 18:10:40 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/07/26 20:42:42 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,16 @@ int	main(int argc, char **argv, char **env)
 			add_history(line);
 			if (lexer(&token, line)) // Lexerda syntax alırsa kendi içinde free_token yapıyor.
 			{
-				print_token_list(token);
+				// print_token_list(token);
 				if (syntax_check(token))
 				{
 					segments = parser(token);
 					if (segments)
 					{
-						print_segment_list(segments, segments->segment_count);
-						print_heredoc_data(segments);
+						// print_segment_list(segments, segments->segment_count);
+						// print_heredoc_data(segments);
 						// pipe_lines NULL değilse executa'a gidicek.
+						executor(segments);
 						free_segment(segments, segments->segment_count);
 					}
 				}
