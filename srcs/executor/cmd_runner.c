@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 14:25:08 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/27 16:18:54 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	execute_external(t_segment *segments)
 		if (!execve(segments->cmd_path, segments->args, NULL));
 		{
 			// Her şeyi free'le
-			ft_putendl_fd(strerror(errno), 2);
+			perror(segments->args[0]);
 			if (errno == EACCES)
 				exit(126);
 			if (errno == ENOENT)

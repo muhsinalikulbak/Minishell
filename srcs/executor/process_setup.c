@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:21:48 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 14:39:41 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/27 16:32:47 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,21 @@ static void	wait_child_process(int *pids, int seg_count)
 	set_exit_code(WEXITSTATUS(status));
 }
 
+static void	child_process(t_segment *segment, int pipefd[][2], int i)
+{
+	if (segment->segment_count - 1 != 0)
+	{
+		pipe_setup(pipefd, i, segment->segment_count);
+		close_all_pipes(pipefd, segment->segment_count - 1);
+	}
+	// handle_redirections(segment->redirections);
+	handle_command(segment);
+}
+
 bool	process_setup(t_segment *segments, int *pids, int pipefd[][2])
 {
 	int	i;
-
+	
 	i = 0;
 	while (i < segments->segment_count)
 	{
@@ -46,18 +57,15 @@ bool	process_setup(t_segment *segments, int *pids, int pipefd[][2])
 		if (pids[i] == -1)
 		{
 			kill_process(pids, i - 1);
+			ft_putendl_fd("Fork error", 2);
 			return (false);
 		}
 		if (pids[i] == 0)
-		{
-			setup_pipes(pipefd, i, segments->segment_count - 1);
-			// handle_redirections(segments[i].redirections);
-			close_all_pipes(pipefd, segments->segment_count - 1);
-			handle_command(&segments[i]);
-		}
+			child_process(&segments[i], pipefd, i);
 		i++;
 	}
-	close_all_pipes(pipefd, segments->segment_count - 1);
+	if (segments->segment_count - 1 != 0)
+		close_all_pipes(pipefd, segments->segment_count - 1);
 	wait_child_process(pids, segments->segment_count);
 	return (true);
 }

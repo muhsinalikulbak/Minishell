@@ -6,24 +6,24 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 01:29:56 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 14:28:45 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/27 15:28:19 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_redirections(t_redir *redir)
-{
-	// int		i;
+// void	handle_redirections(t_redir *redir)
+// {
+// 	// int		i;
 
-	// i = 0;
-	// while (i < redir->redir_count)
-	// {
-	// 	if (redir[i].type == TOKEN_REDIR_IN || redir[i].type == TOKEN_HEREDOC)
-	// 		dup2()
-	// }
+// 	// i = 0;
+// 	// while (i < redir->redir_count)
+// 	// {
+// 	// 	if (redir[i].type == TOKEN_REDIR_IN || redir[i].type == TOKEN_HEREDOC)
+// 	// 		dup2()
+// 	// }
 	
-}
+// }
 
 bool	executor(t_segment *segments)
 {

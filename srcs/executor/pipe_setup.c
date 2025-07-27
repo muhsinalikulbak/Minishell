@@ -6,36 +6,37 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:18:50 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 14:30:16 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/27 16:06:53 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	close_all_pipes(int pipefd[][2], int cmd_count)
+void	close_all_pipes(int pipefd[][2], int pipe_count)
 {
 	int	i;
 
 	i = 0;
-	while (i < cmd_count)
+	while (i < pipe_count)
 	{
-		close(pipefd[i][0]);
-		close(pipefd[i][1]);
+		close_pipefd(pipefd[i]);
 		i++;
 	}
 }
 
-bool	open_pipefd(int pipefd[][2], int seg_count)
+bool	open_pipefd(int pipefd[][2], int pipe_count)
 {
 	int	i;
 
 	i = 0;
-		while (i < seg_count)
+	while (i < pipe_count)
 	{
 		if (pipe(pipefd[i]) == -1)
 		{
-			// Açılan varsa close' yap; çünkü sonraki prompta gidicek. fd açık kalmasın
-			// Burada sorun olursa çıkmaya gerek yok büyük ihtimal, prompt almaya devam edicek.
+			while (--i >= 0)
+			{
+				close_pipefd(pipefd[i]);
+			}
 			return (false);
 		}
 		i++;
@@ -43,11 +44,11 @@ bool	open_pipefd(int pipefd[][2], int seg_count)
 	return (true);
 }
 
-void	setup_pipes(int pipefd[][2], int i, int cmd_count)
+void	pipe_setup(int pipefd[][2], int i, int seg_count)
 {
 	if (i == 0)
 		dup2(pipefd[i][1], STDOUT_FILENO);
-	else if (i == cmd_count - 1)
+	else if (i == seg_count - 1)
 		dup2(pipefd[i - 1][0], STDIN_FILENO);
 	else
 	{

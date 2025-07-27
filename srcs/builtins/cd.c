@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/26 14:30:24 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/27 16:10:04 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,7 @@ void	cd(char **args, t_map **env_map_head, bool is_child)
 	pwd = getcwd(NULL, 0);
 	export(env_map_head, pwd, "PWD", true, is_child); // Aynı şekilde burda da
 	if (pwd)
-	{
-		printf("current dir: %s\n", pwd);
 		free(pwd);
-	}
 	else
-		perror("bash: getcwd");
+		ft_putendl_fd("error: getwcd", 2);
 }
