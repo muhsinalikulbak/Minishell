@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 16:10:04 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/27 17:00:17 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,16 @@ void	cd(char **args, t_map **env_map_head, bool is_child)
 		return ;
 	old_pwd = getcwd(NULL, 0);
 	// Eğer PWD ya da OLDPWD unset edildiyse herhangi bir güncelleme yapılmayacak.
-	export(env_map_head, old_pwd, "OLDPWD", true, is_child); // Burada double free durumu olabilir. Dikkat et.
+	if (try_get_value("OLDPWD"))
+		export(env_map_head, old_pwd, "OLDPWD", true, is_child); // Burada double free durumu olabilir. Dikkat et.
 	if (chdir(args[1]) == -1)
 	{
 		perror("cd : ");
 		return;
 	}
 	pwd = getcwd(NULL, 0);
-	export(env_map_head, pwd, "PWD", true, is_child); // Aynı şekilde burda da
+	if (try_get_value("PWD"))
+		export(env_map_head, pwd, "PWD", true, is_child); // Aynı şekilde burda da
 	if (pwd)
 		free(pwd);
 	else

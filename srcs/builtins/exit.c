@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/24 22:03:51 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/27 17:02:07 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static bool	check_alpha(char **args)
 	{
 		if (ft_isalpha(args[1][i]))
 		{
-			ft_putendl_fd("exit: ", 2);
-			ft_putendl_fd(args[1], 2);
+			ft_putendl_fd("exit", 2);
+			ft_putstr_fd(args[1], 2);
 			ft_putendl_fd(":numeric argument required", 2);
 			// segment'i structunu ve t_map'i freele
 			return (false);

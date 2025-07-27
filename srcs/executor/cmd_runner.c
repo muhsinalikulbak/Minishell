@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 16:18:54 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/27 16:55:13 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static void	execute_external(t_segment *segments)
 {
 	if (segments->cmd_type == CMD_EXTERNAL)
 	{
-		if (!execve(segments->cmd_path, segments->args, NULL));
+		// env yi burada oluştur
+		if (!execve(segments->cmd_path, segments->args, NULL))
 		{
 			// Her şeyi free'le
 			perror(segments->args[0]);
