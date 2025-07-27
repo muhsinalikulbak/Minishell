@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 17:00:17 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/27 17:31:10 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	cd(char **args, t_map **env_map_head, bool is_child)
 		export(env_map_head, old_pwd, "OLDPWD", true, is_child); // Burada double free durumu olabilir. Dikkat et.
 	if (chdir(args[1]) == -1)
 	{
-		perror("cd : ");
-		return;
+		perror("cd");
+		return ;
 	}
 	pwd = getcwd(NULL, 0);
 	if (try_get_value("PWD"))
@@ -52,4 +52,5 @@ void	cd(char **args, t_map **env_map_head, bool is_child)
 		free(pwd);
 	else
 		ft_putendl_fd("error: getwcd", 2);
+	set_exit_code(0);
 }
