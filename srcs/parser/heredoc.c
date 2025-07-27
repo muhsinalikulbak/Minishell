@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/14 20:13:32 by muhsin            #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/07/26 20:52:38 by omakbas          ###   ########.fr       */
-=======
-/*   Updated: 2025/07/26 19:32:01 by mkulbak          ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Created: 2025/07/27 00:44:02 by muhsin            #+#    #+#             */
+/*   Updated: 2025/07/27 03:19:58 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +133,10 @@ static bool	heredoc_child_process(char *delimiter, int pipefd[2], bool is_it_exp
 	close(pipefd[1]);
 	exit(0);
 }
+
+// ***********************************************************************
+// << eof ctrl c attıktan sonra ctrl d attığında çıkmıyor ikinci atışta çıkıyor
+// ***********************************************************************
 
 static bool	heredoc(char *delimiter, int *fd, bool is_it_expandable)
 {

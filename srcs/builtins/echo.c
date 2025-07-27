@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:27:55 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/24 22:08:48 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/27 12:19:52 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	write_args(char **args, int i, bool is_newline, int fd)
 	}
 	if (is_newline)
 		write(fd, "\n", 1);
+	set_exit_code(0);
 }
 
 void echo(char **args, int fd, bool is_child)

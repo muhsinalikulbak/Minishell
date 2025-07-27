@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/26 20:04:13 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/27 03:18:54 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define PARSER_H
 
 # include "lexer.h"
+
+typedef enum e_cmd_type
+{
+    CMD_BUILTIN,
+    CMD_EXTERNAL,
+    CMD_NOT_FOUND,
+    NO_PATH,
+}   t_cmd_type;
 
 typedef struct s_redir
 {
@@ -29,9 +37,9 @@ typedef struct s_segment
 {
 	char            **args;         // ["ls", "-la", NULL]
 	t_redir         *redirections;  // array of redirections
+	t_cmd_type		cmd_type;
 	int				segment_count;
 	char			*cmd_path;
-	bool			is_builtin;
 }		t_segment;
 
 

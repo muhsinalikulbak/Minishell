@@ -3,21 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:21 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/26 20:49:06 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/27 14:34:21 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
-# include "parser.h"
 # include "builtins.h"
 
+// Forward declarations
+typedef struct s_segment t_segment;
+
 bool	executor(t_segment *segments);
-
-
-
+bool	open_pipefd(int pipefd[][2], int seg_count);
+void	close_all_pipes(int pipefd[][2], int cmd_count);
+void	setup_pipes(int pipefd[][2], int i, int cmd_count);
+void	execute_builtin(t_segment *segments, bool is_child);
+void	handle_command(t_segment *segment);
+bool	process_setup(t_segment *segments, int *pids, int pipefd[][2]);
+void	close_all_pipes(int pipefd[][2], int cmd_count);
+bool	open_pipefd(int pipefd[][2], int seg_count);
+void	setup_pipes(int pipefd[][2], int i, int cmd_count);
 #endif

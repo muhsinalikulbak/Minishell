@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+         #
+#    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/26 20:04:14 by mkulbak          ###   ########.fr        #
+#    Updated: 2025/07/27 14:38:03 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,9 @@ SRC = main.c \
 	  parser/heredoc_utils.c \
 	  parser/find_cmd.c \
 	  executor/executor.c \
+	  executor/cmd_runner.c \
+	  executor/pipe_setup.c \
+	  executor/process_setup.c \
 	  signals/signal.c \
 	  builtins/echo.c \
 	  builtins/cd.c \
