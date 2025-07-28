@@ -3,199 +3,101 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:44:02 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 03:19:58 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/28 16:04:48 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void heredoc_child_signal_setup(void)
+static void	process_heredoc_line(char *line, int pipefd[2],
+				bool is_it_expandable)
 {
-    struct sigaction sa;
-    sa.sa_handler = SIG_DFL; // Default: terminate on SIGINT/SIGQUIT
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = 0;
-    sigaction(SIGINT, &sa, NULL);
-    sigaction(SIGQUIT, &sa, NULL);
-}
-
-static void	heredoc_parent_signal_setup(void)
-{
-	struct sigaction sa;
-	
-	// Ignore SIGINT/SIGQUIT in parent during heredoc collection
-	sa.sa_handler = SIG_IGN;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
-}
-
-static void	heredoc_restore_signals(void)
-{
-	// Restore original signal handlers after heredoc
-	// This should call your main signal_setup() function
-	signal_setup();
-}
-
-static char	*get_value_for_heredoc(char *line, int *i)
-{
-	char	*key;
-	char	*value;
-	int		j;
-
-	j = ++(*i);
-	if (ft_isdigit(line[j]))
-		return ("");
-	while (line[j] && (ft_isalnum(line[j]) || line[j] == '_'))
-		j++;
-	key = ft_substr(line, *i, j - *i);
-	if (!key)
-		return (free(line), NULL);
-	value = try_get_value(key);
-	free(key);
-	*i = j - 1;
-	if (value == NULL)
-		return ("");
-	return (value);
-}
-
-static bool	heredoc_expand(char *line, int pipefd[])
-{
-	char	*value;
-	int		i;
-
-	i = 0;
-	while (line[i])
+	if (is_it_expandable && ft_strchr(line, '$'))
 	{
-		if (line[i] == '$' && check_no_expand_for_heredoc(line, i))
+		if (!heredoc_expand(line, pipefd))
 		{
-			value = get_value_for_heredoc(line, &i);
-			if (!value)
-				return (free(line), false);
-			write(pipefd[1], value, ft_strlen(value));
+			close(pipefd[1]);
+			exit(1);
 		}
-		else
-			write(pipefd[1], &line[i], 1);
-		i++;
+		write(pipefd[1], "\n", 1);
+		free(line);
 	}
-	return (true);
+	else
+		write_pipefd(line, pipefd);
 }
 
-static bool	heredoc_child_process(char *delimiter, int pipefd[2], bool is_it_expandable)
+static bool	heredoc_child_process(char *delimiter, int pipefd[2],
+		bool is_it_expandable)
 {
 	char	*line;
 
-	// Setup signal handlers for child process
 	heredoc_child_signal_setup();
-	
-	// Close read end in child
 	close(pipefd[0]);
-
 	line = get_input(true);
-    
 	if (!line)
-	{
-        ft_putstr_fd("bash: warning: here-document delimited by end-of-file (wanted `", 2);
-        ft_putstr_fd(delimiter, 2);
-        ft_putendl_fd("')", 2);
-        close(pipefd[1]);
-        exit(0);
-	}
-
+		handle_heredoc_eof(delimiter, pipefd);
 	while (!str_equal(delimiter, line))
 	{
-		if (is_it_expandable && ft_strchr(line, '$'))
-		{
-			if (!heredoc_expand(line, pipefd))
-			{
-				close(pipefd[1]);
-				exit(1);
-			}
-			write(pipefd[1], "\n", 1);
-			free(line);
-		}
-		else
-			write_pipefd(line, pipefd);
-		
+		process_heredoc_line(line, pipefd, is_it_expandable);
 		line = get_input(true);
 		if (!line)
 		{
 			close(pipefd[1]);
-			exit(0); // EOF (Ctrl-D)
+			exit(0);
 		}
 	}
-	
 	free(line);
 	close(pipefd[1]);
 	exit(0);
 }
 
-// ***********************************************************************
-// << eof ctrl c attıktan sonra ctrl d attığında çıkmıyor ikinci atışta çıkıyor
-// ***********************************************************************
+static bool	heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd)
+{
+	int	status;
+
+	close(pipefd[1]);
+	waitpid(child_pid, &status, 0);
+	heredoc_restore_signals();
+	if (WIFSIGNALED(status))
+	{
+		close(pipefd[0]);
+		*fd = -1;
+		return (true);
+	}
+	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+	{
+		close(pipefd[0]);
+		*fd = -1;
+		return (false);
+	}
+	*fd = pipefd[0];
+	return (true);
+}
 
 static bool	heredoc(char *delimiter, int *fd, bool is_it_expandable)
 {
 	int		pipefd[2];
 	pid_t	child_pid;
-	int		status;
 
 	if (pipe(pipefd) == -1)
 		return (false);
-
-	// Setup parent signal handling (ignore signals during heredoc)
 	heredoc_parent_signal_setup();
-
 	child_pid = fork();
 	if (child_pid == -1)
 		return (close_pipefd(pipefd));
-
 	if (child_pid == 0)
 	{
-		// Child process - collect heredoc input
 		heredoc_child_process(delimiter, pipefd, is_it_expandable);
-		// Should never reach here
 		exit(1);
 	}
 	else
-	{
-		// Parent process - wait for child
-		close(pipefd[1]); // Close write end in parent
-		
-		// Wait for child to complete
-		waitpid(child_pid, &status, 0);
-		
-		// Restore original signal handlers
-		heredoc_restore_signals();
-		
-		// Check if child was killed by signal
-		if (WIFSIGNALED(status))
-		{
-			// Child was interrupted (Ctrl-C, etc.)
-			close(pipefd[0]);
-			*fd = -1;
-			return (true);
-		}
-		
-		// Check if child exited with error
-		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-		{
-			close(pipefd[0]);
-			*fd = -1;
-			return (false);
-		}
-		
-		// Success - return read end of pipe
-		*fd = pipefd[0];
-		return (true);
-	}
+		return (heredoc_parent_process(pipefd, child_pid, fd));
 }
 
-static bool	heredoc_scan(t_redir *redir)
+bool	heredoc_scan(t_redir *redir)
 {
 	bool	is_it_expandable;
 	char	*delimiter;
@@ -216,29 +118,7 @@ static bool	heredoc_scan(t_redir *redir)
 	return (true);
 }
 
-bool	heredoc_init(t_segment *segments)
-{
-	int		i;
-	t_redir	*redir;
-
-	i = 0;
-	while (i < segments->segment_count)
-	{
-		redir = segments[i].redirections;
-		if (redir)
-		{
-			if (!heredoc_scan(redir))
-				return (false);
-		}
-		i++;
-	}
-	return (true);
-}
-
-
-
-// EN SON KALDIRILACAK
-
+/*
 static void print_heredoc_content(int fd, int segment_idx, int heredoc_idx)
 {
 	char    buffer[1024];
@@ -351,3 +231,4 @@ void print_heredoc_data(t_segment *segments)
 	printf("\n═══════════════════════════════════════════════════════════\n");
 	printf("🏁 Heredoc inspection completed!\n\n");
 }
+*/

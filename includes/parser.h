@@ -6,7 +6,7 @@
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 14:39:18 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/28 16:03:03 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,12 @@ void		write_pipefd(char *line, int pipefd[2]);
 bool		heredoc_init(t_segment *segments);
 bool		heredoc_finishing(char *line, int pipefd[2], int *fd);
 void		print_heredoc_data(t_segment *segments);
+void		heredoc_child_signal_setup(void);
+void		heredoc_parent_signal_setup(void);
+void		heredoc_restore_signals(void);
+void		handle_heredoc_eof(char *delimiter, int pipefd[2]);
+bool		heredoc_expand(char *line, int pipefd[2]);
+char		*get_value_for_heredoc(char *line, int *i);
+bool		heredoc_scan(t_redir *redir);
 bool		find_cmd(t_segment *segments);
 #endif

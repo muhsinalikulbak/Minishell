@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:39:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 12:35:34 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/28 15:21:25 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ static bool	path_access_control(char **full_path, char *slash_cmd, char **path)
 	return (free(slash_cmd), true);
 }
 
-static bool	find_path(char *cmd, char *env_path, t_segment *segment, char **path)
+static bool	find_path(char *cmd, char *env_path, t_segment *segment,
+				char **path)
 {
 	char	**full_path;
 	char	*slash_cmd;
@@ -99,7 +100,8 @@ bool	find_cmd(t_segment *segments)
 			else if (try_get_value("PATH"))
 			{
 				path = &segments[i].cmd_path;
-				if (!find_path(segments[i].args[0], try_get_value("PATH"), &segments[i], path))
+				if (!find_path(segments[i].args[0], try_get_value("PATH"),
+						&segments[i], path))
 					return (false);
 			}
 			else

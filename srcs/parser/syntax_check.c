@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 04:08:38 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 03:10:44 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/28 16:09:45 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	check_redir_file(t_token *token, char **next_value)
 
 	last = get_last_token(token);
 	if (last->type >= 2 && last->type <= 5)
-		return (false); // Buradaki durumda unexpected token newline olacak. SADECE BU KISMI FONKSİYONA ALABİLİRİM
+		return (false);
 	while (token != NULL && token->next != NULL)
 	{
 		*next_value = token->next->value;

@@ -6,7 +6,7 @@
 #    By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/28 14:20:07 by kayraakbas       ###   ########.fr        #
+#    Updated: 2025/07/28 16:01:29 by kayraakbas       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,8 @@ SRC = main.c \
 	  parser/create_segment.c \
 	  parser/heredoc.c \
 	  parser/heredoc_utils.c \
+	  parser/heredoc_utils2.c \
+	  parser/heredoc_signals.c \
 	  parser/find_cmd.c \
 	  executor/executor.c \
 	  executor/cmd_runner.c \

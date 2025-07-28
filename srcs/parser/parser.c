@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:52:32 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/23 01:52:35 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/28 16:08:33 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 static t_segment	*segment(t_token *token)
 {
-	int	segment_count;
+	int			segment_count;
+	t_segment	*segments;
 
 	segment_count = get_segment_count(token);
-	t_segment	*segments = malloc(sizeof(t_segment) * segment_count);
+	segments = malloc(sizeof(t_segment) * segment_count);
 	if (!segments)
 	{
 		ft_putendl_fd("memory allocation failed", 2);
@@ -33,14 +34,6 @@ static t_segment	*segment(t_token *token)
 	free_token(token);
 	if (!heredoc_init(segments))
 	{
-		// heredoc da CTRL+C sinyaliyle çıkıldığında bu hata mesajı yazılmayacak.
-		// CTRL+D ile çıkılırsa bash'deki hata mesajı yazılacak.
-		// Sinyal dışında hata oluşmuş ise aşağıdaki hata yazılacak.
-		// Bunu anlamanın yolu flag koymak. Flag'i 0 ile başlat bu hata yok anlamına gelsin.
-		// CTRL+C ile çıkıldıysa Flag 1 olsun, CTRL+D olursa flag 2 olsun.
-		// Hata oluştuğunda flag 3 olsun. // FLAG 3 gelirsa aşağıdaki yazılıcak.
-		// Çıkış sinyalini yakalayarak bu flag atamaları yapılabilir.
-		// Eğer sorun olmadan çıkarsa zaten succes döner exit kodu 0'dır.
 		ft_putendl_fd("heredoc initialization failed", 2);
 		return (NULL);
 	}

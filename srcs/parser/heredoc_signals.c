@@ -1,35 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_utils.c                                    :+:      :+:    :+:   */
+/*   heredoc_signals.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/17 02:45:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 15:23:03 by kayraakbas       ###   ########.fr       */
+/*   Created: 2025/07/28 15:56:34 by kayraakbas        #+#    #+#             */
+/*   Updated: 2025/07/28 16:05:53 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	write_pipefd(char *line, int pipefd[2])
+void	heredoc_child_signal_setup(void)
 {
-	write(pipefd[1], line, ft_strlen(line));
-	write(pipefd[1], "\n", 1);
-	free(line);
+	struct sigaction	sa;
+
+	sa.sa_handler = SIG_DFL;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 }
 
-bool	heredoc_finishing(char *line, int pipefd[2], int *fd)
+void	heredoc_parent_signal_setup(void)
 {
-	(void) fd;
-	free(line);
-	close(pipefd[1]);
-	return (true);
+	struct sigaction	sa;
+
+	sa.sa_handler = SIG_IGN;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 }
 
-bool	check_no_expand_for_heredoc(char *line, int i)
+void	heredoc_restore_signals(void)
 {
-	if (line[i + 1] != '_' && (!ft_isalnum(line[i + 1]) || !line[i + 1]))
-		return (false);
-	return (true);
+	signal_setup();
 }

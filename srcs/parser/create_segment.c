@@ -1,22 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                      {
-                printf("    \033[1;34m[%d]\033[0m ", j + 1);
-                printf("\033[1;37mType\033[0m: \033[1;33m%s\033[0m, ", 
-                       redir_type[segments[i].redirections[j].type]);
-                printf("\033[1;37mFile\033[0m: \033[1;33m\"%s\"\033[0m, ", 
-                       segments[i].redirections[j].filename);
-                printf("\033[1;37mState\033[0m: \033[1;33m%s\033[0m", 
-                       token_state[segments[i].redirections[j].state]);
-                if (segments[i].redirections[j].type == TOKEN_HEREDOC)
-                    printf(", \033[1;37mHeredoc_fd\033[0m: \033[1;33m%d\033[0m", 
-                           segments[i].redirections[j].heredoc_fd);                                   :::      ::::::::   */
+/*                                                        :::      ::::::::   */
 /*   create_segment.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/13 03:29:12 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 03:10:44 by muhsin           ###   ########.fr       */
+/*   Created: 2025/07/28 16:10:19 by kayraakbas        #+#    #+#             */
+/*   Updated: 2025/07/28 16:12:44 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +42,7 @@ static t_redir	*create_redir(t_token *token)
 	i = 0;
 	while (token != NULL && token->type != TOKEN_PIPE)
 	{
-		if (token->type != TOKEN_WORD) // PIPE VE WORD DEĞİLSE REDİRECTİONDUR
+		if (token->type != TOKEN_WORD)
 		{
 			if (!set_redir(token, redir, redir_count, i))
 				return (NULL);
@@ -80,7 +70,7 @@ static char	**set_args(t_token *token, int cmd_count)
 			if (!args[i])
 				return (free_all(args));
 		}
-		else // PIPE VE TOKEN_WORD DEĞİLSE REDİRECTİONDUR
+		else
 			token = token->next;
 		token = token->next;
 	}
@@ -130,14 +120,7 @@ bool	create_segment(t_token *token, t_segment *segments, int segment_count)
 	return (true);
 }
 
-
-
-
-
-
-
-
-
+/*
 // Bu en son silinecek - test için
 void print_segment_list(t_segment *segments, int segment_count)
 {
@@ -208,3 +191,4 @@ void print_segment_list(t_segment *segments, int segment_count)
     
     printf("\033[1;32m=== End of Segment List ===\033[0m\n");
 }
+*/
