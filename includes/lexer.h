@@ -18,7 +18,7 @@ typedef enum s_token_state
 	STATE_NORMAL,
 	STATE_IN_DQUOTE,
 	STATE_IN_SQUOTE,
-    STATE_IDLE
+	STATE_IDLE
 }		t_token_state;
 
 typedef enum s_token_type

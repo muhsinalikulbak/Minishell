@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef MINISHELL_H
+#ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include <unistd.h>
@@ -26,7 +26,6 @@
 # include <readline/history.h>
 # include <stdbool.h>
 
-
 /* Libft library */
 # include "libft.h"
 
@@ -39,5 +38,5 @@
 # include "signals.h"
 # include "utils.h"
 
-extern volatile sig_atomic_t g_signal_received;
+extern volatile sig_atomic_t	g_signal_received;
 #endif

@@ -13,14 +13,9 @@
 #ifndef UTILS_H
 # define UTILS_H
 
-bool	str_equal(char *str1, char* str2);
+bool	str_equal(char *str1, char *str2);
 int		get_exit_code(void);
 void	set_exit_code(int status);
 bool	close_pipefd(int pipefd[2]);
-
-
-
-
-
 
 #endif

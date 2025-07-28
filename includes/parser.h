@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 03:18:54 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/28 14:39:18 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,30 @@
 
 typedef enum e_cmd_type
 {
-    CMD_BUILTIN,
-    CMD_EXTERNAL,
-    CMD_NOT_FOUND,
-    NO_PATH,
-}   t_cmd_type;
+	CMD_BUILTIN,
+	CMD_EXTERNAL,
+	CMD_NOT_FOUND,
+	NO_PATH,
+}	t_cmd_type;
 
 typedef struct s_redir
 {
 	char			*filename;
-	int				heredoc_fd;  // heredocları açtıktan sonra tek pipe'de birden fazla heredoc var ise öncekini kapa
-	t_token_state	state;		 // Burada filename'in state'i tutulacak. Örneğin "merhaba" ise DQ word olarak sayılacak.
-	t_token_type	type;        // REDIR_IN, REDIR_OUT, etc.
+	int				heredoc_fd;
+	t_token_state	state;
+	t_token_type	type;
 	int				redir_count;
 	bool			is_ambiguous;
 }		t_redir;
 
 typedef struct s_segment
 {
-	char            **args;         // ["ls", "-la", NULL]
-	t_redir         *redirections;  // array of redirections
+	char			**args;
+	t_redir			*redirections;
 	t_cmd_type		cmd_type;
 	int				segment_count;
 	char			*cmd_path;
 }		t_segment;
-
 
 t_segment	*parser(t_token *token);
 int			token_count_in_segment(t_token *token);
@@ -51,7 +50,8 @@ bool		syntax_check(t_token *token);
 bool		free_segment(t_segment *segment, int end);
 void		free_redir(t_redir *redir, int end);
 t_token		*next_pipe(t_token *token);
-bool		create_segment(t_token *token, t_segment *segments, int segment_count);
+bool		create_segment(t_token *token, t_segment *segments,
+				int segment_count);
 void		print_segment_list(t_segment *segments, int segment_count);
 bool		check_no_expand_for_heredoc(char *line, int i);
 void		write_pipefd(char *line, int pipefd[2]);

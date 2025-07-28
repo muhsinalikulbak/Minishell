@@ -16,7 +16,7 @@
 # include "builtins.h"
 
 // Forward declarations
-typedef struct s_segment t_segment;
+typedef struct s_segment	t_segment;
 
 bool	executor(t_segment *segments);
 bool	open_pipefd(int pipefd[][2], int seg_count);
