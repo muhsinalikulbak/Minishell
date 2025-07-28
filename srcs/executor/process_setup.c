@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_setup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:21:48 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 16:51:30 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/28 17:53:36 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	child_process(t_segment *segment, int pipefd[][2], int i)
 		pipe_setup(pipefd, i, segment->segment_count);
 		close_all_pipes(pipefd, segment->segment_count - 1);
 	}
+	// handle_redirections(segment->redirections);
 	handle_command(segment);
 }
 

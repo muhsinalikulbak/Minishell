@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:21 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 16:06:15 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/28 20:25:03 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define EXECUTOR_H
 
 # include "builtins.h"
-
+# include "parser.h"
 // Forward declarations
 typedef struct s_segment	t_segment;
 
@@ -28,5 +28,5 @@ bool	process_setup(t_segment *segments, int *pids, int pipefd[][2]);
 void	close_all_pipes(int pipefd[][2], int pipe_count);
 bool	open_pipefd(int pipefd[][2], int pipe_count);
 void	pipe_setup(int pipefd[][2], int i, int seg_count);
-// void	handle_redirections(t_redir *redir);
+bool	handle_redirections(t_redir *redir);
 #endif

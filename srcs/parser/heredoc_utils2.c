@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:48:03 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/28 16:05:23 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/28 20:47:29 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ bool	heredoc_expand(char *line, int pipefd[2])
 
 void	handle_heredoc_eof(char *delimiter, int pipefd[2])
 {
-	ft_putstr_fd("bash: warning: here-document \
-					delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd("bash: warning: here-document", 2);
+	ft_putstr_fd("elimited by end-of-file (wanted `", 2);
 	ft_putstr_fd(delimiter, 2);
 	ft_putendl_fd("')", 2);
 	close(pipefd[1]);

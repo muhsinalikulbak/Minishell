@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 01:29:56 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 17:16:51 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/28 20:26:16 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
- void	handle_redirections(t_redir *redir)
- {
- 	 int		i;
-
- 	i = 0;
- 	while (i < redir->redir_count)
- 	{
- 	 	if (redir[i].type == TOKEN_REDIR_IN || redir[i].type == TOKEN_HEREDOC)
- 	 		dup2()
- 	}
-	
-}*/
 
 bool	executor(t_segment *segments)
 {
@@ -41,19 +28,20 @@ bool	executor(t_segment *segments)
 		ft_putendl_fd("memory allocation failed", 2);
 		return (false);
 	}
-	pipefd = malloc(sizeof(int [2]) * (segments->segment_count - 1));
-	if (!pipefd)
+	if (segments->segment_count - 1 > 0)
 	{
-		ft_putendl_fd("memory allocation failed", 2);
-		free(pids);
-		return (false);
-	}
-	if (!open_pipefd(pipefd, segments->segment_count - 1))
-	{
-		ft_putendl_fd("pipe() function failed", 2);
-		free(pipefd);
-		free(pids);
-		return (false);
+		pipefd = malloc(sizeof(int [2]) * (segments->segment_count - 1));
+		if (!pipefd)
+		{
+			ft_putendl_fd("memory allocation failed", 2);
+			return (free(pids), false);
+		}
+		if (!open_pipefd(pipefd, segments->segment_count - 1))
+		{
+			ft_putendl_fd("pipe() function failed", 2);
+			free(pipefd);
+			return (free(pids), false);
+		}
 	}
 	process_setup(segments, pids, pipefd);
 	free(pids);

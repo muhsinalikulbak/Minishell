@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_runner.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 17:14:07 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/28 20:15:53 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	execute_builtin(t_segment *segments, bool is_child)
 	char	*cmd;
 	t_map	*env_map;
 
+	// unset eklenicek, export düzeltilecek, cd home ayarlanacak.
 	env_map = get_env_map(NULL);
 	cmd = segments->args[0];
 	if (str_equal(cmd, "cd"))
