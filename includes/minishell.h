@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:39 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/26 19:01:52 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/07/28 19:05:14 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,7 @@
 # include "utils.h"
 
 extern volatile sig_atomic_t	g_signal_received;
+
+void	process_input_line(char *line);
+void	main_loop(void);
 #endif

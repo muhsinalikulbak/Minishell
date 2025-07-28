@@ -6,13 +6,13 @@
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/28 17:35:04 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/28 20:05:24 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	process_input_line(char *line)
+void	process_input_line(char *line)
 {
 	t_token		*token;
 	t_segment	*segments;
@@ -35,26 +35,27 @@ static void	process_input_line(char *line)
 	}
 }
 
-static void	main_loop(void)
+void	main_loop(void)
 {
 	char	*line;
 
-	while (true)
-	{
-		line = get_input(false);
-		if (g_signal_received == SIGINT)
-		{
-			g_signal_received = 0;
-			continue ;
-		}
-		if (line)
-		{
-			process_input_line(line);
-			free(line);
-		}
-		else
-			handle_eof();
-	}
+    while (true)
+    {
+        line = get_input(false);
+        if (!line)
+        {
+            handle_eof();
+            break;
+        }
+        if (g_signal_received == SIGINT)
+        {
+            g_signal_received = 0;
+            free(line);
+            continue ;
+        }
+        process_input_line(line);
+        free(line);
+    }
 }
 
 int	main(int argc, char **argv, char **env)

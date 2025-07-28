@@ -6,13 +6,13 @@
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:44:02 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 17:17:14 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/28 18:57:17 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	process_heredoc_line(char *line, int pipefd[2],
+void	process_heredoc_line(char *line, int pipefd[2],
 				bool is_it_expandable)
 {
 	if (is_it_expandable && ft_strchr(line, '$'))
@@ -29,7 +29,7 @@ static void	process_heredoc_line(char *line, int pipefd[2],
 		write_pipefd(line, pipefd);
 }
 
-static bool	heredoc_child_process(char *delimiter, int pipefd[2],
+bool	heredoc_child_process(char *delimiter, int pipefd[2],
 		bool is_it_expandable)
 {
 	char	*line;
@@ -54,7 +54,7 @@ static bool	heredoc_child_process(char *delimiter, int pipefd[2],
 	exit(0);
 }
 
-static bool	heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd)
+bool	heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd)
 {
 	int	status;
 
@@ -77,7 +77,7 @@ static bool	heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd)
 	return (true);
 }
 
-static bool	heredoc(char *delimiter, int *fd, bool is_it_expandable)
+bool	heredoc(char *delimiter, int *fd, bool is_it_expandable)
 {
 	int		pipefd[2];
 	pid_t	child_pid;
