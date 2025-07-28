@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
+#    By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/27 16:57:49 by muhsin           ###   ########.fr        #
+#    Updated: 2025/07/28 14:20:07 by kayraakbas       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SRC = main.c \
 	  builtins/env.c \
 	  builtins/exit.c \
 	  builtins/map_utils.c \
+	  builtins/map_utils2.c \
 	  builtins/builtins_utils.c \
 	  builtins/export_utils.c \
 	  builtins/env_manager.c \

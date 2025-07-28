@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 17:31:10 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/28 13:31:45 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,15 @@ static bool	cd_control(char **args)
 }
 
 void	cd(char **args, t_map **env_map_head, bool is_child)
-{   
-	char *pwd;
-	char *old_pwd;
+{
+	char	*pwd;
+	char	*old_pwd;
 
 	if (!cd_control(args))
 		return ;
 	old_pwd = getcwd(NULL, 0);
-	// Eğer PWD ya da OLDPWD unset edildiyse herhangi bir güncelleme yapılmayacak.
 	if (try_get_value("OLDPWD"))
-		export(env_map_head, old_pwd, "OLDPWD", true, is_child); // Burada double free durumu olabilir. Dikkat et.
+		export(env_map_head, old_pwd, "OLDPWD", true, is_child);
 	if (chdir(args[1]) == -1)
 	{
 		perror("cd");
@@ -47,7 +46,7 @@ void	cd(char **args, t_map **env_map_head, bool is_child)
 	}
 	pwd = getcwd(NULL, 0);
 	if (try_get_value("PWD"))
-		export(env_map_head, pwd, "PWD", true, is_child); // Aynı şekilde burda da
+		export(env_map_head, pwd, "PWD", true, is_child);
 	if (pwd)
 		free(pwd);
 	else

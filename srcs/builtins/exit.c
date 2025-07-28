@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 17:02:07 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/28 14:06:06 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static bool	check_alpha(char **args)
 			ft_putendl_fd("exit", 2);
 			ft_putstr_fd(args[1], 2);
 			ft_putendl_fd(":numeric argument required", 2);
-			// segment'i structunu ve t_map'i freele
 			return (false);
 		}
 		i++;
@@ -43,19 +42,16 @@ static bool	check_many_arguments(char **args)
 	return (true);
 }
 
-// exit'de parent process de gelse  child process'de her şey free edilecek sonrasında exit atılacak.
-void ft_exit(char **args)
+void	ft_exit(char **args)
 {
 	if (!args[1])
 	{
-		// segment'i structunu ve t_map'i freele
 		exit(get_exit_code());
 	}
 	if (!check_alpha(args))
 		exit(2);
 	if (check_many_arguments(args))
 	{
-		// segment'i structunu ve t_map'i freele
 		exit(ft_atoi(args[1]));
 	}
 }
