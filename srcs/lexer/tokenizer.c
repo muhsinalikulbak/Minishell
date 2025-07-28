@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/27 03:10:44 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/28 17:19:41 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ bool	tokenizer(t_lexer_data *data)
 		token_type = TOKEN_WORD;
 	return (token_add_back(data, token_type));
 }
-
+/*
 // Bu en son silinecek
 void print_token_list(t_token *list)
 {
@@ -143,10 +143,11 @@ void print_token_list(t_token *list)
         int token_len = (int)strlen(ptr->value) + 2;
         for (int i = 0; i < max_len + 2 - token_len; i++)
             putchar(' ');
-        printf(" \033[1;36mType\033[0m: \033[1;33m%s\033[0m\n", token_type[ptr->type]);
+        printf(" \033[1;36mType\033
+		[0m: \033[1;33m%s\
+			033[0m\n", token_type[ptr->type]);
         ptr = ptr->next;
     }
 
     printf("\033[1;32m--- End of Token List ---\033[0m\n");
-}
-
+}*/

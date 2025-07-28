@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_setup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:21:48 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 16:32:47 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/28 16:51:30 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static void	kill_process(int *pids, int i)
 {
-    while (i >= 0)
-    {
-        kill(pids[i], SIGTERM);
-        i--;
-    }    
+	while (i >= 0)
+	{
+		kill(pids[i], SIGTERM);
+		i--;
+	}
 }
 
 static void	wait_child_process(int *pids, int seg_count)
@@ -42,14 +42,13 @@ static void	child_process(t_segment *segment, int pipefd[][2], int i)
 		pipe_setup(pipefd, i, segment->segment_count);
 		close_all_pipes(pipefd, segment->segment_count - 1);
 	}
-	// handle_redirections(segment->redirections);
 	handle_command(segment);
 }
 
 bool	process_setup(t_segment *segments, int *pids, int pipefd[][2])
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < segments->segment_count)
 	{

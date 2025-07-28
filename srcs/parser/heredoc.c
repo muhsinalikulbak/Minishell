@@ -6,7 +6,7 @@
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:44:02 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 16:04:48 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/28 17:17:14 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,8 @@ static void print_heredoc_content(int fd, int segment_idx, int heredoc_idx)
 		// Manuel parsing - boş satırları da göster
 		line_start = 0;
 		i = 0;
-		while (i < bytes_read)  // 🔥 Değişiklik: i <= bytes_read yerine i < bytes_read
+		while (i < bytes_read)  
+		// 🔥 Değişiklik: i <= bytes_read yerine i < bytes_read
 		{
 			if (buffer[i] == '\n')
 			{

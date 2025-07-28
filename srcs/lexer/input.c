@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:01:14 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 17:28:52 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/28 17:21:31 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ static char	*get_next_line(int fd)
 	return (line);
 }*/
 
-static char *build_prompt_string(char *username, char *pwd)
+static	char	*build_prompt_string(char *username, char *pwd)
 {
 	char	*temp1;
 	char	*temp2;
@@ -140,11 +140,11 @@ static char *build_prompt_string(char *username, char *pwd)
 	return (prompt);
 }
 
-static char *create_prompt(void)
+static	char	*create_prompt(void)
 {
-	char *pwd;
-	char *username;
-	char *prompt;
+	char	*pwd;
+	char	*username;
+	char	*prompt;
 
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
@@ -163,7 +163,7 @@ char	*get_input(bool is_heredoc)
 {
 	char	*line;
 	char	*prompt;
-	
+
 	if (is_heredoc)
 		line = readline("> ");
 	else

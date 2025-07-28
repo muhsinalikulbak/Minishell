@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_operator.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/22 15:12:39 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/28 17:23:24 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,6 @@ static bool	tokenize_operator(t_lexer_data *data, char *operator)
 		ft_putendl_fd("memory allocation failed", 2);
 		return (false);
 	}
-	 // pipe, redir vs zaten tırnaksız olarak geldiği için
-	 // prev state'i de NORMAL olucak.
-	 // Ki her halükarda state normale döneceği için direk 
-	 // data.state'de prev_state'e atanabilir.
 	data->prev_state = STATE_NORMAL;
 	data->state = STATE_IDLE;
 	if (!tokenizer(data))
