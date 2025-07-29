@@ -14,7 +14,9 @@
 # define SIGNALS_H
 
 void		signal_setup(void);
+void		child_signal_setup(void);
 void		handle_eof(void);
+void		interactive_sigint(int sig);
 extern void	rl_replace_line(const char *text, int clear_undo);
 
 #endif

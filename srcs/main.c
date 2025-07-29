@@ -6,7 +6,7 @@
 /*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/28 20:05:24 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/29 16:45:34 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,12 @@ void	main_loop(void)
             free(line);
             continue ;
         }
-        process_input_line(line);
+        if (ft_strlen(line) > 0)
+        {
+            process_input_line(line);
+        }
         free(line);
+        g_signal_received = 0;
     }
 }
 

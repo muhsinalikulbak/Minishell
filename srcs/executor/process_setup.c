@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_setup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:21:48 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 12:38:54 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 16:25:08 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,34 @@ static void	wait_child_process(int *pids, int seg_count)
 {
 	int	i;
 	int	status;
+	int	last_status = 0;
 
 	i = 0;
 	while (i < seg_count)
 	{
 		waitpid(pids[i], &status, 0);
+		if (WIFEXITED(status))
+			last_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+		{
+			if (WTERMSIG(status) == SIGINT)
+				last_status = 130;
+			else if (WTERMSIG(status) == SIGQUIT)
+				last_status = 131;
+			else
+				last_status = 128 + WTERMSIG(status);
+		}
 		i++;
 	}
-	set_exit_code(WEXITSTATUS(status));
+	set_exit_code(last_status);
 }
 
 static void	child_process(t_segment *segment, int pipefd[][2], int i)
 {
+	/* Set up default signal handling for child processes */
+	/* Note: heredoc processes will override this with their own signal setup */
+	child_signal_setup();
+	
 	if (segment->segment_count - 1 != 0)
 	{
 		pipe_setup(pipefd, i, segment->segment_count);

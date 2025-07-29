@@ -161,13 +161,21 @@ static	char	*create_prompt(void)
 
 char	*get_input(bool is_heredoc)
 {
-	char	*line;
-	char	*prompt;
+	char				*line;
+	char				*prompt;
+	struct sigaction	old_sa;
+	struct sigaction	interactive_sa;
 
 	if (is_heredoc)
 		line = readline("> ");
 	else
 	{
+		/* Set up interactive signal handling for readline */
+		interactive_sa.sa_handler = interactive_sigint;
+		sigemptyset(&interactive_sa.sa_mask);
+		interactive_sa.sa_flags = SA_RESTART;
+		sigaction(SIGINT, &interactive_sa, &old_sa);
+		
 		prompt = create_prompt();
 		if (!prompt)
 		{
@@ -176,6 +184,9 @@ char	*get_input(bool is_heredoc)
 		}
 		line = readline(prompt);
 		free(prompt);
+		
+		/* Restore original signal handling */
+		sigaction(SIGINT, &old_sa, NULL);
 	}
 	return (line);
 }
