@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:21:48 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 03:42:22 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 04:00:44 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	child_process(t_segment *segment, int pipefd[][2], int i)
 	exit(EXIT_SUCCESS);
 }
 
-bool	process_setup(t_segment *segments, int *pids, int (*pipefd)[2])
+bool	process_setup(t_segment *segments, int *pids, int pipefd[][2])
 {
 	int	i;
 

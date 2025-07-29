@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:15:07 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/29 03:53:43 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 04:08:28 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,14 @@ static void	open_redir_input(int *fds, int i, t_redir *redir)
 	}
 }
 
-bool	handle_redirections(t_redir *redir)
+void	handle_redirections(t_redir *redir)
 {
 	int				i;
 	int				*fds;
 
 	fds = malloc(sizeof(int) * redir->redir_count);
 	if (!fds)
-		return (false);
+		exit(EXIT_FAILURE);
 	i = 0;
 	while (i < redir->redir_count)
 	{
@@ -90,8 +90,7 @@ bool	handle_redirections(t_redir *redir)
 		if (redir[i].type == REDIR_IN || redir[i].type == HEREDOC)
 			open_redir_input(fds, i , &redir[i]);
 		else if (redir[i].type == REDIR_OUT || redir[i].type == APPEND)
-			open_redir_output(fds, i, redir);
+			open_redir_output(fds, i, &redir[i]);
 		i++;
 	}
-	return (true);
 }

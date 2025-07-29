@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:01:14 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 17:21:31 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/29 04:18:36 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,10 @@ static	char	*build_prompt_string(char *username, char *pwd)
 	char	*temp2;
 	char	*prompt;
 
-	temp1 = ft_strjoin("\033[1;32m", username);
+	temp1 = ft_strjoin("\001\033[1;32m\002", username);
 	if (!temp1)
 		return (NULL);
-	temp2 = ft_strjoin(temp1, "\033[0m:\033[1;34m");
+	temp2 = ft_strjoin(temp1, "\001\033[0m\002:\001\033[1;34m\002");
 	free(temp1);
 	if (!temp2)
 		return (NULL);
@@ -135,7 +135,7 @@ static	char	*build_prompt_string(char *username, char *pwd)
 	free(temp2);
 	if (!temp1)
 		return (NULL);
-	prompt = ft_strjoin(temp1, "\033[0m$ ");
+	prompt = ft_strjoin(temp1, "\001\033[0m\002$ ");
 	free(temp1);
 	return (prompt);
 }
