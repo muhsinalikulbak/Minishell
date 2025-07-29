@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 13:30:05 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/29 12:39:38 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env(char **args, bool is_child)
+void	env(char **args)
 {
 	if (args[1])
 	{

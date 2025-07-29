@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:21 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 03:59:19 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 12:39:27 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@
 // Forward declarations
 typedef struct s_segment	t_segment;
 
-bool	executor(t_segment *segments);
-bool	open_pipefd(int pipefd[][2], int seg_count);
+void    executor(t_segment *segments);
 void	close_all_pipes(int pipefd[][2], int cmd_count);
 void	pipe_setup(int pipefd[][2], int i, int cmd_count);
 void	execute_builtin(t_segment *segments, bool is_child);
 void	handle_command(t_segment *segment);
-bool	process_setup(t_segment *segments, int *pids, int pipefd[][2]);
+void	process_setup(t_segment *segments, int *pids, int pipefd[][2]);
 void	close_all_pipes(int pipefd[][2], int pipe_count);
 bool	open_pipefd(int pipefd[][2], int pipe_count);
 void	pipe_setup(int pipefd[][2], int i, int seg_count);

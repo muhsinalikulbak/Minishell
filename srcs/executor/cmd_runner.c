@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_runner.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 20:15:53 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/29 13:06:25 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,20 @@ void	execute_builtin(t_segment *segments, bool is_child)
 	char	*cmd;
 	t_map	*env_map;
 
+	(void)(is_child);
 	// unset eklenicek, export düzeltilecek, cd home ayarlanacak.
 	env_map = get_env_map(NULL);
 	cmd = segments->args[0];
 	if (str_equal(cmd, "cd"))
-		cd(segments->args, &env_map, is_child);
+		cd(segments->args, &env_map);
 	if (str_equal(cmd, "echo"))
-		echo(segments->args, STDOUT_FILENO, is_child);
+		echo(segments->args, STDOUT_FILENO);
 	if (str_equal(cmd, "pwd"))
-		pwd(is_child);
+		pwd();
 	if (str_equal(cmd, "export"))
-		export(&env_map, segments->args[1], segments->args[2], false, is_child);
+		export(&env_map, segments->args[1], segments->args[2], false);
 	if (str_equal(cmd, "env"))
-		env(segments->args, is_child);
+		env(segments->args);
 	if (str_equal(cmd, "exit"))
 		ft_exit(segments->args);
 }
@@ -59,12 +60,14 @@ void	handle_command(t_segment *segment)
 	{
 		ft_putstr_fd(segment->args[0], 2);
 		ft_putendl_fd(": command not found", 2);
+		// FREE
 		exit(127);
 	}
 	else if (segment->cmd_type == NO_PATH)
 	{
 		ft_putstr_fd(segment->args[0], 2);
 		ft_putendl_fd(": No such file or directory", 2);
+		// FREE
 		exit(127);
 	}
 }

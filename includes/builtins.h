@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:17 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 14:48:34 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/29 12:39:30 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 # include "env_manager.h"
 
-void	echo(char **args, int fd, bool is_child);
-void	cd(char **args, t_map **env_map_head, bool is_child);
-void	pwd(bool is_child);
-void	export(t_map **env_map_head, char *var, char *key, bool is_set, bool is_child);// fonskiyon 4 argümandan fazla alıyo ve çok uzun
-void	unset(t_map **env_map_head, char *key, bool is_child);
-void	env(char **args, bool is_child);
+void	echo(char **args, int fd);
+void	cd(char **args, t_map **env_map_head);
+void	pwd(void);
+void	export(t_map **env_map_head, char *var, char *key, bool is_set);// fonskiyon 4 argümandan fazla alıyo ve çok uzun
+void	unset(t_map **env_map_head, char *key);
+void	env(char **args);
 void	ft_exit(char **args);
 bool	validate_key(char *key);
 void	add_new_var(t_map **env_map_head, char *key, char *var);

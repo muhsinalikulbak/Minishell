@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 14:45:07 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/29 12:39:37 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ static void	set_var(t_map **env_map_head, char *key, char *var)
 	add_new_var(env_map_head, key, var);
 }
 
-void	export(t_map **env_map_head, char *var, char *key, bool is_set,
-			bool is_child)
+void	export(t_map **env_map_head, char *var, char *key, bool is_set)
 {
 	int	size;
 
