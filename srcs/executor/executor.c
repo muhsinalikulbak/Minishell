@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 01:29:56 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 13:13:41 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 13:58:17 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,24 @@ void	executor(t_segment *segments)
 	pipefd = NULL;
 	if (segments->segment_count == 1 && segments->cmd_type == CMD_BUILTIN)
 	{
+		int saved_stdout = -1;
+		int saved_stdin = -1;
+		
 		if (segments->redirections)
+		{
+			saved_stdout = dup(STDOUT_FILENO);
+			saved_stdin = dup(STDIN_FILENO);
 			handle_redirections(segments->redirections);
+		}
 		execute_builtin(segments, false);
+		
+		if (segments->redirections)
+		{
+			dup2(saved_stdout, STDOUT_FILENO);
+			dup2(saved_stdin, STDIN_FILENO);
+			close(saved_stdout);
+			close(saved_stdin);
+		}
 	}
 	else
 	{
