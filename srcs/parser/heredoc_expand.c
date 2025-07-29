@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_utils2.c                                   :+:      :+:    :+:   */
+/*   heredoc_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:48:03 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/28 20:47:29 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/30 02:40:02 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_value_for_heredoc(char *line, int *i)
+char	*get_value_for_heredoc(char *line, int *i, bool *is_it_exit_code)
 {
 	char	*key;
 	char	*value;
@@ -21,6 +21,14 @@ char	*get_value_for_heredoc(char *line, int *i)
 	j = ++(*i);
 	if (ft_isdigit(line[j]))
 		return ("");
+	if (line[j] == '?')
+	{
+		value = ft_itoa(get_exit_code());
+		if (!value)
+			return (NULL);
+		*is_it_exit_code = true;
+		return (value);
+	}
 	while (line[j] && (ft_isalnum(line[j]) || line[j] == '_'))
 		j++;
 	key = ft_substr(line, *i, j - *i);
@@ -34,17 +42,28 @@ char	*get_value_for_heredoc(char *line, int *i)
 	return (value);
 }
 
+static bool	check_no_expand_for_heredoc(char *line, int i)
+{
+	char	ch;
+
+	ch = line[i + 1];
+	if (ch != '_' && ch != '?' && (!ft_isalnum(ch) || !ch))
+		return (false);
+	return (true);
+}
+
 bool	heredoc_expand(char *line, int pipefd[2])
 {
 	char	*value;
 	int		i;
+	bool	is_it_exit_code;
 
 	i = 0;
 	while (line[i])
 	{
 		if (line[i] == '$' && check_no_expand_for_heredoc(line, i))
 		{
-			value = get_value_for_heredoc(line, &i);
+			value = get_value_for_heredoc(line, &i, &is_it_exit_code);
 			if (!value)
 				return (free(line), false);
 			write(pipefd[1], value, ft_strlen(value));
@@ -56,31 +75,5 @@ bool	heredoc_expand(char *line, int pipefd[2])
 	return (true);
 }
 
-void	handle_heredoc_eof(char *delimiter, int pipefd[2])
-{
-	ft_putstr_fd("bash: warning: here-document", 2);
-	ft_putstr_fd("elimited by end-of-file (wanted `", 2);
-	ft_putstr_fd(delimiter, 2);
-	ft_putendl_fd("')", 2);
-	close(pipefd[1]);
-	exit(0);
-}
 
-bool	heredoc_init(t_segment *segments)
-{
-	int		i;
-	t_redir	*redir;
 
-	i = 0;
-	while (i < segments->segment_count)
-	{
-		redir = segments[i].redirections;
-		if (redir)
-		{
-			if (!heredoc_scan(redir))
-				return (false);
-		}
-		i++;
-	}
-	return (true);
-}

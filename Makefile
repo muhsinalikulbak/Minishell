@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+         #
+#    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/29 18:19:12 by omakbas          ###   ########.fr        #
+#    Updated: 2025/07/30 02:38:42 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,9 +42,9 @@ SRC = main.c \
 	  parser/segment_utils.c \
 	  parser/create_segment.c \
 	  parser/heredoc.c \
-	  parser/heredoc_utils.c \
-	  parser/heredoc_utils2.c \
 	  parser/heredoc_signals.c \
+	  parser/heredoc_process.c \
+	  parser/heredoc_expand.c \
 	  parser/find_cmd.c \
 	  executor/executor.c \
 	  executor/executor_signals.c \

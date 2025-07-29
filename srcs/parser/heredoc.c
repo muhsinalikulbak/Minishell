@@ -3,81 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:44:02 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 19:20:27 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/07/30 02:37:20 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	process_heredoc_line(char *line, int pipefd[2],
-				bool is_it_expandable)
-{
-	if (is_it_expandable && ft_strchr(line, '$'))
-	{
-		if (!heredoc_expand(line, pipefd))
-		{
-			close(pipefd[1]);
-			exit(1);
-		}
-		write(pipefd[1], "\n", 1);
-		free(line);
-	}
-	else
-		write_pipefd(line, pipefd);
-}
-
-bool	heredoc_child_process(char *delimiter, int pipefd[2],
-		bool is_it_expandable)
-{
-	char	*line;
-
-	heredoc_child_signal_setup();
-	close(pipefd[0]);
-	line = get_input(true);
-	if (!line)
-		handle_heredoc_eof(delimiter, pipefd);
-	while (!str_equal(delimiter, line))
-	{
-		process_heredoc_line(line, pipefd, is_it_expandable);
-		line = get_input(true);
-		if (!line)
-		{
-			close(pipefd[1]);
-			exit(0);
-		}
-	}
-	free(line);
-	close(pipefd[1]);
-	exit(EXIT_SUCCESS);
-}
-
-bool	heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd)
-{
-	int	status;
-
-	close(pipefd[1]);
-	waitpid(child_pid, &status, 0);
-	heredoc_restore_signals();
-	if (WIFSIGNALED(status))
-	{
-		close(pipefd[0]);
-		*fd = -1;
-		return (true);
-	}
-	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-	{
-		close(pipefd[0]);
-		*fd = -1;
-		return (false);
-	}
-	*fd = pipefd[0];
-	return (true);
-}
-
-bool	heredoc(char *delimiter, int *fd, bool is_it_expandable)
+static bool	start_heredoc(char *delimiter, int *fd, bool is_it_expandable)
 {
 	int		pipefd[2];
 	pid_t	child_pid;
@@ -97,7 +32,7 @@ bool	heredoc(char *delimiter, int *fd, bool is_it_expandable)
 		return (heredoc_parent_process(pipefd, child_pid, fd));
 }
 
-bool	heredoc_scan(t_redir *redir)
+static bool	heredoc_scan(t_redir *redir)
 {
 	bool	is_it_expandable;
 	char	*delimiter;
@@ -110,7 +45,26 @@ bool	heredoc_scan(t_redir *redir)
 		{
 			delimiter = redir[i].file_name;
 			is_it_expandable = redir[i].state == STATE_NORMAL;
-			if (!heredoc(delimiter, &redir[i].heredoc_fd, is_it_expandable))
+			if (!start_heredoc(delimiter, &redir[i].heredoc_fd, is_it_expandable))
+				return (false);
+		}
+		i++;
+	}
+	return (true);
+}
+
+bool	heredoc_init(t_segment *segments)
+{
+	int		i;
+	t_redir	*redir;
+
+	i = 0;
+	while (i < segments->segment_count)
+	{
+		redir = segments[i].redirections;
+		if (redir)
+		{
+			if (!heredoc_scan(redir))
 				return (false);
 		}
 		i++;
@@ -187,7 +141,7 @@ void print_heredoc_data(t_segment *segments)
 	
 	if (!segments)
 	{
-		printf("❌ No segments to display heredoc data\n");
+		printf("❌ No segments to display start_heredoc data\n");
 		return;
 	}
 	
