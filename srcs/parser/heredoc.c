@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:44:02 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 03:07:25 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 14:11:29 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ bool	heredoc_child_process(char *delimiter, int pipefd[2],
 	}
 	free(line);
 	close(pipefd[1]);
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
 
 bool	heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd)
@@ -91,7 +91,7 @@ bool	heredoc(char *delimiter, int *fd, bool is_it_expandable)
 	if (child_pid == 0)
 	{
 		heredoc_child_process(delimiter, pipefd, is_it_expandable);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	else
 		return (heredoc_parent_process(pipefd, child_pid, fd));

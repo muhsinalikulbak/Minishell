@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 01:29:56 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 13:58:17 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 14:01:18 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	executor(t_segment *segments)
 			handle_redirections(segments->redirections);
 		}
 		execute_builtin(segments, false);
-		
 		if (segments->redirections)
 		{
 			dup2(saved_stdout, STDOUT_FILENO);
