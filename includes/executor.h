@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:21 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 12:39:27 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 18:21:02 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,8 @@ void	close_all_pipes(int pipefd[][2], int pipe_count);
 bool	open_pipefd(int pipefd[][2], int pipe_count);
 void	pipe_setup(int pipefd[][2], int i, int seg_count);
 void    handle_redirections(t_redir *redir);
+void	exec_child_signal_setup(void);
+void	exec_parent_signal_setup(void);
+void	exec_restore_signals(void);
+
 #endif

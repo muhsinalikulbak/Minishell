@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:01:14 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 04:18:36 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 18:15:10 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,18 +163,11 @@ char	*get_input(bool is_heredoc)
 {
 	char				*line;
 	char				*prompt;
-	struct sigaction	old_sa;
-	struct sigaction	interactive_sa;
-
+	
 	if (is_heredoc)
 		line = readline("> ");
 	else
 	{
-		/* Set up interactive signal handling for readline */
-		interactive_sa.sa_handler = interactive_sigint;
-		sigemptyset(&interactive_sa.sa_mask);
-		interactive_sa.sa_flags = SA_RESTART;
-		sigaction(SIGINT, &interactive_sa, &old_sa);
 		
 		prompt = create_prompt();
 		if (!prompt)
@@ -184,9 +177,6 @@ char	*get_input(bool is_heredoc)
 		}
 		line = readline(prompt);
 		free(prompt);
-		
-		/* Restore original signal handling */
-		sigaction(SIGINT, &old_sa, NULL);
 	}
 	return (line);
 }

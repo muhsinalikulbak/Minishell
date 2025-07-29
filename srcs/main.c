@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/29 16:45:34 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/29 19:52:16 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,19 @@ void	main_loop(void)
 
     while (true)
     {
+		g_signal_received = 0;
         line = get_input(false);
+
         if (!line)
         {
             handle_eof();
             break;
-        }
-        if (g_signal_received == SIGINT)
-        {
-            g_signal_received = 0;
-            free(line);
-            continue ;
         }
         if (ft_strlen(line) > 0)
         {
             process_input_line(line);
         }
         free(line);
-        g_signal_received = 0;
     }
 }
 
