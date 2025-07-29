@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 02:45:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 15:23:03 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/29 19:43:59 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ bool	heredoc_finishing(char *line, int pipefd[2], int *fd)
 
 bool	check_no_expand_for_heredoc(char *line, int i)
 {
-	if (line[i + 1] != '_' && (!ft_isalnum(line[i + 1]) || !line[i + 1]))
+	char	ch;
+
+	ch = line[i + 1];
+	if (ch != '_' && ch != '?' && (!ft_isalnum(ch) || !ch))
 		return (false);
 	return (true);
 }

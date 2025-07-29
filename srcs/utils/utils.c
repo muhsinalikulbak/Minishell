@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:37:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 15:17:35 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/29 18:58:59 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,3 +58,4 @@ bool	close_pipefd(int pipefd[2])
 	close(pipefd[1]);
 	return (false);
 }
+// $?
