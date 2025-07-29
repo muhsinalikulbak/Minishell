@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:17:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/27 02:37:50 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 03:07:25 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static bool	check_no_expand_for_token(t_lexer_data *data)
 	int		i;
 
 	last = get_last_token(*data->token);
-	if (last && last->type == TOKEN_HEREDOC)
+	if (last && last->type == HEREDOC)
 	{
 		data->token_value[data->value_idx++] = '$';
 		return (true);

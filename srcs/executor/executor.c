@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 01:29:56 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 21:21:59 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/29 03:12:18 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ bool	executor(t_segment *segments)
 			return (free(pids), false);
 		}
 	}
-	process__setup(segments, pids, pipefd);
+	process_setup(segments, pids, pipefd);
 	free(pids);
 	return (true);
 }

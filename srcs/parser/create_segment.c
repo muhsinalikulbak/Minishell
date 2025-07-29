@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_segment.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 16:10:19 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/28 16:12:44 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/29 03:07:25 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static bool	set_redir(t_token *token, t_redir *redir, int redir_count, int i)
 	redir[i].type = token->type;
 	redir[i].redir_count = redir_count;
 	token = token->next;
-	redir[i].filename = ft_strdup(token->value);
-	if (!redir[i].filename)
+	redir[i].file_name = ft_strdup(token->value);
+	if (!redir[i].file_name)
 	{
 		free_redir(redir, i);
 		return (false);
@@ -40,9 +40,9 @@ static t_redir	*create_redir(t_token *token)
 	if (!redir)
 		return (NULL);
 	i = 0;
-	while (token != NULL && token->type != TOKEN_PIPE)
+	while (token != NULL && token->type != PIPE)
 	{
-		if (token->type != TOKEN_WORD)
+		if (token->type != WORD)
 		{
 			if (!set_redir(token, redir, redir_count, i))
 				return (NULL);
@@ -62,9 +62,9 @@ static char	**set_args(t_token *token, int cmd_count)
 	if (!args)
 		return (NULL);
 	i = -1;
-	while (token != NULL && token->type != TOKEN_PIPE)
+	while (token != NULL && token->type != PIPE)
 	{
-		if (token->type == TOKEN_WORD)
+		if (token->type == WORD)
 		{
 			args[++i] = ft_strdup(token->value);
 			if (!args[i])
@@ -170,10 +170,10 @@ void print_segment_list(t_segment *segments, int segment_count)
                 printf("\033[1;37mType\033[0m: \033[1;33m%s\033[0m, ", 
                        redir_type[segments[i].redirections[j].type]);
                 printf("\033[1;37mFile\033[0m: \033[1;33m\"%s\"\033[0m, ", 
-                       segments[i].redirections[j].filename);
+                       segments[i].redirections[j].file_name);
                 printf("\033[1;37mState\033[0m: \033[1;33m%s\033[0m", 
                        token_state[segments[i].redirections[j].state]);
-                if (segments[i].redirections[j].type == TOKEN_HEREDOC)
+                if (segments[i].redirections[j].type == HEREDOC)
                     printf(", \033[1;37mHeredoc_fd\033[0m: \033[1;33m%d\033[0m", 
                            segments[i].redirections[j].heredoc_fd);
                 printf("\n");

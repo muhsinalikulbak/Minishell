@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:44:02 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 18:57:17 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/29 03:07:25 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,9 @@ bool	heredoc_scan(t_redir *redir)
 	i = 0;
 	while (i < redir->redir_count)
 	{
-		if (redir[i].type == TOKEN_HEREDOC)
+		if (redir[i].type == HEREDOC)
 		{
-			delimiter = redir[i].filename;
+			delimiter = redir[i].file_name;
 			is_it_expandable = redir[i].state == STATE_NORMAL;
 			if (!heredoc(delimiter, &redir[i].heredoc_fd, is_it_expandable))
 				return (false);
@@ -212,9 +212,9 @@ void print_heredoc_data(t_segment *segments)
 		j = 0;
 		while (j < redir->redir_count)
 		{
-			if (redir[j].type == TOKEN_HEREDOC)
+			if (redir[j].type == HEREDOC)
 			{
-				printf("  🔸 Heredoc found: delimiter='%s'\n", redir[j].filename);
+				printf("  🔸 Heredoc found: delimiter='%s'\n", redir[j].file_name);
 				print_heredoc_content(redir[j].heredoc_fd, i, heredoc_count);
 				heredoc_count++;
 			}

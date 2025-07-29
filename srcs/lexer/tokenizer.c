@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/28 17:19:41 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/29 03:07:25 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,20 +86,20 @@ bool	tokenizer(t_lexer_data *data)
 	prev_state = data->prev_state;
 	if (prev_state == STATE_IN_DQUOTE || prev_state == STATE_IN_SQUOTE)
 	{
-		return (token_add_back(data, TOKEN_WORD));
+		return (token_add_back(data, WORD));
 	}
 	else if (str_equal(data->token_value, "|"))
-		token_type = TOKEN_PIPE;
+		token_type = PIPE;
 	else if (str_equal(data->token_value, "<"))
-		token_type = TOKEN_REDIR_IN;
+		token_type = REDIR_IN;
 	else if (str_equal(data->token_value, ">"))
-		token_type = TOKEN_REDIR_OUT;
+		token_type = REDIR_OUT;
 	else if (str_equal(data->token_value, "<<"))
-		token_type = TOKEN_HEREDOC;
+		token_type = HEREDOC;
 	else if (str_equal(data->token_value, ">>"))
-		token_type = TOKEN_APPEND;
+		token_type = APPEND;
 	else
-		token_type = TOKEN_WORD;
+		token_type = WORD;
 	return (token_add_back(data, token_type));
 }
 /*
@@ -114,12 +114,12 @@ void print_token_list(t_token *list)
     }
 
     char *token_type[] = {
-        "TOKEN_WORD", 
-        "TOKEN_PIPE", 
-        "TOKEN_REDIR_IN", 
-        "TOKEN_REDIR_OUT", 
-        "TOKEN_APPEND", 
-        "TOKEN_HEREDOC", 
+        "WORD", 
+        "PIPE", 
+        "REDIR_IN", 
+        "REDIR_OUT", 
+        "APPEND", 
+        "HEREDOC", 
         NULL
     };
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+         #
+#    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/28 16:01:29 by kayraakbas       ###   ########.fr        #
+#    Updated: 2025/07/29 02:43:55 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRC = main.c \
 	  executor/cmd_runner.c \
 	  executor/pipe_setup.c \
 	  executor/process_setup.c \
+	  executor/handle_redirections.c \
 	  signals/signal.c \
 	  builtins/echo.c \
 	  builtins/cd.c \

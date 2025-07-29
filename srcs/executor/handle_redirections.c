@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:15:07 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/28 21:21:35 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/29 03:53:43 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,63 @@ static void	close_fds(int *fds, int i)
 	free(fds);
 }
 
-static bool	file_check(t_redir *redir)
+static void	check_ambiguous(t_redir *redir, int *fds, int i)
 {
-	if (*redir->filename == '\0' && redir->is_ambiguous)
+	if (*redir->file_name == '\0' && redir->is_ambiguous)
 	{
 		ft_putendl_fd("ambiguous redirect", 2);
-		set_exit_code(1);
-		return (false);
+		close_fds(fds, i);
+		exit(EXIT_FAILURE);
 	}
-	//*************************** */
-	// Open bu hatayı yakalarsa burayı sil
-	//*************************** */
-	// if (*redir->filename == '\0')
-	// {
-	// 	// bash: fşke,: No such file or directory
-	// 	ft_putendl_fd("bash: fşke,: No such file or directory")		
-	// }
+}
+
+static void	open_redir_output(int *fds, int i, t_redir *redir)
+{
+	t_token_type	type;
+
+	type = redir->type;
+	if (type == REDIR_OUT)
+		fds[i] = open(redir->file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (type == APPEND)
+		fds[i] = open(redir->file_name, O_CREAT | O_RDWR | O_APPEND, 0644);
+	if (fds[i] == -1)
+	{
+		perror(redir->file_name);
+		close_fds(fds, i - 1);
+		exit(EXIT_FAILURE);
+	}
+	dup2(fds[i], STDOUT_FILENO);
+	close(fds[i]);
+}
+
+static void	open_redir_input(int *fds, int i, t_redir *redir)
+{
+	t_token_type	type;
+
+	type = redir->type;
+	if (type == REDIR_IN)
+	{
+		fds[i] = open(redir->file_name, O_RDONLY, 0444);
+		if (fds[i] == -1)
+		{
+			perror(redir->file_name);
+			close_fds(fds, i - 1);
+			exit(EXIT_FAILURE);
+		}
+		dup2(fds[i], STDIN_FILENO);
+		close(fds[i]);
+	}
+	else if (type == HEREDOC)
+	{
+		dup2(redir->heredoc_fd, STDIN_FILENO);
+		close(redir->heredoc_fd);
+	}
 }
 
 bool	handle_redirections(t_redir *redir)
 {
-	int		i;
-	int		*fds;
+	int				i;
+	int				*fds;
 
 	fds = malloc(sizeof(int) * redir->redir_count);
 	if (!fds)
@@ -51,22 +86,12 @@ bool	handle_redirections(t_redir *redir)
 	i = 0;
 	while (i < redir->redir_count)
 	{
-		if (!check_file(&redir[i]), fds)
-		{
-			close_fds(fds, i - 1);
-			return (false);
-		}
-		if (redir[i].type == TOKEN_REDIR_IN)
-		{
-			fds[i] = open(redir[i].filename, O_CREAT | O_RDONLY, 0444);
-			if (fds[i] == -1)
-			{
-				ft_putstr_fd(redir[i].filename, 2);
-				ft_putendl_fd(": No such file or directory", 2);		
-				set_exit_code(1);
-				close_fds(fds, i - 1);
-				return (false);
-			}
-		}
+		check_ambiguous(&redir[i], fds, i - 1);
+		if (redir[i].type == REDIR_IN || redir[i].type == HEREDOC)
+			open_redir_input(fds, i , &redir[i]);
+		else if (redir[i].type == REDIR_OUT || redir[i].type == APPEND)
+			open_redir_output(fds, i, redir);
+		i++;
 	}
+	return (true);
 }
