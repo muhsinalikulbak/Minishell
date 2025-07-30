@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:17:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 19:42:50 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/07/30 03:08:23 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,31 +36,34 @@ static bool	check_no_expand_for_token(t_lexer_data *data)
 	return (false);
 }
 
+static bool	expand_special_param(char **value, char ch, bool *is_it_exit_code)
+{
+	if (ft_isdigit(ch))
+		*value = "";
+	else if (ch == '?')
+	{
+		*value = ft_itoa(get_exit_code());
+		if (!*value)
+		{
+			ft_putendl_fd("memory allocation failed", 2);
+			return (false);
+		}
+		*is_it_exit_code = true;
+	}
+	return (true);
+}
+
 static bool	get_value_for_token(t_lexer_data *data, char **value, bool *is_it_exit_code)
 {
 	char	*line;
 	char	*key;
 	int		j;
 
+	*is_it_exit_code = false;
 	line = data->input_line;
 	j = ++(*data->i);
-	if (ft_isdigit(line[j]))
-	{
-		*value = "";
-		return (true);
-	}
-	if (line[j] == '?')
-	{
-		key = ft_itoa(get_exit_code());
-		if (!key)
-		{
-			ft_putendl_fd("memory allocation failed", 2);
-			return (false);
-		}
-		*value = key;
-		*is_it_exit_code = true;
-		return (true);
-	}
+	if (line[j] == '?' || ft_isdigit(line[j]))
+		return (expand_special_param(value, line[j], is_it_exit_code));
 	while (line[j] && (ft_isalnum(line[j]) || line[j] == '_'))
 		j++;
 	key = ft_substr(data->input_line, *data->i, j - *data->i);
@@ -73,7 +76,6 @@ static bool	get_value_for_token(t_lexer_data *data, char **value, bool *is_it_ex
 	if (*value == NULL)
 		data->is_ambiguous = true;
 	*data->i = --j;
-	*is_it_exit_code = false;
 	return (free(key), true);
 }
 
@@ -107,6 +109,8 @@ bool	expand_dollar(t_lexer_data *data)
 	if (!data->token_value)
 	{
 		ft_putendl_fd("memory allocation failed", 2);
+		if (is_it_exit_code)
+			free(value);
 		return (free(temp_value), false);
 	}
 	realloc_token_value(data, temp_value, value);
