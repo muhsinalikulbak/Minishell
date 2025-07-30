@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/31 00:57:11 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/31 01:26:17 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,25 @@ static void	execute_external(t_segment *segments)
 	{
 		if (is_directory(segments->cmd_path))
 		{
-			ft_putstr_fd(segments->args[0], 2);
-			ft_putendl_fd(": Is a directory", 2);
-			exit(126);
-		}
-		if (execve(segments->cmd_path, segments->args, NULL) == -1)
-		{
-			perror(segments->args[0]);
-			if (errno == EACCES)
+			if (ft_strchr(segments->args[0], '/'))
+			{
+				errno = EISDIR;
+				perror(segments->args[0]);
 				exit(126);
-			if (errno == ENOENT)
-				exit(127);
-			exit(EXIT_FAILURE);
+			}
+			ft_putstr_fd(segments->args[0], 2);
+			ft_putendl_fd(": command not found", 2);
+			exit(127);
 		}
+	}
+	if (execve(segments->cmd_path, segments->args, NULL) == -1)
+	{
+		perror(segments->args[0]);
+		if (errno == EACCES)
+			exit(126);
+		if (errno == ENOENT)
+			exit(127);
+		exit(EXIT_FAILURE);
 	}
 }
 
