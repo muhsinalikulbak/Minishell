@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:27:55 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/24 01:38:30 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 14:24:35 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,17 @@ static void	write_args(char **args, int i, bool is_newline, int fd)
 {
 	while (args[i])
 	{
-		if (str_equal(args[i], "$?"))
-			ft_putnbr_fd(get_exit_code(), fd);
-		else
-			ft_putstr_fd(args[i], fd);
+		ft_putstr_fd(args[i], fd);
 		if (args[i + 1])
 			ft_putstr_fd(" ", fd);
 		i++;
 	}
 	if (is_newline)
 		write(fd, "\n", 1);
+	set_exit_code(0);
 }
 
-void echo(char **args, int fd)
+void	echo(char **args, int fd)
 {
 	bool	is_newline;
 	int		i;

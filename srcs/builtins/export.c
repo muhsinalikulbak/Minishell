@@ -6,45 +6,39 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/24 01:28:57 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 12:39:37 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void set_var(t_map **env_map_head, char *key, char *var)
+static void	set_var(t_map **env_map_head, char *key, char *var)
 {
-    if (update_existing_var(env_map_head, key, var))
-        return;
-    
-    if (!key)
-    {
-        printf("bash: %s not found\n", var);
-        set_exit_code(130);
-        return;
-    }
-    
-    if (!validate_key(key))
-    {
-        printf("bash: export: '%s': not a valid identifier\n", key);
-        set_exit_code(130);
-        return;
-    }
-    
-    add_new_var(env_map_head, key, var);
+	if (update_existing_var(env_map_head, key, var))
+		return ;
+	if (!key)
+	{
+		printf("bash: %s not found\n", var);
+		set_exit_code(130);
+		return ;
+	}
+	if (!validate_key(key))
+	{
+		printf("bash: export: '%s': not a valid identifier\n", key);
+		set_exit_code(130);
+		return ;
+	}
+	add_new_var(env_map_head, key, var);
 }
 
-// export args'yi alıcak, çünkü birden fazla değişken eklenebilir ya da değişkenle birlikte değerleri de eklenebilir >>>> "export a b  c=3 e f=4 gibi"
-void export(t_map **env_map_head, char *var, char *key, bool is_set)
+void	export(t_map **env_map_head, char *var, char *key, bool is_set)
 {
-	int size;
+	int	size;
 
 	if (!env_map_head || !*env_map_head)
-		return;
-
+		return ;
 	size = ft_mapsize(*env_map_head);
-
-	if(is_set)
+	if (is_set)
 		set_var(env_map_head, key, var);
 	else
 		print_export(env_map_head, size);

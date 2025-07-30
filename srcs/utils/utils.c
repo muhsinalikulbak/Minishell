@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:37:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/17 17:14:10 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 18:58:59 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	str_equal(char *str1, char* str2)
+bool	str_equal(char *str1, char *str2)
 {
 	int	len1;
 	int	len2;
@@ -29,12 +29,13 @@ bool	str_equal(char *str1, char* str2)
 			return (false);
 		i++;
 	}
-	return (true);		
+	return (true);
 }
 
-static int current_exit_code(int *exit_code)
+static	int	current_exit_code(int *exit_code)
 {
 	static int	current;
+
 	if (!exit_code)
 		return (current);
 	current = *exit_code;
@@ -46,14 +47,15 @@ void	set_exit_code(int status)
 	current_exit_code(&status);
 }
 
-int	get_exit_code()
+int	get_exit_code(void)
 {
 	return (current_exit_code(NULL));
 }
 
-bool	close_pipefd(int pipefd[])
+bool	close_pipefd(int pipefd[2])
 {
 	close(pipefd[0]);
 	close(pipefd[1]);
 	return (false);
 }
+// $?

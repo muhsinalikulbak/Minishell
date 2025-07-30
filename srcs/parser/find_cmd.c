@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:39:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/24 01:30:31 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/28 15:21:25 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static bool	find_builtin(char *cmd)
 	return (false);
 }
 
-static char	*path_access_control(char **full_path, char *slash_cmd)
+static bool	path_access_control(char **full_path, char *slash_cmd, char **path)
 {
 	int		i;
 	char	*cmd_with_path;
@@ -43,39 +43,52 @@ static char	*path_access_control(char **full_path, char *slash_cmd)
 		if (!cmd_with_path)
 		{
 			free_all(full_path);
-			return (free(slash_cmd), NULL);
+			return (free(slash_cmd), false);
 		}
 		if (access(cmd_with_path, F_OK) == 0)
 		{
 			free_all(full_path);
-			return (free(slash_cmd), cmd_with_path);
+			*path = cmd_with_path;
+			return (free(slash_cmd), true);
 		}
+		free(cmd_with_path);
 		i++;
 	}
 	free_all(full_path);
-	return (free(slash_cmd), NULL);
+	*path = NULL;
+	return (free(slash_cmd), true);
 }
 
-static char	*find_path(char *cmd, char *env_path)
+static bool	find_path(char *cmd, char *env_path, t_segment *segment,
+				char **path)
 {
 	char	**full_path;
 	char	*slash_cmd;
 
+	segment->cmd_type = CMD_NOT_FOUND;
 	if (access(cmd, F_OK) == 0)
-		return (ft_strdup(cmd));
+	{
+		*path = ft_strdup(cmd);
+		segment->cmd_type = CMD_EXTERNAL;
+		return (true);
+	}
 	slash_cmd = ft_strjoin("/", cmd);
 	if (!slash_cmd)
-		return (NULL);
+		return (false);
 	full_path = ft_split(env_path, ':');
 	if (!full_path)
-		return (free(slash_cmd), NULL);
-	return (path_access_control(full_path, slash_cmd));
+		return (free(slash_cmd), false);
+	if (!path_access_control(full_path, slash_cmd, path))
+		return (false);
+	if (*path)
+		segment->cmd_type = CMD_EXTERNAL;
+	return (true);
 }
 
 bool	find_cmd(t_segment *segments)
 {
 	int		i;
-	char	*path;
+	char	**path;
 
 	i = 0;
 	while (i < segments->segment_count)
@@ -83,14 +96,16 @@ bool	find_cmd(t_segment *segments)
 		if (segments[i].args)
 		{
 			if (find_builtin(segments[i].args[0]))
-				segments[i].is_builtin = true;
+				segments[i].cmd_type = CMD_BUILTIN;
 			else if (try_get_value("PATH"))
 			{
-				path = find_path(segments[i].args[0], try_get_value("PATH"));
-				if (!path)
+				path = &segments[i].cmd_path;
+				if (!find_path(segments[i].args[0], try_get_value("PATH"),
+						&segments[i], path))
 					return (false);
-				segments[i].cmd_path = path;
 			}
+			else
+				segments[i].cmd_type = NO_PATH;
 		}
 		i++;
 	}

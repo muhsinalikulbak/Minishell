@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 02:23:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/22 21:30:18 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 02:05:34 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	free_redir(t_redir *redir, int end)
 	i = 0;
 	while (i < end)
 	{
-		if (redir[i].filename)
-			free(redir[i].filename);
+		if (redir[i].file_name)
+			free(redir[i].file_name);
 		if (redir[i].heredoc_fd != -1)
 			close(redir[i].heredoc_fd);
 		i++;
@@ -41,7 +41,7 @@ bool	free_segment(t_segment *segment, int end)
 			free_redir(segment[i].redirections,
 				segment[i].redirections->redir_count);
 		if (segment[i].cmd_path)
-				free(segment[i].cmd_path);
+			free(segment[i].cmd_path);
 		i++;
 	}
 	free(segment);

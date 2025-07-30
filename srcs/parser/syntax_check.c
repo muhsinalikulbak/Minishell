@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 04:08:38 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/18 17:58:56 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 03:07:25 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@ static bool	check_redir_file(t_token *token, char **next_value)
 
 	last = get_last_token(token);
 	if (last->type >= 2 && last->type <= 5)
-		return (false); // Buradaki durumda unexpected token newline olacak. SADECE BU KISMI FONKSİYONA ALABİLİRİM
+		return (false);
 	while (token != NULL && token->next != NULL)
 	{
 		*next_value = token->next->value;
-		if (token->type == TOKEN_REDIR_IN
-			&& token->next->type != TOKEN_WORD)
+		if (token->type == REDIR_IN
+			&& token->next->type != WORD)
 			return (false);
-		else if (token->type == TOKEN_REDIR_OUT
-			&& token->next->type != TOKEN_WORD)
+		else if (token->type == REDIR_OUT
+			&& token->next->type != WORD)
 			return (false);
-		else if (token->type == TOKEN_HEREDOC
-			&& token->next->type != TOKEN_WORD)
+		else if (token->type == HEREDOC
+			&& token->next->type != WORD)
 			return (false);
-		else if (token->type == TOKEN_APPEND
-			&& token->next->type != TOKEN_WORD)
+		else if (token->type == APPEND
+			&& token->next->type != WORD)
 			return (false);
 		token = token->next;
 	}
@@ -41,16 +41,16 @@ static bool	check_redir_file(t_token *token, char **next_value)
 
 static bool	pipe_check(t_token *token)
 {
-	if (token->type == TOKEN_PIPE)
+	if (token->type == PIPE)
 		return (false);
-	if (get_last_token(token)->type == TOKEN_PIPE)
+	if (get_last_token(token)->type == PIPE)
 		return (false);
 	while (token != NULL)
 	{
 		if (token->next != NULL)
 		{
-			if (token->type == TOKEN_PIPE
-				&& token->next->type == TOKEN_PIPE)
+			if (token->type == PIPE
+				&& token->next->type == PIPE)
 				return (false);
 		}
 		token = token->next;

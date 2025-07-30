@@ -3,85 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/14 20:13:32 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/23 16:31:40 by mkulbak          ###   ########.fr       */
+/*   Created: 2025/07/27 00:44:02 by muhsin            #+#    #+#             */
+/*   Updated: 2025/07/30 02:37:20 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_value_for_heredoc(char *line, int *i)
-{
-	char	*key;
-	char	*value;
-	int		j;
-
-	j = ++(*i);
-	if (ft_isdigit(line[j]))
-		return ("");
-	while (line[j] && (ft_isalnum(line[j]) || line[j] == '_'))
-		j++;
-	key = ft_substr(line, *i, j - *i);
-	if (!key)
-		return (free(line), NULL);
-	value = try_get_value(key);
-	free(key);
-	*i = j - 1;
-	if (value == NULL)
-		return ("");
-	return (value);
-}
-
-static bool	heredoc_expand(char *line, int pipefd[])
-{
-	char	*value;
-	int		i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '$' && check_no_expand_for_heredoc(line, i))
-		{
-			value = get_value_for_heredoc(line, &i);
-			if (!value)
-				return (free(line), false);
-			write(pipefd[1], value, ft_strlen(value));
-		}
-		else
-			write(pipefd[1], &line[i], 1);
-		i++;
-	}
-	return (true);
-}
-
-static bool	heredoc(char *delimiter, int *fd, bool is_it_expandable)
+static bool	start_heredoc(char *delimiter, int *fd, bool is_it_expandable)
 {
 	int		pipefd[2];
-	char	*line;
+	pid_t	child_pid;
 
 	if (pipe(pipefd) == -1)
 		return (false);
-	line = get_input(true);
-	if (!line)
+	heredoc_parent_signal_setup();
+	child_pid = fork();
+	if (child_pid == -1)
 		return (close_pipefd(pipefd));
-	while (!str_equal(delimiter, line)) // Buradaki loop true olacak, delimiter kontrolü loop içinde yapılıcak.
+	if (child_pid == 0)
 	{
-		if (is_it_expandable && ft_strchr(line, '$'))
-		{
-			if (!heredoc_expand(line, pipefd))
-				return (close_pipefd(pipefd));
-			write(pipefd[1], "\n", 1);
-			free(line);
-		}
-		else
-			write_pipefd(line, pipefd);
-		line = get_input(true);
-		if (!line)
-			return (close_pipefd(pipefd));
+		heredoc_child_process(delimiter, pipefd, is_it_expandable);
+		exit(EXIT_FAILURE);
 	}
-	return (heredoc_finishing(line, pipefd, fd));
+	else
+		return (heredoc_parent_process(pipefd, child_pid, fd));
 }
 
 static bool	heredoc_scan(t_redir *redir)
@@ -93,11 +41,11 @@ static bool	heredoc_scan(t_redir *redir)
 	i = 0;
 	while (i < redir->redir_count)
 	{
-		if (redir[i].type == TOKEN_HEREDOC)
+		if (redir[i].type == HEREDOC)
 		{
-			delimiter = redir[i].filename;
+			delimiter = redir[i].file_name;
 			is_it_expandable = redir[i].state == STATE_NORMAL;
-			if (!heredoc(delimiter, &redir[i].heredoc_fd, is_it_expandable))
+			if (!start_heredoc(delimiter, &redir[i].heredoc_fd, is_it_expandable))
 				return (false);
 		}
 		i++;
@@ -124,17 +72,7 @@ bool	heredoc_init(t_segment *segments)
 	return (true);
 }
 
-
-
-
-
-
-
-
-
-
-// EN SON KALDIRILACAK
-
+/*
 static void print_heredoc_content(int fd, int segment_idx, int heredoc_idx)
 {
 	char    buffer[1024];
@@ -166,7 +104,8 @@ static void print_heredoc_content(int fd, int segment_idx, int heredoc_idx)
 		// Manuel parsing - boş satırları da göster
 		line_start = 0;
 		i = 0;
-		while (i < bytes_read)  // 🔥 Değişiklik: i <= bytes_read yerine i < bytes_read
+		while (i < bytes_read)  
+		// 🔥 Değişiklik: i <= bytes_read yerine i < bytes_read
 		{
 			if (buffer[i] == '\n')
 			{
@@ -202,7 +141,7 @@ void print_heredoc_data(t_segment *segments)
 	
 	if (!segments)
 	{
-		printf("❌ No segments to display heredoc data\n");
+		printf("❌ No segments to display start_heredoc data\n");
 		return;
 	}
 	
@@ -227,9 +166,9 @@ void print_heredoc_data(t_segment *segments)
 		j = 0;
 		while (j < redir->redir_count)
 		{
-			if (redir[j].type == TOKEN_HEREDOC)
+			if (redir[j].type == HEREDOC)
 			{
-				printf("  🔸 Heredoc found: delimiter='%s'\n", redir[j].filename);
+				printf("  🔸 Heredoc found: delimiter='%s'\n", redir[j].file_name);
 				print_heredoc_content(redir[j].heredoc_fd, i, heredoc_count);
 				heredoc_count++;
 			}
@@ -247,3 +186,4 @@ void print_heredoc_data(t_segment *segments)
 	printf("\n═══════════════════════════════════════════════════════════\n");
 	printf("🏁 Heredoc inspection completed!\n\n");
 }
+*/

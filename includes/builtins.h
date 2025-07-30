@@ -6,24 +6,22 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:17 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/24 01:32:16 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 12:39:30 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-#include "env_manager.h"
+# include "env_manager.h"
 
 void	echo(char **args, int fd);
-void	cd(char *path, t_map **env_map_head);
-void	pwd(char *pwd);
-void	export(t_map **env_map_head, char *var, char *key, bool is_set);
+void	cd(char **args, t_map **env_map_head);
+void	pwd(void);
+void	export(t_map **env_map_head, char *var, char *key, bool is_set);// fonskiyon 4 argümandan fazla alıyo ve çok uzun
 void	unset(t_map **env_map_head, char *key);
-void	env(void);
+void	env(char **args);
 void	ft_exit(char **args);
-
-// Export utils functions
 bool	validate_key(char *key);
 void	add_new_var(t_map **env_map_head, char *key, char *var);
 void	print_export(t_map **env_map_head, int size);

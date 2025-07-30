@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/22 14:23:50 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 03:07:25 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,23 +86,23 @@ bool	tokenizer(t_lexer_data *data)
 	prev_state = data->prev_state;
 	if (prev_state == STATE_IN_DQUOTE || prev_state == STATE_IN_SQUOTE)
 	{
-		return (token_add_back(data, TOKEN_WORD));
+		return (token_add_back(data, WORD));
 	}
 	else if (str_equal(data->token_value, "|"))
-		token_type = TOKEN_PIPE;
+		token_type = PIPE;
 	else if (str_equal(data->token_value, "<"))
-		token_type = TOKEN_REDIR_IN;
+		token_type = REDIR_IN;
 	else if (str_equal(data->token_value, ">"))
-		token_type = TOKEN_REDIR_OUT;
+		token_type = REDIR_OUT;
 	else if (str_equal(data->token_value, "<<"))
-		token_type = TOKEN_HEREDOC;
+		token_type = HEREDOC;
 	else if (str_equal(data->token_value, ">>"))
-		token_type = TOKEN_APPEND;
+		token_type = APPEND;
 	else
-		token_type = TOKEN_WORD;
+		token_type = WORD;
 	return (token_add_back(data, token_type));
 }
-
+/*
 // Bu en son silinecek
 void print_token_list(t_token *list)
 {
@@ -114,12 +114,12 @@ void print_token_list(t_token *list)
     }
 
     char *token_type[] = {
-        "TOKEN_WORD", 
-        "TOKEN_PIPE", 
-        "TOKEN_REDIR_IN", 
-        "TOKEN_REDIR_OUT", 
-        "TOKEN_APPEND", 
-        "TOKEN_HEREDOC", 
+        "WORD", 
+        "PIPE", 
+        "REDIR_IN", 
+        "REDIR_OUT", 
+        "APPEND", 
+        "HEREDOC", 
         NULL
     };
 
@@ -143,10 +143,11 @@ void print_token_list(t_token *list)
         int token_len = (int)strlen(ptr->value) + 2;
         for (int i = 0; i < max_len + 2 - token_len; i++)
             putchar(' ');
-        printf(" \033[1;36mType\033[0m: \033[1;33m%s\033[0m\n", token_type[ptr->type]);
+        printf(" \033[1;36mType\033
+		[0m: \033[1;33m%s\
+			033[0m\n", token_type[ptr->type]);
         ptr = ptr->next;
     }
 
     printf("\033[1;32m--- End of Token List ---\033[0m\n");
-}
-
+}*/

@@ -6,7 +6,7 @@
 #    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/24 01:28:52 by muhsin           ###   ########.fr        #
+#    Updated: 2025/07/30 02:38:42 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ UNAME_S := $(shell uname -s)
 # Common variables
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS =   -Wall -Wextra -Werror -g
 LDFLAGS = -lreadline -lcurses
 
 ifeq ($(UNAME_S), Darwin)
@@ -42,8 +42,16 @@ SRC = main.c \
 	  parser/segment_utils.c \
 	  parser/create_segment.c \
 	  parser/heredoc.c \
-	  parser/heredoc_utils.c \
+	  parser/heredoc_signals.c \
+	  parser/heredoc_process.c \
+	  parser/heredoc_expand.c \
 	  parser/find_cmd.c \
+	  executor/executor.c \
+	  executor/executor_signals.c \
+	  executor/cmd_runner.c \
+	  executor/pipe_setup.c \
+	  executor/process_setup.c \
+	  executor/handle_redirections.c \
 	  signals/signal.c \
 	  builtins/echo.c \
 	  builtins/cd.c \
@@ -53,6 +61,7 @@ SRC = main.c \
 	  builtins/env.c \
 	  builtins/exit.c \
 	  builtins/map_utils.c \
+	  builtins/map_utils2.c \
 	  builtins/builtins_utils.c \
 	  builtins/export_utils.c \
 	  builtins/env_manager.c \

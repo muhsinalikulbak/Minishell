@@ -3,17 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/24 01:28:51 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/28 14:06:06 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_exit(char **args)
+static bool	check_alpha(char **args)
 {
-	(void)args;
-	exit(get_exit_code());
+	int	i;
+
+	i = 0;
+	while (args[1][i])
+	{
+		if (ft_isalpha(args[1][i]))
+		{
+			ft_putendl_fd("exit", 2);
+			ft_putstr_fd(args[1], 2);
+			ft_putendl_fd(":numeric argument required", 2);
+			return (false);
+		}
+		i++;
+	}
+	return (true);
+}
+
+static bool	check_many_arguments(char **args)
+{
+	if (args[2])
+	{
+		ft_putendl_fd("exit: too many arguments", 2);
+		set_exit_code(1);
+		return (false);
+	}
+	return (true);
+}
+
+void	ft_exit(char **args)
+{
+	if (!args[1])
+	{
+		exit(get_exit_code());
+	}
+	if (!check_alpha(args))
+		exit(2);
+	if (check_many_arguments(args))
+	{
+		exit(ft_atoi(args[1]));
+	}
 }

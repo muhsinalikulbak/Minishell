@@ -3,45 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:03:40 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/06 23:55:49 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 19:50:46 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void    ctrls(int sig)
+volatile sig_atomic_t	g_signal_received = 0;
+
+static void	interactive_sigint(int sig)
 {
-    if (sig == SIGINT)
-    {
-        write(2, "\n", 1);
-        rl_replace_line("", 0);
-        rl_on_new_line();
-        rl_redisplay();
-    }
+	g_signal_received = 1;
+	if (sig == SIGINT)
+	{
+		write(STDERR_FILENO, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
-void    handle_eof()
+void	handle_eof(void)
 {
-    exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
 
-void signal_setup()
+void	signal_setup(void)
 {
-    struct sigaction sa_int;  // For SIGINT
-    struct sigaction sa_quit; // For SIGQUIT
-    
-    // Set up SIGINT handler
-    sa_int.sa_handler = &ctrls;
-    sigemptyset(&sa_int.sa_mask);
-    sa_int.sa_flags = 0;
-    sigaction(SIGINT, &sa_int, NULL);
-    
-    // Set up SIGQUIT to be ignored
-    sa_quit.sa_handler = SIG_IGN;
-    sigemptyset(&sa_quit.sa_mask);
-    sa_quit.sa_flags = 0;
-    sigaction(SIGQUIT, &sa_quit, NULL);
+	struct sigaction	sa_int;
+	struct sigaction	sa_quit;
+
+	g_signal_received = 0;
+	sa_int.sa_handler = &interactive_sigint;
+	sigemptyset(&sa_int.sa_mask);
+	sa_int.sa_flags = SA_RESTART;
+	sigaction(SIGINT, &sa_int, NULL);
+	sa_quit.sa_handler = SIG_IGN;
+	sigemptyset(&sa_quit.sa_mask);
+	sa_quit.sa_flags = 0;
+	sigaction(SIGQUIT, &sa_quit, NULL);
 }
+

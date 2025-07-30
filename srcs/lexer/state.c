@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/22 15:04:50 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/28 17:28:19 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,6 @@ bool	last_state(t_lexer_data *data)
 			return (false);
 		}
 	}
-	// Eğer en son pipe token yapıldıysa token_value = NULL oluyor
-	// O yüzden aşağıda token sayısını kontrol ediyorum.
-	// Token 0 değilse sorun yok true döner.
-	// Token 0 ise prompt girilmiş ama token oluşturulamamıştır.
-
 	if (get_token_count(*data->token) == 0)
 		return (false);
 	return (true);

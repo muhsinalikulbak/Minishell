@@ -6,15 +6,17 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/24 01:28:56 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 12:39:35 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void pwd(char *pwd)
+void	pwd(void)
 {
+	char	*pwd;
+
 	pwd = getcwd(NULL, 0);
-	printf("%s\n",pwd);
+	printf("%s\n", pwd);
 	free(pwd);
 }

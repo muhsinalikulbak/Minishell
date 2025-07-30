@@ -3,26 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:21 by muhsin            #+#    #+#             */
-/*   Updated: 2025/06/16 03:03:43 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 18:21:02 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
+# include "builtins.h"
+# include "parser.h"
+// Forward declarations
+typedef struct s_segment	t_segment;
 
-typedef enum e_exec_error
-{
-	EXEC_ERROR_CMD_NOT_FOUND,       // 127
-	EXEC_ERROR_PERMISSION_DENIED,   // 126  
-	EXEC_ERROR_FILE_NOT_FOUND,      // 1
-	EXEC_ERROR_IS_DIRECTORY         // 126
-}		t_exec_error;
-
-
-
+void    executor(t_segment *segments);
+void	close_all_pipes(int pipefd[][2], int cmd_count);
+void	pipe_setup(int pipefd[][2], int i, int cmd_count);
+void	execute_builtin(t_segment *segments, bool is_child);
+void	handle_command(t_segment *segment);
+void	process_setup(t_segment *segments, int *pids, int pipefd[][2]);
+void	close_all_pipes(int pipefd[][2], int pipe_count);
+bool	open_pipefd(int pipefd[][2], int pipe_count);
+void	pipe_setup(int pipefd[][2], int i, int seg_count);
+void    handle_redirections(t_redir *redir);
+void	exec_child_signal_setup(void);
+void	exec_parent_signal_setup(void);
+void	exec_restore_signals(void);
 
 #endif

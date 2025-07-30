@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:01:14 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/18 17:59:57 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 18:15:10 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,17 +118,65 @@ static char	*get_next_line(int fd)
 	return (line);
 }*/
 
+static	char	*build_prompt_string(char *username, char *pwd)
+{
+	char	*temp1;
+	char	*temp2;
+	char	*prompt;
+
+	temp1 = ft_strjoin("\001\033[1;32m\002", username);
+	if (!temp1)
+		return (NULL);
+	temp2 = ft_strjoin(temp1, "\001\033[0m\002:\001\033[1;34m\002");
+	free(temp1);
+	if (!temp2)
+		return (NULL);
+	temp1 = ft_strjoin(temp2, pwd);
+	free(temp2);
+	if (!temp1)
+		return (NULL);
+	prompt = ft_strjoin(temp1, "\001\033[0m\002$ ");
+	free(temp1);
+	return (prompt);
+}
+
+static	char	*create_prompt(void)
+{
+	char	*pwd;
+	char	*username;
+	char	*prompt;
+
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		return (NULL);
+	username = getenv("USER");
+	if (!username)
+		return (free(pwd), NULL);
+	prompt = build_prompt_string(username, pwd);
+	free(pwd);
+	if (!prompt)
+		return (ft_strdup("$ "));
+	return (prompt);
+}
+
 char	*get_input(bool is_heredoc)
 {
-	char	*line;
-	// Leak bakmak için burayı aç readlien'ı kapat ve maindeki sonsuz while loop'u kaldır
-	// write(1, "minishell~$ ", 12);
-	// line = get_next_line(STDIN_FILENO);
+	char				*line;
+	char				*prompt;
+	
 	if (is_heredoc)
 		line = readline("> ");
 	else
-		line = readline("minishell~$ ");
-	if (!line)
-		handle_eof();
+	{
+		
+		prompt = create_prompt();
+		if (!prompt)
+		{
+			ft_putendl_fd("minishell: prompt creation failed", 2);
+			prompt = ft_strdup("$ ");
+		}
+		line = readline(prompt);
+		free(prompt);
+	}
 	return (line);
 }

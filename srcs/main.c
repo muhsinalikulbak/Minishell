@@ -3,52 +3,66 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/22 21:43:42 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 19:52:16 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	process_input_line(char *line)
+{
+	t_token		*token;
+	t_segment	*segments;
+
+	token = NULL;
+	add_history(line);
+	if (lexer(&token, line))
+	{
+		if (syntax_check(token))
+		{
+			segments = parser(token);
+			if (segments)
+			{
+				executor(segments);
+				free_segment(segments, segments->segment_count);
+			}
+		}
+		else
+			free_token(token);
+	}
+}
+
+void	main_loop(void)
+{
+	char	*line;
+
+    while (true)
+    {
+		g_signal_received = 0;
+        line = get_input(false);
+
+        if (!line)
+        {
+            handle_eof();
+            break;
+        }
+        if (ft_strlen(line) > 0)
+        {
+            process_input_line(line);
+        }
+        free(line);
+    }
+}
+
 int	main(int argc, char **argv, char **env)
-{	
+{
 	(void) argc;
 	(void) argv;
-
-	char		*line;
-	t_token		*token;
-    t_segment	*segments;
-	
-	get_env_map(env); // İlk çağrıda env'i oluştur ve static'de sakla
+	get_env_map(env);
 	signal_setup();
-
-	while (true)
-	{
-		line = get_input(false);
-		if (line)
-		{
-			token = NULL;
-			add_history(line);
-			if (lexer(&token, line)) // Lexerda syntax alırsa kendi içinde free_token yapıyor.
-			{
-				print_token_list(token);
-				if (syntax_check(token))
-				{
-					segments = parser(token);
-					if (segments)
-					{
-						print_segment_list(segments, segments->segment_count);
-						print_heredoc_data(segments);
-						// pipe_lines NULL değilse executa'a gidicek.
-						free_segment(segments, segments->segment_count);
-					}
-				}
-				else
-					free_token(token);
-			}
-			free(line);
-		}
-	}
+	main_loop();
+	return (0);
 }

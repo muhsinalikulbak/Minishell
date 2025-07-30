@@ -3,6 +3,7 @@ a.out
 .vscode
 .idea
 #kayra macbook için
+/Users/kayraakbas/Desktop/minishell/.venv
 /Users/kayraakbas/Desktop/minishell/Makefile
 /Users/kayraakbas/Desktop/minishell/includes/signals.h
 /Users/kayraakbas/Desktop/minishell/srcs/signals/signal.c

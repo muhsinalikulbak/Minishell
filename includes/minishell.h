@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:39 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/06/28 15:42:06 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/29 16:24:52 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef MINISHELL_H
+#ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include <unistd.h>
@@ -26,7 +26,6 @@
 # include <readline/history.h>
 # include <stdbool.h>
 
-
 /* Libft library */
 # include "libft.h"
 
@@ -38,4 +37,9 @@
 # include "parser.h"
 # include "signals.h"
 # include "utils.h"
+
+extern volatile sig_atomic_t	g_signal_received;
+
+void	process_input_line(char *line);
+void	main_loop(void);
 #endif
