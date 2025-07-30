@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:39 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/29 16:24:52 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/31 00:54:17 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>

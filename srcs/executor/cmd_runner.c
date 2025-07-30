@@ -6,23 +6,39 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 13:06:25 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/31 00:57:11 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static bool	is_directory(char *path)
+{
+	struct stat	statbuf;
+
+	if (stat(path, &statbuf) == 0)
+		return (S_ISDIR(statbuf.st_mode));
+	return (false);
+}
+
 static void	execute_external(t_segment *segments)
 {
 	if (segments->cmd_type == CMD_EXTERNAL)
 	{
-		if (!execve(segments->cmd_path, segments->args, NULL))
+		if (is_directory(segments->cmd_path))
+		{
+			ft_putstr_fd(segments->args[0], 2);
+			ft_putendl_fd(": Is a directory", 2);
+			exit(126);
+		}
+		if (execve(segments->cmd_path, segments->args, NULL) == -1)
 		{
 			perror(segments->args[0]);
 			if (errno == EACCES)
 				exit(126);
 			if (errno == ENOENT)
 				exit(127);
+			exit(EXIT_FAILURE);
 		}
 	}
 }
