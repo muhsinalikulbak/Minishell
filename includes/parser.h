@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/30 02:39:08 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/31 11:47:45 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef enum e_cmd_type
 	CMD_BUILTIN,
 	CMD_EXTERNAL,
 	CMD_NOT_FOUND,
+	IS_A_DIRECTORY,
 	NO_PATH,
 }	t_cmd_type;
 
@@ -63,5 +64,6 @@ bool		heredoc_expand(char *line, int pipefd[2]);
 bool		heredoc_child_process(char *delimiter, int pipefd[2],
 				bool is_it_expandable);
 bool		find_cmd(t_segment *segments);
+void		set_cmd_type(t_segment *segment);
 bool		heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd);
 #endif

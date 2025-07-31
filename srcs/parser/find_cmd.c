@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:39:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 15:21:25 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/31 12:16:41 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,17 @@ static bool	path_access_control(char **full_path, char *slash_cmd, char **path)
 	return (free(slash_cmd), true);
 }
 
-static bool	find_path(char *cmd, char *env_path, t_segment *segment,
-				char **path)
+static bool	find_path(char *cmd, char *env_path, t_segment *segment)
 {
 	char	**full_path;
 	char	*slash_cmd;
 
-	segment->cmd_type = CMD_NOT_FOUND;
 	if (access(cmd, F_OK) == 0)
 	{
-		*path = ft_strdup(cmd);
-		segment->cmd_type = CMD_EXTERNAL;
+		segment->cmd_path = ft_strdup(cmd);
+		if (!segment->cmd_path)
+			return (false);
+		set_cmd_type(segment);
 		return (true);
 	}
 	slash_cmd = ft_strjoin("/", cmd);
@@ -78,30 +78,28 @@ static bool	find_path(char *cmd, char *env_path, t_segment *segment,
 	full_path = ft_split(env_path, ':');
 	if (!full_path)
 		return (free(slash_cmd), false);
-	if (!path_access_control(full_path, slash_cmd, path))
+	if (!path_access_control(full_path, slash_cmd, &segment->cmd_path))
 		return (false);
-	if (*path)
-		segment->cmd_type = CMD_EXTERNAL;
+	set_cmd_type(segment);
 	return (true);
 }
 
 bool	find_cmd(t_segment *segments)
 {
 	int		i;
-	char	**path;
+	char	*full_path;
 
 	i = 0;
+	full_path = try_get_value("PATH");
 	while (i < segments->segment_count)
 	{
 		if (segments[i].args)
 		{
 			if (find_builtin(segments[i].args[0]))
 				segments[i].cmd_type = CMD_BUILTIN;
-			else if (try_get_value("PATH"))
+			else if (full_path)
 			{
-				path = &segments[i].cmd_path;
-				if (!find_path(segments[i].args[0], try_get_value("PATH"),
-						&segments[i], path))
+				if (!find_path(segments[i].args[0], full_path, &segments[i]))
 					return (false);
 			}
 			else

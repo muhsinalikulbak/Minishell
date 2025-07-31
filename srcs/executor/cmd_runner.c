@@ -6,38 +6,14 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/31 01:26:17 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/31 11:54:18 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	is_directory(char *path)
-{
-	struct stat	statbuf;
-
-	if (stat(path, &statbuf) == 0)
-		return (S_ISDIR(statbuf.st_mode));
-	return (false);
-}
-
 static void	execute_external(t_segment *segments)
 {
-	if (segments->cmd_type == CMD_EXTERNAL)
-	{
-		if (is_directory(segments->cmd_path))
-		{
-			if (ft_strchr(segments->args[0], '/'))
-			{
-				errno = EISDIR;
-				perror(segments->args[0]);
-				exit(126);
-			}
-			ft_putstr_fd(segments->args[0], 2);
-			ft_putendl_fd(": command not found", 2);
-			exit(127);
-		}
-	}
 	if (execve(segments->cmd_path, segments->args, NULL) == -1)
 	{
 		perror(segments->args[0]);
@@ -84,6 +60,13 @@ void	handle_command(t_segment *segment)
 		ft_putendl_fd(": command not found", 2);
 		// FREE
 		exit(127);
+	}
+	else if (segment->cmd_type == IS_A_DIRECTORY)
+	{
+		ft_putstr_fd(segment->args[0], 2);
+		ft_putendl_fd(": Is a directory", 2);
+		// FREE
+		exit(126);
 	}
 	else if (segment->cmd_type == NO_PATH)
 	{
