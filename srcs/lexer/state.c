@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 17:28:19 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/31 22:53:04 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ bool	state_idle(t_lexer_data *data)
 	len = data->input_length;
 	data->state = STATE_NORMAL;
 	data->is_ambiguous = false;
+	data->expanding = false;
+	data->empty_string = false;
 	if (data->token_value == NULL)
 	{
 		data->token_value = (char *)ft_calloc(len + 1, sizeof(char));
@@ -38,8 +40,7 @@ bool	state_normal(t_lexer_data *data, char ch)
 {
 	if (ch == ' ' || (ch >= 9 && ch <= 13))
 	{
-		data->token_value[data->value_idx] = '\0';
-		if (!tokenizer(data))
+		if (!tokenize_prev_value(data))
 			return (false);
 		data->token_value = NULL;
 		data->prev_state = STATE_NORMAL;

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 13:06:25 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/01 02:09:30 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 
 static void	execute_external(t_segment *segments)
 {
-	if (segments->cmd_type == CMD_EXTERNAL)
+	char	**env;
+
+	env = create_env();
+	if (!env)
+		exit(EXIT_FAILURE);
+	if (execve(segments->cmd_path, segments->args, env) == -1)
 	{
-		if (!execve(segments->cmd_path, segments->args, NULL))
-		{
-			perror(segments->args[0]);
-			if (errno == EACCES)
-				exit(126);
-			if (errno == ENOENT)
-				exit(127);
-		}
+		perror(segments->args[0]);
+		if (errno == EACCES)
+			exit(126);
+		if (errno == ENOENT)
+			exit(127);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -31,22 +34,22 @@ void	execute_builtin(t_segment *segments, bool is_child)
 {
 	char	*cmd;
 	t_map	*env_map;
-
+	
 	(void)(is_child);
 	// unset eklenicek, export düzeltilecek, cd home ayarlanacak.
 	env_map = get_env_map(NULL);
 	cmd = segments->args[0];
 	if (str_equal(cmd, "cd"))
 		cd(segments->args, &env_map);
-	if (str_equal(cmd, "echo"))
+	else if (str_equal(cmd, "echo"))
 		echo(segments->args, STDOUT_FILENO);
-	if (str_equal(cmd, "pwd"))
+	else if (str_equal(cmd, "pwd"))
 		pwd();
-	if (str_equal(cmd, "export"))
+	else if (str_equal(cmd, "export"))
 		export(&env_map, segments->args[1], segments->args[2], false);
-	if (str_equal(cmd, "env"))
+	else if (str_equal(cmd, "env"))
 		env(segments->args);
-	if (str_equal(cmd, "exit"))
+	else if (str_equal(cmd, "exit"))
 		ft_exit(segments->args);
 }
 
@@ -63,11 +66,25 @@ void	handle_command(t_segment *segment)
 		// FREE
 		exit(127);
 	}
+	else if (segment->cmd_type == IS_A_DIRECTORY)
+	{
+		ft_putstr_fd(segment->args[0], 2);
+		ft_putendl_fd(": Is a directory", 2);
+		// FREE
+		exit(126);
+	}
 	else if (segment->cmd_type == NO_PATH)
 	{
 		ft_putstr_fd(segment->args[0], 2);
 		ft_putendl_fd(": No such file or directory", 2);
 		// FREE
 		exit(127);
+	}
+	else if (segment->cmd_type == PERMISSION_DENIED)
+	{
+		ft_putstr_fd(segment->args[0], 2);
+		ft_putendl_fd(": Permission denied", 2);
+		// FREE
+		exit(126);
 	}
 }

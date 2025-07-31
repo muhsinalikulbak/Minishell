@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/30 02:39:08 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/01 02:09:30 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ typedef enum e_cmd_type
 	CMD_BUILTIN,
 	CMD_EXTERNAL,
 	CMD_NOT_FOUND,
+	IS_A_DIRECTORY,
 	NO_PATH,
+	PERMISSION_DENIED,
 }	t_cmd_type;
 
 typedef struct s_redir
@@ -63,5 +65,6 @@ bool		heredoc_expand(char *line, int pipefd[2]);
 bool		heredoc_child_process(char *delimiter, int pipefd[2],
 				bool is_it_expandable);
 bool		find_cmd(t_segment *segments);
+void		set_cmd_type(t_segment *segment);
 bool		heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd);
 #endif

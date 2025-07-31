@@ -6,7 +6,7 @@
 #    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/07/30 02:38:42 by muhsin           ###   ########.fr        #
+#    Updated: 2025/07/31 11:47:10 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRC = main.c \
 	  parser/heredoc_process.c \
 	  parser/heredoc_expand.c \
 	  parser/find_cmd.c \
+	  parser/find_cmd_utils.c \
 	  executor/executor.c \
 	  executor/executor_signals.c \
 	  executor/cmd_runner.c \

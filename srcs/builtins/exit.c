@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 14:06:06 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/31 22:56:41 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static bool	check_alpha(char **args)
 	{
 		if (ft_isalpha(args[1][i]))
 		{
-			ft_putendl_fd("exit", 2);
 			ft_putstr_fd(args[1], 2);
 			ft_putendl_fd(":numeric argument required", 2);
 			return (false);
@@ -44,6 +43,7 @@ static bool	check_many_arguments(char **args)
 
 void	ft_exit(char **args)
 {
+	ft_putendl_fd("exit", 2);
 	if (!args[1])
 	{
 		exit(get_exit_code());
