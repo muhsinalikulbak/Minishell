@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/31 18:33:57 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/31 19:33:36 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 static void	execute_external(t_segment *segments)
 {
-	if (execve(segments->cmd_path, segments->args, NULL) == -1)
+	char	**env;
+
+	env = create_env();
+	if (!env)
+		exit(EXIT_FAILURE);
+	if (execve(segments->cmd_path, segments->args, env) == -1)
 	{
 		perror(segments->args[0]);
 		if (errno == EACCES)
