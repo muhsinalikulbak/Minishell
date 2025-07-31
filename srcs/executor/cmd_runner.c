@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/31 11:54:18 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/31 18:33:57 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,22 @@ void	execute_builtin(t_segment *segments, bool is_child)
 {
 	char	*cmd;
 	t_map	*env_map;
-
+	
 	(void)(is_child);
 	// unset eklenicek, export düzeltilecek, cd home ayarlanacak.
 	env_map = get_env_map(NULL);
 	cmd = segments->args[0];
 	if (str_equal(cmd, "cd"))
 		cd(segments->args, &env_map);
-	if (str_equal(cmd, "echo"))
+	else if (str_equal(cmd, "echo"))
 		echo(segments->args, STDOUT_FILENO);
-	if (str_equal(cmd, "pwd"))
+	else if (str_equal(cmd, "pwd"))
 		pwd();
-	if (str_equal(cmd, "export"))
+	else if (str_equal(cmd, "export"))
 		export(&env_map, segments->args[1], segments->args[2], false);
-	if (str_equal(cmd, "env"))
+	else if (str_equal(cmd, "env"))
 		env(segments->args);
-	if (str_equal(cmd, "exit"))
+	else if (str_equal(cmd, "exit"))
 		ft_exit(segments->args);
 }
 
