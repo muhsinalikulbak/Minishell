@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:15:07 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/29 13:36:47 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/31 12:31:53 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	check_ambiguous(t_redir *redir)
 	{
 		ft_putendl_fd(":ambiguous redirect", 2);
 		// FREE
+		// Parent ise bool ile çık
+		// Child ise exit at
 		exit(EXIT_FAILURE);
 	}
 }
@@ -36,6 +38,8 @@ static void	open_redir_output(t_redir *redir)
 	{
 		perror(redir->file_name);
 		//FREE
+		// Parent ise bool ile çık
+		// Child ise exit at
 		exit(EXIT_FAILURE);
 	}
 	dup2(fd, STDOUT_FILENO);
@@ -55,6 +59,8 @@ static void	open_redir_input(t_redir *redir)
 		{
 			perror(redir->file_name);
 			//FREE
+			// Parent ise bool ile çık
+			// Child ise exit at
 			exit(EXIT_FAILURE);
 		}
 		dup2(fd, STDIN_FILENO);
