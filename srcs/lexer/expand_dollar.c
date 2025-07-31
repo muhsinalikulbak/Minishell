@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:17:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/30 03:08:23 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/31 21:42:09 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static bool	check_no_expand_for_token(t_lexer_data *data)
 		data->token_value[data->value_idx++] = '$';
 		return (true);
 	}
+	data->expanding = true;
 	return (false);
 }
 

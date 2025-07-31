@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 03:07:25 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/31 22:53:04 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_token
 	struct s_token	*prev;
 	t_token_state	state;
 	bool			is_ambiguous;
+	bool			empty_string;
 }		t_token;
 
 typedef struct s_lexer_data
@@ -53,6 +54,8 @@ typedef struct s_lexer_data
 	int				value_idx;
 	int				*i;
 	bool			is_ambiguous;
+	bool			expanding;
+	bool			empty_string;
 }		t_lexer_data;
 
 t_token	*get_last_token(t_token *head);
@@ -71,4 +74,5 @@ void	state_single_quoute(t_lexer_data *data, char ch);
 void	past_space(t_lexer_data *data);
 void	print_redir_error(char *line, int i);
 bool	expand_dollar(t_lexer_data *data);
+bool	tokenize_prev_value(t_lexer_data *data);
 #endif

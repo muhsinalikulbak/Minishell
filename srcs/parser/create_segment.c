@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 16:10:19 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/29 13:38:30 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/31 22:43:34 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,16 @@ static char	**set_args(t_token *token, int cmd_count)
 	if (!args)
 		return (NULL);
 	i = -1;
-	while (token != NULL && token->type != PIPE)		// echo > file merhaba dünya
+	while (token != NULL && token->type != PIPE)
 	{
 		if (token->type == WORD)
 		{
-			args[++i] = ft_strdup(token->value);
-			if (!args[i])
-				return (free_all(args));
+			if (token->value[0] || token->empty_string)
+			{
+				args[++i] = ft_strdup(token->value);
+				if (!args[i])
+					return (free_all(args));
+			}
 		}
 		else
 			token = token->next;

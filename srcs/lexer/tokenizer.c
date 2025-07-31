@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/29 03:07:25 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/31 22:31:10 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static bool	token_add_back(t_lexer_data *data, t_token_type token_type)
 	new_token->value = data->token_value;
 	new_token->type = token_type;
 	new_token->is_ambiguous = data->is_ambiguous;
+	new_token->empty_string = data->empty_string;
 	new_token->next = NULL;
 	new_token->prev = NULL;
 	last = get_last_token(*data->token);

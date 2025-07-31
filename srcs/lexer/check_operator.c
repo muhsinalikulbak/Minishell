@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_operator.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/28 17:23:24 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/07/31 22:53:04 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,37 @@ static bool	set_quote(t_lexer_data *data, char ch)
 	return (true);
 }
 
-static bool	tokenize_operator(t_lexer_data *data, char *operator)
+bool	tokenize_prev_value(t_lexer_data *data)
 {
-	int	len;
+	int		len;
+	int		idx;
+	char	*line;
 
 	data->token_value[data->value_idx] = '\0';
 	len = ft_strlen(data->token_value);
-	if (len == 0 && data->token_value)
+	idx = *data->i;
+	line = data->input_line;
+	if (idx - 2 >= 0)
+	{
+		if ((line[idx - 1] == '"' && line[idx - 2] == '"')
+			|| (line[idx - 1 == '\''] && line[idx - 2] == '\''))
+		{
+			data->empty_string = true;
+			if (!tokenizer(data))
+				return (false);
+			return (true);
+		}
+	}
+	if (len == 0 && !data->expanding)
 		free(data->token_value);
 	else if (!tokenizer(data))
+		return (false);
+	return (true);
+}
+
+static bool	tokenize_operator(t_lexer_data *data, char *operator)
+{
+	if (!tokenize_prev_value(data))
 		return (false);
 	data->token_value = ft_strdup(operator);
 	if (data->token_value == NULL)

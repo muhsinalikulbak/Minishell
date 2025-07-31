@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 02:22:33 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 03:07:25 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/07/31 22:42:08 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	token_count_in_segment(t_token *token)
 	count = 0;
 	while (token != NULL && token->type != PIPE)
 	{
-		count++;
+		if (token->value[0] || token->empty_string)
+			count++;
 		token = token->next;
 	}
 	return (count);
