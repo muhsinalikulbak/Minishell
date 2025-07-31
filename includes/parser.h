@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/31 11:47:45 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/01 02:09:30 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef enum e_cmd_type
 	CMD_NOT_FOUND,
 	IS_A_DIRECTORY,
 	NO_PATH,
+	PERMISSION_DENIED,
 }	t_cmd_type;
 
 typedef struct s_redir

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/31 19:33:36 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/01 02:09:30 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,12 @@ void	handle_command(t_segment *segment)
 		ft_putendl_fd(": No such file or directory", 2);
 		// FREE
 		exit(127);
+	}
+	else if (segment->cmd_type == PERMISSION_DENIED)
+	{
+		ft_putstr_fd(segment->args[0], 2);
+		ft_putendl_fd(": Permission denied", 2);
+		// FREE
+		exit(126);
 	}
 }

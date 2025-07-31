@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 11:41:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/31 12:17:06 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/01 02:09:29 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void    set_cmd_type(t_segment *segment)
         if (ft_strchr(segment->args[0], '/'))
             segment->cmd_type = IS_A_DIRECTORY;
     }
-    else
+    else if (access(segment->cmd_path, X_OK) == 0)
         segment->cmd_type = CMD_EXTERNAL;
+    else
+        segment->cmd_type = PERMISSION_DENIED;
 }

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:39:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/31 12:16:41 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/01 02:05:16 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,9 @@ static bool	path_access_control(char **full_path, char *slash_cmd, char **path)
 		}
 		if (access(cmd_with_path, F_OK) == 0)
 		{
-			free_all(full_path);
+			// Dosya bulundu, executable olsun ya da olmasın döndür
 			*path = cmd_with_path;
+			free_all(full_path);
 			return (free(slash_cmd), true);
 		}
 		free(cmd_with_path);
@@ -64,14 +65,25 @@ static bool	find_path(char *cmd, char *env_path, t_segment *segment)
 	char	**full_path;
 	char	*slash_cmd;
 
-	if (access(cmd, F_OK) == 0)
+	// Eğer komut path içeriyorsa (/ ile başlıyorsa), direkt kontrol et
+	if (ft_strchr(cmd, '/'))
 	{
-		segment->cmd_path = ft_strdup(cmd);
-		if (!segment->cmd_path)
-			return (false);
-		set_cmd_type(segment);
-		return (true);
+		if (access(cmd, F_OK) == 0)
+		{
+			segment->cmd_path = ft_strdup(cmd);
+			if (!segment->cmd_path)
+				return (false);
+			set_cmd_type(segment);
+			return (true);
+		}
+		else
+		{
+			segment->cmd_path = NULL;
+			segment->cmd_type = NO_PATH;
+			return (true);
+		}
 	}
+	// Path içermiyorsa sadece PATH'te ara (mevcut dizinde arama!)
 	slash_cmd = ft_strjoin("/", cmd);
 	if (!slash_cmd)
 		return (false);
@@ -80,7 +92,8 @@ static bool	find_path(char *cmd, char *env_path, t_segment *segment)
 		return (free(slash_cmd), false);
 	if (!path_access_control(full_path, slash_cmd, &segment->cmd_path))
 		return (false);
-	set_cmd_type(segment);
+	if (segment->cmd_path)
+		set_cmd_type(segment);
 	return (true);
 }
 
