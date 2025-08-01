@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/31 23:30:36 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/01 22:03:03 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static void	set_var(t_map **env_map_head, char *key, char *var)
 	}
 	add_new_var(env_map_head, key, var);
 }
+
+// değişken yoksa env de gözükmüyücek, ama export a=  olunca ve değer olunca env de gözüküyo
 
 void	export(t_map **env_map_head, char *var, char *key, bool is_set)
 {

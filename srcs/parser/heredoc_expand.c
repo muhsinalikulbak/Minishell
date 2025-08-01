@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:48:03 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/30 03:03:03 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/01 18:17:51 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static char	*expand_special_param(char ch, bool *is_it_exit_code)
 {
 	char	*value;
 
+	value = NULL;
 	if (ft_isdigit(ch))
 		value = "";
 	else if (ch == '?')

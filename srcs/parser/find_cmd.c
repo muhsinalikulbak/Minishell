@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 22:39:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/01 02:05:16 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/01 20:09:47 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static bool	path_access_control(char **full_path, char *slash_cmd, char **path)
 		}
 		if (access(cmd_with_path, F_OK) == 0)
 		{
-			// Dosya bulundu, executable olsun ya da olmasın döndür
 			*path = cmd_with_path;
 			free_all(full_path);
 			return (free(slash_cmd), true);
@@ -60,30 +59,35 @@ static bool	path_access_control(char **full_path, char *slash_cmd, char **path)
 	return (free(slash_cmd), true);
 }
 
+static bool	check_directory(t_segment *segment, char *cmd)
+{
+	if (access(cmd, F_OK) == 0)
+	{
+		segment->cmd_path = ft_strdup(cmd);
+		if (!segment->cmd_path)
+			return (false);
+		set_cmd_type(segment);
+		return (true);
+	}
+	else
+	{
+		segment->cmd_path = NULL;
+		segment->cmd_type = NO_PATH;
+		return (true);
+	}
+}
+
 static bool	find_path(char *cmd, char *env_path, t_segment *segment)
 {
 	char	**full_path;
 	char	*slash_cmd;
 
-	// Eğer komut path içeriyorsa (/ ile başlıyorsa), direkt kontrol et
 	if (ft_strchr(cmd, '/'))
 	{
-		if (access(cmd, F_OK) == 0)
-		{
-			segment->cmd_path = ft_strdup(cmd);
-			if (!segment->cmd_path)
-				return (false);
-			set_cmd_type(segment);
-			return (true);
-		}
-		else
-		{
-			segment->cmd_path = NULL;
-			segment->cmd_type = NO_PATH;
-			return (true);
-		}
+		if (!check_directory(segment, cmd))
+			return (false);
+		return (true);
 	}
-	// Path içermiyorsa sadece PATH'te ara (mevcut dizinde arama!)
 	slash_cmd = ft_strjoin("/", cmd);
 	if (!slash_cmd)
 		return (false);
