@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/31 19:31:56 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 01:23:21 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ typedef struct s_node
 	struct s_node	*next;
 }	t_map;
 
-t_map	*create_map(char *key, char *content);
+t_map	*create_map_node(char *key, char *content);
 void	ft_map_add_back(t_map **map, t_map *new);
 t_map	*ft_maplast(t_map *map);
 int		ft_mapsize(t_map *map);
 void	print_map(t_map *map);
 t_map	*mat_to_map(char **mat);
 void	free_map(t_map *map);
-bool	is_key_exist(t_map *env_list, char *key);
 char	*try_get_value(char *key);
-t_map	*get_env_map(char **env);
+t_map	*try_get_key_value_pair(char *key);
+t_map	**get_env_map(char **env);
 char**	create_env();
 
 #endif

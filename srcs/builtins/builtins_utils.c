@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 12:43:22 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/28 12:51:26 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/08/03 01:03:11 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,21 @@ bool	is_key_in_array(char **array, char *key)
 	return (false);
 }
 
-bool	update_existing_var(t_map **env_map_head, char *key, char *var)
+bool	update_key_value(t_map **env_map_head, char *key, char *value)
 {
-	t_map	*tmp;
+	t_map	*node;
 
-	if (!key || !is_key_exist(*env_map_head, key))
-		return (false);
-	tmp = *env_map_head;
-	while (tmp && ft_strcmp(key, tmp->key) != 0)
-		tmp = tmp->next;
-	if (tmp)
+	node = try_get_key_value_pair(key);
+	if (node)
 	{
-		free(tmp->content);
-		tmp->content = ft_strdup(var);
+		free(node->content);
+		node->content = value;
 		return (true);
 	}
-	return (false);
+	else
+	{
+		node = create_map_node(key, value);
+		ft_map_add_back(env_map_head, node);
+	}
+	return (true);
 }

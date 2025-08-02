@@ -3,45 +3,112 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/01 22:03:03 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/08/03 01:23:25 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	set_var(t_map **env_map_head, char *key, char *var)
+static bool	validate_key(char *key_with_value)
 {
-	if (update_existing_var(env_map_head, key, var))
-		return ;
-	if (!key)
+	int	i;
+
+	i = 0;
+	if (ft_isdigit(key_with_value[i]) || key_with_value[i] == '=')
 	{
-		printf("%s not found\n", var);
-		set_exit_code(130);
-		return ;
+		ft_putstr_fd(key_with_value, 2);
+		ft_putendl_fd(": not a valid identifier", 2);
+		return (false);
 	}
-	if (!validate_key(key))
+	while (key_with_value[i] && key_with_value[i] != '=')
 	{
-		printf("export: '%s': not a valid identifier\n", key);
-		set_exit_code(130);
-		return ;
+		if (!ft_isalnum(key_with_value[i]) && key_with_value[i] != '_')
+		{
+			ft_putstr_fd(key_with_value, 2);
+			ft_putendl_fd(": not a valid identifier", 2);
+			return (false);
+		}
+		i++;
 	}
-	add_new_var(env_map_head, key, var);
+	return (true);
 }
 
-// değişken yoksa env de gözükmüyücek, ama export a=  olunca ve değer olunca env de gözüküyo
-
-void	export(t_map **env_map_head, char *var, char *key, bool is_set)
+static bool	print_malloc_error(char *str)
 {
-	int	size;
+	ft_putendl_fd("Memory allocation failed", 2);
+	if (str)
+		free(str);
+	return (false);
+}
 
-	if (!env_map_head || !*env_map_head)
-		return ;
-	size = ft_mapsize(*env_map_head);
-	if (is_set)
-		set_var(env_map_head, key, var);
+static bool	extract_key_and_value(char **key, char **value, char *key_with_value)
+{
+	char	*equal_position;
+
+	equal_position = ft_strchr(key_with_value, '=');
+	if (equal_position)
+	{
+		*value = ft_strdup(equal_position + 1);
+		if (!*value)
+			return (print_malloc_error(NULL));
+		*key = ft_substr(key_with_value, 0, equal_position - key_with_value);
+		if (!*key)
+			return (print_malloc_error(*value));
+	}
 	else
-		print_export(env_map_head, size);
+	{
+		*value = NULL;
+		*key = ft_strdup(key_with_value);
+		if (!*key)
+			return (print_malloc_error(NULL));
+	}
+	return (true);
+}
+
+static void	set_var(t_map **env_map, char **args, bool is_child)
+{
+	int		i;
+	char	*key;
+	char	*value;
+
+	i = 1;
+	while (args[i])
+	{
+		if (validate_key(args[i]))
+		{
+			if (!extract_key_and_value(&key, &value, args[i]))
+			{
+				if (is_child)
+				{
+					// FREE
+					exit (EXIT_FAILURE);
+				}
+				return ;
+			}
+			update_key_value(env_map, key, value);
+		}
+		else
+			set_exit_code(1);
+		i++;
+	}
+	// Değişken kontrolü yapılacak, eğer geçerli değişken değilse hatası basılıp sonraki değişkene geçilecek
+	// Değişken uygunsa, değişkenin eşittirden sonra bir şeyi yoksa env'de var=, exportda var="" olarak gözükecek, Value olarak '\0' eklencek
+	// env'de value'su olmayan değişkenler yazılmayacak.
+}
+
+void	export(char **args, bool is_child)
+{
+	t_map	**env_map;
+
+	env_map = get_env_map(NULL);
+	set_exit_code(0);
+	if (!args[1])
+		print_export(env_map, ft_mapsize(*env_map));
+	else
+	{
+		set_var(env_map, args, is_child);
+	}
 }

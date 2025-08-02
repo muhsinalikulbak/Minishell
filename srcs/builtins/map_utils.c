@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 14:14:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/28 14:21:51 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/08/03 01:48:07 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ void	print_map(t_map *map)
 		return ;
 	}
 	ptr = map;
-	printf("TOKEN map:\n");
 	while (ptr)
 	{
-		printf("%s=", ptr->key);
-		printf("%s\n", ptr->content);
+		if (ptr->content)  // NULL kontrol eklendi
+		{
+			printf("%s=", ptr->key);
+			printf("%s\n", ptr->content);
+		}
 		ptr = ptr->next;
 	}
 	printf("\n");

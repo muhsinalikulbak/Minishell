@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_runner.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/01 22:01:22 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/08/03 01:24:07 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,27 @@ static void	execute_external(t_segment *segments)
 void	execute_builtin(t_segment *segments, bool is_child)
 {
 	char	*cmd;
-	t_map	*env_map;
+	t_map	**env_map;
 	
 	(void)(is_child);
 	// unset eklenicek, export düzeltilecek, cd home ayarlanacak. FREE eklenicek
 	env_map = get_env_map(NULL);
 	cmd = segments->args[0];
 	if (str_equal(cmd, "cd"))
-		cd(segments->args, &env_map);
+		cd(segments->args, env_map);
 	else if (str_equal(cmd, "echo"))
 		echo(segments->args, STDOUT_FILENO);
 	else if (str_equal(cmd, "pwd"))
 		pwd();
 	else if (str_equal(cmd, "export"))
-		export(&env_map, segments->args[1], segments->args[2], false);
+		export(segments->args, is_child);
 	else if (str_equal(cmd, "env"))
 		env(segments->args);
 	else if (str_equal(cmd, "exit"))
 		ft_exit(segments->args);
 }
 
-void	print_err_and_exit(char *cmd, char *message, int exit_code)
+static void	print_err_and_exit(char *cmd, char *message, int exit_code)
 {
 	ft_putstr_fd(cmd, 2);
 	ft_putendl_fd(message, 2);
@@ -61,7 +61,7 @@ void	print_err_and_exit(char *cmd, char *message, int exit_code)
 	exit(exit_code);
 }
 
-void	handle_error(t_segment *segment)
+static void	handle_error(t_segment *segment)
 {
 	if (segment->cmd_type == CMD_NOT_FOUND)
 	{

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:39 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/31 00:54:17 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/02 20:34:42 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,4 @@
 # include "utils.h"
 
 extern volatile sig_atomic_t	g_signal_received;
-
-void	process_input_line(char *line);
-void	main_loop(void);
 #endif
