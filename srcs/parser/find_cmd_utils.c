@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 11:41:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/01 02:09:29 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/01 18:26:42 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ static bool	is_directory(char *path)
 
 void    set_cmd_type(t_segment *segment)
 {
-    if (segment->cmd_path == NULL)
-        return ;
     if (is_directory(segment->cmd_path))
     {
         if (ft_strchr(segment->args[0], '/'))

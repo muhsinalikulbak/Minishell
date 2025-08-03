@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 14:19:46 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/28 14:22:39 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/08/03 01:23:20 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,34 @@ void	extract_key_content(char *str, char **key, char **content)
 	*content = ft_substr(str, content_start, content_len);
 }
 
-bool	is_key_exist(t_map *env_list, char *key)
+t_map	*try_get_key_value_pair(char *key)
 {
-	t_map	*ptr;
+	t_map	**env_map_ptr;
+	t_map	*env_map;
 
-	ptr = env_list;
-	while (ptr)
+	env_map_ptr = get_env_map(NULL);
+	env_map = *env_map_ptr;
+	while (env_map)
 	{
-		if (ft_strcmp(ptr->key, key) == 0)
-			return (true);
-		ptr = ptr->next;
+		if (str_equal(env_map->key, key))
+			return (env_map);
+		env_map = env_map->next;
 	}
-	return (false);
+	return (NULL);
 }
 
 char	*try_get_value(char *key)
 {
-	t_map	*env;
+	t_map	**env_map_ptr;
+	t_map	*env_map;
 
-	env = get_env_map(NULL);
-	while (env)
+	env_map_ptr = get_env_map(NULL);
+	env_map = *env_map_ptr;
+	while (env_map)
 	{
-		if (str_equal(env->key, key))
-			return (env->content);
-		env = env->next;
+		if (str_equal(env_map->key, key))
+			return (env_map->content);
+		env_map = env_map->next;
 	}
 	return (NULL);
 }
@@ -71,10 +75,10 @@ t_map	*mat_to_map(char **mat)
 	{
 		extract_key_content(mat[i], &key, &content);
 		if (!head)
-			head = create_map(key, content);
+			head = create_map_node(key, content);
 		else
 		{
-			tmp = create_map(key, content);
+			tmp = create_map_node(key, content);
 			ft_map_add_back(&head, tmp);
 		}
 		i++;
@@ -82,14 +86,14 @@ t_map	*mat_to_map(char **mat)
 	return (head);
 }
 
-t_map	*create_map(char *key, char *content)
+t_map	*create_map_node(char *key, char *value)
 {
 	t_map	*new_node;
 
 	new_node = malloc(sizeof(t_map));
 	if (!new_node)
 		return (NULL);
-	new_node->content = content;
+	new_node->content = value;
 	new_node->key = key;
 	new_node->next = NULL;
 	return (new_node);

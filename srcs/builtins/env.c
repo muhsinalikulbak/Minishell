@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 12:39:38 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 13:20:42 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 void	env(char **args)
 {
+	t_map	**env_map_ptr;
+
 	if (args[1])
 	{
 		ft_putendl_fd("env: too many arguments", 2);
 		set_exit_code(2);
 	}
 	else
-		print_map(get_env_map(NULL));
+	{
+		env_map_ptr = get_env_map(NULL);
+		print_map(*env_map_ptr);
+	}
 	set_exit_code(0);
 }

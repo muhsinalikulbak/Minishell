@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/29 19:52:16 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/08/03 01:23:41 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	process_input_line(char *line)
+static void	process_input_line(char *line)
 {
 	t_token		*token;
 	t_segment	*segments;
@@ -35,7 +35,7 @@ void	process_input_line(char *line)
 	}
 }
 
-void	main_loop(void)
+static void	input_loop(void)
 {
 	char	*line;
 
@@ -59,10 +59,18 @@ void	main_loop(void)
 
 int	main(int argc, char **argv, char **env)
 {
+	t_map	**env_map_ptr;
+
 	(void) argc;
 	(void) argv;
 	get_env_map(env);
+	env_map_ptr = get_env_map(NULL);
+	if (!env_map_ptr || !*env_map_ptr)
+	{
+		ft_putendl_fd("Memory allocation for env failed, try again", 2);
+		exit(EXIT_FAILURE);
+	}
 	signal_setup();
-	main_loop();
+	input_loop();
 	return (0);
 }

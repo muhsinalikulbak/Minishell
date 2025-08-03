@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 14:06:55 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/28 14:10:35 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/08/03 13:30:23 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool	validate_key(char *key)
-{
-	int	i;
-
-	if (!key)
-		return (false);
-	i = 0;
-	while (key[i])
-	{
-		if (ft_isalpha(key[i]) == 0 && key[0] != '_')
-			return (false);
-		i++;
-	}
-	return (true);
-}
-
-void	add_new_var(t_map **env_map_head, char *key, char *var)
-{
-	t_map	*tmp;
-
-	tmp = create_map(ft_strdup(key), ft_strdup(var));
-	ft_map_add_back(env_map_head, tmp);
-}
 
 static t_map	*find_smallest_unprinted_key(t_map **env_map_head,
 		char **printed_keys)
@@ -58,7 +34,16 @@ static void	print_and_track_key(t_map *map, char **printed_keys, int index)
 {
 	if (map)
 	{
-		printf("declare -x %s=%s\n", map->key, map->content);
+		printf("declare -x %s", map->key);
+		if (map->content)
+		{
+			if (*map->content == '\0')
+				printf("=\"\"\n");
+			else
+				printf("=%s\n", map->content);
+		}
+		else
+			printf("\n");
 		printed_keys[index] = ft_strdup(map->key);
 	}
 }
@@ -81,4 +66,5 @@ void	print_export(t_map **env_map_head, int size)
 		i++;
 	}
 	free_mat(printed_keys, size);
+	set_exit_code(0);
 }
