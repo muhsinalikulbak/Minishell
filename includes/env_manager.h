@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/03 13:13:26 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 14:05:21 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ typedef struct s_node
 	char			*content;
 	char			*key;
 	struct s_node	*next;
+	struct s_node	*prev;
 }	t_map;
 
 t_map	*create_map_node(char *key, char *content);

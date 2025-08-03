@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 14:19:46 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/03 01:23:20 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 14:12:55 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,9 @@ void	extract_key_content(char *str, char **key, char **content)
 
 t_map	*try_get_key_value_pair(char *key)
 {
-	t_map	**env_map_ptr;
 	t_map	*env_map;
 
-	env_map_ptr = get_env_map(NULL);
-	env_map = *env_map_ptr;
+	env_map = *(get_env_map(NULL));
 	while (env_map)
 	{
 		if (str_equal(env_map->key, key))
@@ -47,11 +45,9 @@ t_map	*try_get_key_value_pair(char *key)
 
 char	*try_get_value(char *key)
 {
-	t_map	**env_map_ptr;
 	t_map	*env_map;
 
-	env_map_ptr = get_env_map(NULL);
-	env_map = *env_map_ptr;
+	env_map = *(get_env_map(NULL));
 	while (env_map)
 	{
 		if (str_equal(env_map->key, key))
@@ -96,5 +92,6 @@ t_map	*create_map_node(char *key, char *value)
 	new_node->content = value;
 	new_node->key = key;
 	new_node->next = NULL;
+	new_node->prev = NULL;
 	return (new_node);
 }

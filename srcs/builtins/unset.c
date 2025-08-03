@@ -6,35 +6,46 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 12:39:39 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 14:47:58 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unset(t_map **env_map_head, char *key)
+static void	remove_head_node(t_map *node)
 {
-	t_map	*current;
-	t_map	*prev;
+	t_map	**map;
 
-	if (!env_map_head || !*env_map_head || !key)
-		return ;
-	current = *env_map_head;
-	prev = NULL;
-	while (current)
+	map = get_env_map(NULL);
+	*map = node->next;
+	node->next->prev = NULL;
+}
+
+void	unset(char **args)
+{
+	t_map	**map;
+	t_map	*node;
+	int		i;
+
+	map = get_env_map(NULL);
+	i = 1;
+	while (args[i])
 	{
-		if (ft_strcmp(current->key, key) == 0)
+		node = try_get_key_value_pair(args[i]);
+		if (node)
 		{
-			if (prev)
-				prev->next = current->next;
+			if (node->prev)
+			{
+				node->prev->next = node->next;
+				if (node->next)
+					node->next->prev = node->prev;
+			}
+			else if (node->next)
+				remove_head_node(node);
 			else
-				*env_map_head = current->next;
-			free_map_node(current);
-			printf("bash: unset: %s: successfully removed\n", key);
-			return ;
+				*map = NULL;
+			free_map_node(node);
 		}
-		prev = current;
-		current = current->next;
+		i++;
 	}
-	printf("bash: unset: %s: not found\n", key);
 }
