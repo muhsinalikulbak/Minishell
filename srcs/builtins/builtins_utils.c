@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 12:43:22 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/03 13:08:05 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 14:18:35 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ void	free_map_node(t_map *node)
 {
 	if (!node)
 		return ;
-	free(node->key);
-	free(node->content);
+	if (node->key)
+		free(node->key);
+	if (node->content)
+		free(node->content);
 	free(node);
 }
 

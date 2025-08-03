@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/03 13:13:26 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 13:54:49 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ static void	execute_external(t_segment *segments)
 
 	env = create_env_for_execve();
 	if (!env)
+	{
+		ft_putendl_fd("Memory allocation failed", 2);
 		exit(EXIT_FAILURE);
+	}
 	if (execve(segments->cmd_path, segments->args, env) == -1)
 	{
 		perror(segments->args[0]);
@@ -36,13 +39,14 @@ void	execute_builtin(t_segment *segments, bool is_child)
 	t_map	**env_map;
 	
 	(void)(is_child);
-	// unset eklenicek, export düzeltilecek, cd home ayarlanacak. FREE eklenicek
 	env_map = get_env_map(NULL);
 	cmd = segments->args[0];
 	if (str_equal(cmd, "cd"))
 		cd(segments->args, env_map);
 	else if (str_equal(cmd, "echo"))
 		echo(segments->args, STDOUT_FILENO);
+	else if (str_equal(cmd, "unset"))
+		unset(segments->args);
 	else if (str_equal(cmd, "pwd"))
 		pwd();
 	else if (str_equal(cmd, "export"))

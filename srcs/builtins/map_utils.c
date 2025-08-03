@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 14:14:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/03 12:43:35 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 14:05:21 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,17 @@ void	ft_map_add_back(t_map **map, t_map *new)
 {
 	t_map	*last;
 
+	if (!new)  // Safety check
+		return ;
 	last = ft_maplast(*map);
 	if (!last)
 	{
 		*map = new;
+		new->prev = NULL;  // Head node'un prev'i NULL
 		return ;
 	}
 	last->next = new;
+	new->prev = last;  // Yeni node'un prev'ini set et
 }
 
 t_map	*ft_maplast(t_map *map)
