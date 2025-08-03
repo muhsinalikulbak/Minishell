@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 04:08:38 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 03:07:25 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 23:21:24 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 static bool	check_redir_file(t_token *token, char **next_value)
 {
-	t_token	*last;
-
-	last = get_last_token(token);
-	if (last->type >= 2 && last->type <= 5)
-		return (false);
 	while (token != NULL && token->next != NULL)
 	{
 		*next_value = token->next->value;
@@ -58,6 +53,21 @@ static bool	pipe_check(t_token *token)
 	return (true);
 }
 
+static bool	check_last_redir(t_token *token)
+{
+	t_token			*last;
+	t_token_type	type;
+
+	last = get_last_token(token);
+	type = last->type;
+	if (type >= REDIR_IN && type <= HEREDOC)
+	{
+		ft_putendl_fd("syntax error near unexpected token `newline'", 2);
+		return (false);
+	}
+	return (true); 
+}
+
 bool	syntax_check(t_token *token_list)
 {
 	char	*next_value;
@@ -68,10 +78,13 @@ bool	syntax_check(t_token *token_list)
 		set_exit_code(2);
 		return (false);
 	}
+	if (!check_last_redir(token_list))
+		return (false);
 	if (!check_redir_file(token_list, &next_value))
 	{
 		ft_putstr_fd("syntax error near unexpected token ", 2);
-		ft_putendl_fd(next_value, 2);
+		if (next_value)
+			ft_putendl_fd(next_value, 2);
 		set_exit_code(2);
 		return (false);
 	}
