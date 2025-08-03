@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 17:20:07 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/03 01:46:43 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 13:18:02 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,36 +33,29 @@ static void	set_null(char **env, int count)
 	}
 }
 
-char**	create_env()
+int	get_env_map_count(void)
 {
-	t_map	**env_map_ptr;
 	t_map	*map;
-	char	**env;
-	char	*temp;
 	int		count;
-	int		i;
 
-	env_map_ptr = get_env_map(NULL);
-	map = *env_map_ptr;
-	
-	// Sadece content'i olan değişkenleri say
+	map = *(get_env_map(NULL));
 	count = 0;
-	t_map *temp_map = map;
-	while (temp_map)
+	while (map)
 	{
-		if (temp_map->content)
+		if (map->content)
 			count++;
-		temp_map = temp_map->next;
+		map = map->next;
 	}
-	
-	if (!map || count == 0)
-		return (NULL);
-	env = malloc(sizeof(char *) * (count + 1));
-	if (!env)
-		return (NULL);
-	set_null(env, count);
+	return (count);
+}
+
+static char	**set_env_for_execve(char **env, int count, t_map *map)
+{
+	int	i;
+	char	*temp;
+
 	i = 0;
-	while (map && i < count)
+	while (i < count)
 	{
 		if (map->content)  // Sadece content'i olan değişkenleri ekle
 		{
@@ -77,5 +70,24 @@ char**	create_env()
 		}
 		map = map->next;
 	}
+	return (env);
+}
+
+char	**create_env_for_execve()
+{
+	t_map	*map;
+	char	**env;
+	int		count;
+
+	map = *(get_env_map(NULL));
+	count = get_env_map_count();
+	if (count == 0)
+		return (NULL);
+	env = malloc(sizeof(char *) * (count + 1));
+	if (!env)
+		return (NULL);
+	set_null(env, count);
+	if (!set_env_for_execve(env, count, map))
+		return (NULL);
 	return (env);
 }

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 14:06:55 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/02 22:03:19 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 13:30:23 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,16 @@ static void	print_and_track_key(t_map *map, char **printed_keys, int index)
 {
 	if (map)
 	{
-		printf("declare -x %s=%s\n", map->key, map->content);
+		printf("declare -x %s", map->key);
+		if (map->content)
+		{
+			if (*map->content == '\0')
+				printf("=\"\"\n");
+			else
+				printf("=%s\n", map->content);
+		}
+		else
+			printf("\n");
 		printed_keys[index] = ft_strdup(map->key);
 	}
 }

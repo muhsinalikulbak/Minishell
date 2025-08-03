@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 12:43:22 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/03 01:03:11 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 13:08:05 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ bool	update_key_value(t_map **env_map_head, char *key, char *value)
 	else
 	{
 		node = create_map_node(key, value);
+		if (!node)
+			return (false);
 		ft_map_add_back(env_map_head, node);
 	}
 	return (true);

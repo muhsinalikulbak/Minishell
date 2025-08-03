@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 14:14:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/03 01:48:07 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 12:43:35 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	print_map(t_map *map)
 		}
 		ptr = ptr->next;
 	}
-	printf("\n");
 }
 
 void	free_map(t_map *map)

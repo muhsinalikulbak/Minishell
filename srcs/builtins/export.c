@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/03 01:23:25 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 13:13:04 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static bool	extract_key_and_value(char **key, char **value, char *key_with_value
 	return (true);
 }
 
-static void	set_var(t_map **env_map, char **args, bool is_child)
+static void	process_export_variables(t_map **env_map, char **args, bool is_child)
 {
 	int		i;
 	char	*key;
@@ -94,9 +94,6 @@ static void	set_var(t_map **env_map, char **args, bool is_child)
 			set_exit_code(1);
 		i++;
 	}
-	// Değişken kontrolü yapılacak, eğer geçerli değişken değilse hatası basılıp sonraki değişkene geçilecek
-	// Değişken uygunsa, değişkenin eşittirden sonra bir şeyi yoksa env'de var=, exportda var="" olarak gözükecek, Value olarak '\0' eklencek
-	// env'de value'su olmayan değişkenler yazılmayacak.
 }
 
 void	export(char **args, bool is_child)
@@ -109,6 +106,6 @@ void	export(char **args, bool is_child)
 		print_export(env_map, ft_mapsize(*env_map));
 	else
 	{
-		set_var(env_map, args, is_child);
+		process_export_variables(env_map, args, is_child);
 	}
 }

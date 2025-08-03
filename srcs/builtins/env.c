@@ -6,13 +6,12 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/03 01:23:30 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 13:20:42 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// değişken yoksa env de gözükmüyücek, ama export a=  olunca ve değer olunca env de gözüküyo
 void	env(char **args)
 {
 	t_map	**env_map_ptr;
