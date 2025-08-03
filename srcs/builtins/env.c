@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/03 13:20:42 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 22:42:42 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	env(char **args)
 	else
 	{
 		env_map_ptr = get_env_map(NULL);
-		print_map(*env_map_ptr);
+		print_map_for_env(*env_map_ptr);
 	}
 	set_exit_code(0);
 }

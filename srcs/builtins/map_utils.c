@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 14:14:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/03 14:05:21 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 22:42:42 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_mapsize(t_map *map)
 	return (count);
 }
 
-void	print_map(t_map *map)
+void	print_map_for_env(t_map *map)
 {
 	t_map	*ptr;
 
