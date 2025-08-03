@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 02:45:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/30 02:33:42 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/03 22:37:03 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ bool	heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd)
 	{
 		close(pipefd[0]);
 		*fd = -1;
+		set_exit_code(130);
 		return (false);
 	}
 	*fd = pipefd[0];

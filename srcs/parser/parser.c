@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:52:32 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/01 22:02:31 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/08/03 22:27:53 by kayraakbas       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static t_segment	*segment(t_token *token)
 	free_token(token);
 	if (!heredoc_init(segments))
 	{
-		// << eof ---> inputu CTRL+C ile çıkıldığında buraya gelip bu hatayı basıyor, exit_code 130 ayarlanmalı
-		ft_putendl_fd("heredoc initialization failed", 2);
+		if (get_exit_code() != 130)
+			ft_putendl_fd("heredoc initialization failed", 2);
 		return (NULL);
 	}
 	return (segments);
