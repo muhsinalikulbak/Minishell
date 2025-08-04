@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_signals.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:56:34 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/03 23:00:24 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/04 20:48:51 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void heredoc_sigint_handler(int sig)
 {
 	(void)sig;
+
 	write(STDERR_FILENO, "\n", 1);
 	exit(130);
 }
