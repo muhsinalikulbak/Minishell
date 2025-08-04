@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 14:14:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/03 22:42:42 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/05 00:23:06 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,10 @@ void	free_map(t_map *map)
 	while (current)
 	{
 		next = current->next;
-		free(current->content);
-		free(current->key);
+		if (current->content)
+			free(current->content);
+		if (current->key)
+			free(current->key);
 		free(current);
 		current = next;
 	}
