@@ -6,7 +6,7 @@
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/04 16:40:31 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/08/04 16:43:16 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,16 @@ static void	set_pwd_and_oldpwd(char *old_pwd, t_map **env_map_head)
 	set_exit_code(0);
 }
 
-static bool	set_home()
+static bool	set_home(char **target_dir)
 {
-	char	*target_dir;
-
-	target_dir = getenv("HOME");
-	if (!target_dir)
+	*target_dir = getenv("HOME");
+	if (!*target_dir)
 	{
 		ft_putendl_fd("cd: HOME not set", 2);
 		set_exit_code(1);
-		return (NULL);
+		return (false);
 	}
-	return (target_dir);
+	return (true);
 }
 
 void	cd(char **args, t_map **env_map_head)
@@ -63,7 +61,7 @@ void	cd(char **args, t_map **env_map_head)
 		return ;
 	target_dir = args[1];
 	if (!args[1] || (args[1] && str_equal(args[1], "~")))
-		if (!set_home())
+		if (!set_home(&target_dir))
 			return ;
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
