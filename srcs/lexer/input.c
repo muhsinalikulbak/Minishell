@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:01:14 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 18:15:10 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/08/04 14:40:35 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,6 @@ char	*get_input(bool is_heredoc)
 		line = readline("> ");
 	else
 	{
-		
 		prompt = create_prompt();
 		if (!prompt)
 		{
