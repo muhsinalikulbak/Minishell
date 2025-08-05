@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 01:29:56 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/31 18:54:12 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/05 16:05:21 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 
 static void	single_command_builtin(t_segment *segment)
 {
-	int	saved_stdout;
-	int saved_stdin;
+	int		saved_stdout;
+	int 	saved_stdin;
+	bool	redirect_ok;
 
+	redirect_ok = true;
 	if (segment->redirections)
 	{
 		saved_stdout = dup(STDOUT_FILENO);
 		saved_stdin = dup(STDIN_FILENO);
-		handle_redirections(segment->redirections);
+		redirect_ok = handle_redirections(segment->redirections, false);
 	}
-	execute_builtin(segment, false);
+	if (redirect_ok)
+		execute_builtin(segment, false);
 	if (segment->redirections)
 	{
 		dup2(saved_stdout, STDOUT_FILENO);

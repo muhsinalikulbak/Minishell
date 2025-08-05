@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:21:48 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/30 02:01:18 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/05 15:41:33 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	child_process(t_segment *segment, int pipefd[][2], int i)
 		close_all_pipes(pipefd, segment->segment_count - 1);
 	}
 	if (segment->redirections)
-		handle_redirections(segment->redirections);
+		handle_redirections(segment->redirections, true);
 	if (segment->args)
 		handle_command(segment);
 	exit(EXIT_SUCCESS);

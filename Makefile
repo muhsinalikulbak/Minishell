@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+         #
+#    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/01 16:48:41 by mkulbak           #+#    #+#              #
-#    Updated: 2025/08/04 20:20:07 by mkulbak          ###   ########.fr        #
+#    Updated: 2025/08/05 15:32:18 by muhsin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SRC = main.c \
 	  builtins/export_utils.c \
 	  builtins/env_manager.c \
 	  utils/utils.c \
+	  utils/cleanup_manager.c \
 	  
 SRCS = $(addprefix $(SRC_PATH), $(SRC))	
 OBJ = $(SRC:.c=.o)

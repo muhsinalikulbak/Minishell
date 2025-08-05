@@ -6,25 +6,25 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:15:07 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/31 12:31:53 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/05 15:59:52 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	check_ambiguous(t_redir *redir)
+static bool	check_ambiguous(t_redir *redir, bool is_child)
 {
 	if (*redir->file_name == '\0' && redir->is_ambiguous)
 	{
 		ft_putendl_fd(":ambiguous redirect", 2);
-		// FREE
-		// Parent ise bool ile çık
-		// Child ise exit at
-		exit(EXIT_FAILURE);
+		if (!is_child)
+			return (false);
+		cleanup_manager(EXIT_FAILURE);
 	}
+	return (true);
 }
 
-static void	open_redir_output(t_redir *redir)
+static bool	open_redir_output(t_redir *redir, bool is_child)
 {
 	t_token_type	type;
 	int				fd;
@@ -37,16 +37,16 @@ static void	open_redir_output(t_redir *redir)
 	if (fd == -1)
 	{
 		perror(redir->file_name);
-		//FREE
-		// Parent ise bool ile çık
-		// Child ise exit at
-		exit(EXIT_FAILURE);
+		if (!is_child)
+			return (false);
+		cleanup_manager(EXIT_FAILURE);
 	}
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
+	return (true);
 }
 
-static void	open_redir_input(t_redir *redir)
+static bool	open_redir_input(t_redir *redir, bool is_child)
 {
 	t_token_type	type;
 	int				fd;
@@ -58,10 +58,9 @@ static void	open_redir_input(t_redir *redir)
 		if (fd == -1)
 		{
 			perror(redir->file_name);
-			//FREE
-			// Parent ise bool ile çık
-			// Child ise exit at
-			exit(EXIT_FAILURE);
+			if (!is_child)
+				return (false);
+			cleanup_manager(EXIT_FAILURE);
 		}
 		dup2(fd, STDIN_FILENO);
 		close(fd);
@@ -71,20 +70,29 @@ static void	open_redir_input(t_redir *redir)
 		dup2(redir->heredoc_fd, STDIN_FILENO);
 		close(redir->heredoc_fd);
 	}
+	return (true);
 }
 
-void	handle_redirections(t_redir *redir)
+bool	handle_redirections(t_redir *redir, bool is_child)
 {
-	int				i;
+	int		i;
+	bool	check_error;
 
 	i = 0;
 	while (i < redir->redir_count)
 	{
-		check_ambiguous(&redir[i]);
+		check_error = check_ambiguous(&redir[i], is_child);
 		if (redir[i].type == REDIR_IN || redir[i].type == HEREDOC)
-			open_redir_input(&redir[i]);
+			check_error = open_redir_input(&redir[i], is_child);
 		else if (redir[i].type == REDIR_OUT || redir[i].type == APPEND)
-			open_redir_output(&redir[i]);
+			check_error = open_redir_output(&redir[i], is_child);
+		if (!check_error)
+		{
+			set_exit_code(1);
+			return (false);
+		}
 		i++;
 	}
+	set_exit_code(0);
+	return (true);
 }
