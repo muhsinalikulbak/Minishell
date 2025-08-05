@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:52:32 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/04 20:45:52 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/08/05 20:19:45 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,7 @@ t_segment	*parser(t_token *token)
 		free_segment(segments, segments->segment_count);
 		return (NULL);
 	}
+	segments->pids = NULL;
+	segments->pipefd = NULL;
 	return (segments);
 }

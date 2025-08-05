@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/05 19:51:26 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/05 20:22:21 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static bool	check_alpha(char **args)
 		{
 			ft_putstr_fd(args[1], 2);
 			ft_putendl_fd(":numeric argument required", 2);
+			set_exit_code(2);
 			return (false);
 		}
 		i++;
