@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/05 21:18:39 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/05 21:29:21 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,20 @@ static void	set_pwd_and_oldpwd(char *old_pwd, t_map **env_map_head)
 {
 	char	*pwd;
 
-	update_key_value(env_map_head, ft_strdup("OLDPWD"), old_pwd);
+	if (try_get_value("OLDPWD"))
+		update_key_value(env_map_head, ft_strdup("OLDPWD"), old_pwd);
+	else
+		free(old_pwd);
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 	{
 		ft_putendl_fd("memory allocation failed", 2);
 		return ;
 	}
-	update_key_value(env_map_head, ft_strdup("PWD"), pwd);
+	if (try_get_value("PWD"))
+		update_key_value(env_map_head, ft_strdup("PWD"), pwd);
+	else
+		free(pwd);
 	set_exit_code(0);
 }
 
