@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 12:43:22 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/03 14:18:35 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/05 19:45:26 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ bool	update_key_value(t_map **env_map_head, char *key, char *value)
 	node = try_get_key_value_pair(key);
 	if (node)
 	{
-		free(node->content);
+		if (node->content)
+			free(node->content);
 		node->content = value;
 		return (true);
 	}

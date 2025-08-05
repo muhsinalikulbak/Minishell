@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/05 17:16:03 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/05 19:46:56 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	execute_builtin(t_segment *segments, bool is_child)
 	char	*cmd;
 	t_map	**env_map;
 	
-	(void)(is_child);
 	env_map = get_env_map(NULL);
 	cmd = segments->args[0];
 	if (str_equal(cmd, "cd"))
@@ -51,11 +50,15 @@ void	execute_builtin(t_segment *segments, bool is_child)
 	else if (str_equal(cmd, "pwd"))
 		pwd();
 	else if (str_equal(cmd, "export"))
-		export(segments->args, is_child);
+		export(segments->args);
 	else if (str_equal(cmd, "env"))
 		env(segments->args);
 	else if (str_equal(cmd, "exit"))
 		ft_exit(segments->args);
+	if (is_child)
+	{
+		cleanup_manager(get_exit_code());
+	}
 }
 
 static void	print_err_and_exit(char *cmd, char *message, int exit_code)
