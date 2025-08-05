@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   cleanup_manager.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/05 19:52:42 by muhsin           ###   ########.fr       */
+/*   Created: 2025/08/05 13:42:20 by muhsin            #+#    #+#             */
+/*   Updated: 2025/08/05 15:32:33 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env(char **args)
+void	cleanup_manager(int exit_code)
 {
-	t_map	**env_map_ptr;
+	t_map		*map;
+	t_segment	*segments;
 
-	if (args[1])
-	{
-		ft_putendl_fd("env: too many arguments", 2);
-		set_exit_code(2);
-	}
-	else
-	{
-		env_map_ptr = get_env_map(NULL);
-		print_map_for_env(*env_map_ptr);
-		set_exit_code(0);
-	}
+	map = *get_env_map(NULL);
+	segments = get_segments(NULL);
+	free_segment(segments, segments->segment_count);
+	free_map(map);
+	exit(exit_code);
 }

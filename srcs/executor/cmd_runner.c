@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/03 13:54:49 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/05 19:46:56 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,17 @@ static void	execute_external(t_segment *segments)
 	if (!env)
 	{
 		ft_putendl_fd("Memory allocation failed", 2);
-		exit(EXIT_FAILURE);
+		cleanup_manager(EXIT_FAILURE);
 	}
 	if (execve(segments->cmd_path, segments->args, env) == -1)
 	{
+		free_all(env);
 		perror(segments->args[0]);
 		if (errno == EACCES)
-			exit(126);
+			cleanup_manager(126);
 		if (errno == ENOENT)
-			exit(127);
-		exit(EXIT_FAILURE);
+			cleanup_manager(127);
+		cleanup_manager(EXIT_FAILURE);
 	}
 }
 
@@ -38,7 +39,6 @@ void	execute_builtin(t_segment *segments, bool is_child)
 	char	*cmd;
 	t_map	**env_map;
 	
-	(void)(is_child);
 	env_map = get_env_map(NULL);
 	cmd = segments->args[0];
 	if (str_equal(cmd, "cd"))
@@ -50,19 +50,22 @@ void	execute_builtin(t_segment *segments, bool is_child)
 	else if (str_equal(cmd, "pwd"))
 		pwd();
 	else if (str_equal(cmd, "export"))
-		export(segments->args, is_child);
+		export(segments->args);
 	else if (str_equal(cmd, "env"))
 		env(segments->args);
 	else if (str_equal(cmd, "exit"))
 		ft_exit(segments->args);
+	if (is_child)
+	{
+		cleanup_manager(get_exit_code());
+	}
 }
 
 static void	print_err_and_exit(char *cmd, char *message, int exit_code)
 {
 	ft_putstr_fd(cmd, 2);
 	ft_putendl_fd(message, 2);
-	// FREE
-	exit(exit_code);
+	cleanup_manager(exit_code);
 }
 
 static void	handle_error(t_segment *segment)

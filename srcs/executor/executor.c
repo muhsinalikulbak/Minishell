@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 01:29:56 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/31 18:54:12 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/05 20:19:36 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 
 static void	single_command_builtin(t_segment *segment)
 {
-	int	saved_stdout;
-	int saved_stdin;
+	int		saved_stdout;
+	int 	saved_stdin;
+	bool	redirect_ok;
 
+	redirect_ok = true;
 	if (segment->redirections)
 	{
 		saved_stdout = dup(STDOUT_FILENO);
 		saved_stdin = dup(STDIN_FILENO);
-		handle_redirections(segment->redirections);
+		redirect_ok = handle_redirections(segment->redirections, false);
 	}
-	execute_builtin(segment, false);
+	if (redirect_ok)
+		execute_builtin(segment, false);
 	if (segment->redirections)
 	{
 		dup2(saved_stdout, STDOUT_FILENO);
@@ -33,7 +36,7 @@ static void	single_command_builtin(t_segment *segment)
 	}
 }
 
-static void	start_external(t_segment *segments, int seg_count, pid_t *pids)
+static void	execute_pipeline(t_segment *segments, int seg_count, pid_t *pids)
 {
 	int		(*pipefd)[2];
 
@@ -44,21 +47,18 @@ static void	start_external(t_segment *segments, int seg_count, pid_t *pids)
 		if (!pipefd)
 		{
 			ft_putendl_fd("memory allocation failed", 2);
-			free(pids);
 			return ;
 		}
 		if (!open_pipefd(pipefd, seg_count - 1))
 		{
 			ft_putendl_fd("pipe() function failed", 2);
 			free(pipefd);
-			free(pids);
 			return ;
 		}
 	}
+	segments->pipefd = pipefd;
 	process_setup(segments, pids, pipefd);
-	if (pipefd)
-		free(pipefd);
-	free(pids);
+	free(pipefd);
 }
 
 void	executor(t_segment *segments)
@@ -77,6 +77,10 @@ void	executor(t_segment *segments)
 			ft_putendl_fd("memory allocation failed", 2);
 			return ;
 		}
-		start_external(segments, seg_count, pids);
+		segments->pids = pids;
+		execute_pipeline(segments, seg_count, pids);
+		free(pids);
 	}
+	segments->pids = NULL;
+	segments->pipefd = NULL;
 }

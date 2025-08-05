@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:17 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/03 13:55:10 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/05 19:37:48 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void	echo(char **args, int fd);
 void	cd(char **args, t_map **env_map_head);
 void	pwd(void);
-void	export(char **args, bool is_child);
+void	export(char **args);
 void	unset(char  **args);
 void	env(char **args);
 void	ft_exit(char **args);

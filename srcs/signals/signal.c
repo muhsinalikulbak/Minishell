@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:03:40 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/29 19:50:46 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/08/04 19:40:14 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	interactive_sigint(int sig)
 
 void	handle_eof(void)
 {
+	free_map(*get_env_map(NULL));
 	exit(EXIT_SUCCESS);
 }
 

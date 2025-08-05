@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   segment_manager.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/05 19:52:42 by muhsin           ###   ########.fr       */
+/*   Created: 2025/08/04 21:00:00 by mkulbak           #+#    #+#             */
+/*   Updated: 2025/08/04 20:21:03 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env(char **args)
+t_segment	*get_segments(t_segment *segments)
 {
-	t_map	**env_map_ptr;
+	static t_segment	*segment_list = NULL;
 
-	if (args[1])
-	{
-		ft_putendl_fd("env: too many arguments", 2);
-		set_exit_code(2);
-	}
-	else
-	{
-		env_map_ptr = get_env_map(NULL);
-		print_map_for_env(*env_map_ptr);
-		set_exit_code(0);
-	}
+	if (segments)
+		segment_list = segments;
+	return (segment_list);
 }

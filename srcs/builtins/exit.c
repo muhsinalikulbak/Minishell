@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/31 22:56:41 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/05 20:22:21 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static bool	check_alpha(char **args)
 		{
 			ft_putstr_fd(args[1], 2);
 			ft_putendl_fd(":numeric argument required", 2);
+			set_exit_code(2);
 			return (false);
 		}
 		i++;
@@ -43,15 +44,18 @@ static bool	check_many_arguments(char **args)
 
 void	ft_exit(char **args)
 {
+	int	exit_code;
+
 	ft_putendl_fd("exit", 2);
 	if (!args[1])
 	{
-		exit(get_exit_code());
+		cleanup_manager(get_exit_code());
 	}
 	if (!check_alpha(args))
-		exit(2);
+		cleanup_manager(get_exit_code());
 	if (check_many_arguments(args))
 	{
-		exit(ft_atoi(args[1]));
+		exit_code = ft_atoi(args[1]);
+		cleanup_manager(exit_code);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/03 00:55:36 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/05 21:29:21 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,44 @@
 
 static bool	cd_control(char **args)
 {
-	if (!args[1])
+	if (!args)
+		return (false);
+	if (args[1] && args[2])
 	{
-		ft_putendl_fd("bash: cd: missing argument\n", 2);
+		ft_putendl_fd("cd: too many arguments", 2);
 		set_exit_code(1);
 		return (false);
 	}
-	else if (args[2])
+	return (true);
+}
+
+static void	set_pwd_and_oldpwd(char *old_pwd, t_map **env_map_head)
+{
+	char	*pwd;
+
+	if (try_get_value("OLDPWD"))
+		update_key_value(env_map_head, ft_strdup("OLDPWD"), old_pwd);
+	else
+		free(old_pwd);
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
 	{
-		ft_putendl_fd("cd: too many arguments\n", 2);
+		ft_putendl_fd("memory allocation failed", 2);
+		return ;
+	}
+	if (try_get_value("PWD"))
+		update_key_value(env_map_head, ft_strdup("PWD"), pwd);
+	else
+		free(pwd);
+	set_exit_code(0);
+}
+
+static bool	set_home(char **target_dir)
+{
+	*target_dir = getenv("HOME");
+	if (!*target_dir)
+	{
+		ft_putendl_fd("cd: HOME not set", 2);
 		set_exit_code(1);
 		return (false);
 	}
@@ -31,25 +60,28 @@ static bool	cd_control(char **args)
 
 void	cd(char **args, t_map **env_map_head)
 {
-	char	*pwd;
 	char	*old_pwd;
+	char	*target_dir;
 
 	if (!cd_control(args))
 		return ;
+	target_dir = args[1];
+	if (!args[1] || (args[1] && str_equal(args[1], "~")))
+		if (!set_home(&target_dir))
+			return ;
 	old_pwd = getcwd(NULL, 0);
-	update_key_value(env_map_head, "OLDPWD", old_pwd);
-	if (chdir(args[1]) == -1)
+	if (!old_pwd)
 	{
-		ft_putstr_fd("cd: ", 2);
-		perror(args[1]);
-		set_exit_code(1);
+		perror("getcwd");
 		return ;
 	}
-	pwd = getcwd(NULL, 0);
-	update_key_value(env_map_head, "PWD", pwd);
-	if (pwd)
-		free(pwd);
-	else
-		ft_putendl_fd("error: getwcd", 2);
-	set_exit_code(0);
+	if (chdir(target_dir) == -1)
+	{
+		ft_putstr_fd("cd: ", 2);
+		perror(target_dir);
+		set_exit_code(1);
+		free(old_pwd);
+		return ;
+	}
+	set_pwd_and_oldpwd(old_pwd, env_map_head);
 }

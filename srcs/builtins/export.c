@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/03 13:13:04 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/05 19:43:36 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static bool	extract_key_and_value(char **key, char **value, char *key_with_value
 	return (true);
 }
 
-static void	process_export_variables(t_map **env_map, char **args, bool is_child)
+static void	process_export_variables(t_map **env_map, char **args)
 {
 	int		i;
 	char	*key;
@@ -80,14 +80,7 @@ static void	process_export_variables(t_map **env_map, char **args, bool is_child
 		if (validate_key(args[i]))
 		{
 			if (!extract_key_and_value(&key, &value, args[i]))
-			{
-				if (is_child)
-				{
-					// FREE
-					exit (EXIT_FAILURE);
-				}
 				return ;
-			}
 			update_key_value(env_map, key, value);
 		}
 		else
@@ -96,7 +89,7 @@ static void	process_export_variables(t_map **env_map, char **args, bool is_child
 	}
 }
 
-void	export(char **args, bool is_child)
+void	export(char **args)
 {
 	t_map	**env_map;
 
@@ -106,6 +99,6 @@ void	export(char **args, bool is_child)
 		print_export(env_map, ft_mapsize(*env_map));
 	else
 	{
-		process_export_variables(env_map, args, is_child);
+		process_export_variables(env_map, args);
 	}
 }
