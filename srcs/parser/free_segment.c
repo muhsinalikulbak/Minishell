@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_segment.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 02:23:34 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/01 18:22:47 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/08/05 16:59:17 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ bool	free_segment(t_segment *segment, int end)
 	int	i;
 
 	i = 0;
+	if (segment->pids)
+		free(segment->pids);
+	if (segment->pipefd)
+		free(segment->pipefd);
 	while (i < end)
 	{
 		if (segment[i].args != NULL)

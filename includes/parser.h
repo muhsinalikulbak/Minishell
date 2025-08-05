@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/04 20:31:54 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/08/05 16:37:08 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ typedef struct s_segment
 	t_cmd_type		cmd_type;
 	int				segment_count;
 	char			*cmd_path;
+	pid_t			*pids;
+	int				(*pipefd)[2];
+
 }		t_segment;
 
 t_segment	*parser(t_token *token);
@@ -67,7 +70,6 @@ bool		heredoc_child_process(char *delimiter, int pipefd[2],
 bool		find_cmd(t_segment *segments);
 void		set_cmd_type(t_segment *segment);
 bool		heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd);
-
 t_segment	*get_segments(t_segment *segments);
 
 #endif

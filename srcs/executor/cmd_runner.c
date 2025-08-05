@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/05 15:51:25 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/05 17:16:03 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,17 @@ static void	execute_external(t_segment *segments)
 	if (!env)
 	{
 		ft_putendl_fd("Memory allocation failed", 2);
-		exit(EXIT_FAILURE);
+		cleanup_manager(EXIT_FAILURE);
 	}
 	if (execve(segments->cmd_path, segments->args, env) == -1)
 	{
+		free_all(env);
 		perror(segments->args[0]);
 		if (errno == EACCES)
-			exit(126);
+			cleanup_manager(126);
 		if (errno == ENOENT)
-			exit(127);
-		exit(EXIT_FAILURE);
+			cleanup_manager(127);
+		cleanup_manager(EXIT_FAILURE);
 	}
 }
 
@@ -61,8 +62,7 @@ static void	print_err_and_exit(char *cmd, char *message, int exit_code)
 {
 	ft_putstr_fd(cmd, 2);
 	ft_putendl_fd(message, 2);
-	// FREE
-	exit(exit_code);
+	cleanup_manager(exit_code);
 }
 
 static void	handle_error(t_segment *segment)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:37:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/29 18:58:59 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/08/05 16:58:17 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ bool	str_equal(char *str1, char *str2)
 	return (true);
 }
 
+// exit_code process
+
 static	int	current_exit_code(int *exit_code)
 {
 	static int	current;
@@ -52,10 +54,10 @@ int	get_exit_code(void)
 	return (current_exit_code(NULL));
 }
 
+// close_pipefd process
 bool	close_pipefd(int pipefd[2])
 {
 	close(pipefd[0]);
 	close(pipefd[1]);
 	return (false);
 }
-// $?
