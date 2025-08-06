@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_signals.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:56:34 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/06 20:25:49 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/08/07 00:58:20 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 static void heredoc_sigint_handler(int sig)
 {
 	(void)sig;
-	call_env_map_free();
 	write(STDERR_FILENO, "\n", 1);
-	exit(130);
+	cleanup_manager(130);
 }
 
 void	heredoc_child_signal_setup(void)
@@ -53,11 +52,10 @@ void	heredoc_restore_signals(void)
 
 void	handle_heredoc_eof(char *delimiter, int pipefd[2])
 {
-	call_env_map_free();
 	ft_putstr_fd(": warning: here-document", 2);
 	ft_putstr_fd("delimited by end-of-file (wanted `", 2);
 	ft_putstr_fd(delimiter, 2);
 	ft_putendl_fd("')", 2);
 	close(pipefd[1]);
-	exit(0);
+	cleanup_manager(EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 13:42:20 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/05 15:32:33 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 00:57:11 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ void	cleanup_manager(int exit_code)
 
 	map = *get_env_map(NULL);
 	segments = get_segments(NULL);
-	free_segment(segments, segments->segment_count);
-	free_map(map);
+	if (segments)
+		free_segment(segments, segments->segment_count);
+	if (map)
+		free_map(map);
 	exit(exit_code);
 }

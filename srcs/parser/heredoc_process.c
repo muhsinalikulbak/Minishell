@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 02:45:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/06 20:23:42 by omakbas          ###   ########.fr       */
+/*   Updated: 2025/08/07 01:01:01 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	call_env_map_free()
-{
-	t_map	**map;
-
-	map = get_env_map(NULL);	
-	if (*map)
-		free_map(*map);
-	*map = NULL;
-}
 
 static void	write_pipefd(char *line, int pipefd[2])
 {
@@ -37,7 +27,7 @@ static void	process_heredoc_line(char *line, int pipefd[2],
 		if (!heredoc_expand(line, pipefd))
 		{
 			close(pipefd[1]);
-			exit(1);
+			cleanup_manager(EXIT_FAILURE);
 		}
 		write(pipefd[1], "\n", 1);
 		free(line);
@@ -62,15 +52,13 @@ void	heredoc_child_process(char *delimiter, int pipefd[2],
 		line = get_input(true);
 		if (!line)
 		{
-			call_env_map_free();
 			close(pipefd[1]);
-			exit(EXIT_FAILURE);
+			cleanup_manager(EXIT_FAILURE);
 		}
 	}
-	call_env_map_free();
 	free(line);
 	close(pipefd[1]);
-	exit(EXIT_SUCCESS);
+	cleanup_manager(EXIT_SUCCESS);
 }
 
 bool	heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd)
