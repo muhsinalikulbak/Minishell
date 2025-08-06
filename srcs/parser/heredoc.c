@@ -6,7 +6,7 @@
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:44:02 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/06 16:14:11 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/08/06 16:36:29 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 static bool	start_heredoc(char *delimiter, int *fd, bool is_it_expandable)
 {
-	int		pipefd[2];
-	pid_t	child_pid;
+	int			pipefd[2];
+	pid_t		child_pid;
+	t_segment	*segments;
 
+	segments = get_segments(NULL);
 	if (pipe(pipefd) == -1)
 		return (false);
 	heredoc_parent_signal_setup();
@@ -25,6 +27,7 @@ static bool	start_heredoc(char *delimiter, int *fd, bool is_it_expandable)
 		return (close_pipefd(pipefd));
 	if (child_pid == 0)
 	{
+		// free_segment(segments, segments->segment_count);
 		heredoc_child_process(delimiter, pipefd, is_it_expandable);
 		exit(EXIT_SUCCESS);
 	}
