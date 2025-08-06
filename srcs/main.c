@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/08/06 10:49:07 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 02:36:59 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	process_input_line(char *line)
 			segments = parser(token);
 			if (segments)
 			{
-				get_segments(segments);
 				executor(segments);
 				free_segment(segments, segments->segment_count);
 			}

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:52:32 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/07 01:19:47 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 02:36:52 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static bool	segment(t_token *token, t_segment *segments, int seg_count)
 	if (!create_segment(token, segments, seg_count))
 		return (print_err_segment(token, "memory allocation failed"));
 	free_token(token);
-	set_exit_code(0);
+	get_segments(segments);
 	if (!heredoc_init(segments))
 	{
 		if (get_exit_code() != 130)
