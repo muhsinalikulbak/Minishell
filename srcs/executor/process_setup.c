@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_setup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:21:48 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/05 16:56:41 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/06 15:30:54 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ static void	child_process(t_segment *segment, int pipefd[][2], int i)
 		handle_redirections(segment->redirections, true);
 	if (segment->args)
 		handle_command(segment);
+	else
+		cleanup_manager(EXIT_SUCCESS);
 	exit(EXIT_SUCCESS);
 }
 
