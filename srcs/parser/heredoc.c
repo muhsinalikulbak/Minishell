@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:44:02 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/06 11:05:12 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/06 16:14:11 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,9 @@ static bool	start_heredoc(char *delimiter, int *fd, bool is_it_expandable)
 	if (child_pid == 0)
 	{
 		heredoc_child_process(delimiter, pipefd, is_it_expandable);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
-	else
-		return (heredoc_parent_process(pipefd, child_pid, fd));
+	return (heredoc_parent_process(pipefd, child_pid, fd));
 }
 
 static bool	heredoc_scan(t_redir *redir)

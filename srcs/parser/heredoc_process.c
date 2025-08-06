@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 02:45:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/06 11:09:01 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/06 16:19:09 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	process_heredoc_line(char *line, int pipefd[2],
 		write_pipefd(line, pipefd);
 }
 
-bool	heredoc_child_process(char *delimiter, int pipefd[2],
+void	heredoc_child_process(char *delimiter, int pipefd[2],
 		bool is_it_expandable)
 {
 	char	*line;
@@ -58,7 +58,6 @@ bool	heredoc_child_process(char *delimiter, int pipefd[2],
 	}
 	free(line);
 	close(pipefd[1]);
-	exit(EXIT_SUCCESS);
 }
 
 bool	heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd)
@@ -68,19 +67,14 @@ bool	heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd)
 	close(pipefd[1]);
 	waitpid(child_pid, &status, 0);
 	heredoc_restore_signals();
-	if (WIFSIGNALED(status))
-	{
-		close(pipefd[0]);
-		*fd = -1;
-		if (WTERMSIG(status) == SIGINT)
-			set_exit_code(130);
-		return (false);
-	}
 	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 	{
 		close(pipefd[0]);
 		*fd = -1;
-		set_exit_code(WEXITSTATUS(status));
+		if (WEXITSTATUS(status) == 130)
+			set_exit_code(130);
+		else
+			set_exit_code(WEXITSTATUS(status));
 		return (false);
 	}
 	*fd = pipefd[0];
