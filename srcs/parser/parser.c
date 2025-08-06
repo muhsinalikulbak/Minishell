@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:52:32 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/06 11:01:30 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/06 11:20:25 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static t_segment	*segment(t_token *token)
 	set_exit_code(0);
 	if (!heredoc_init(segments))
 	{
+		free_segment(segments, segments->segment_count);
 		if (get_exit_code() != 130)
 			ft_putendl_fd("heredoc initialization failed", 2);
 		return (NULL);
