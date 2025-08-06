@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: omakbas <omakbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:44:02 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/06 18:25:08 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/08/06 19:57:15 by omakbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ static bool	start_heredoc(char *delimiter, int *fd, bool is_it_expandable)
 {
 	int			pipefd[2];
 	pid_t		child_pid;
-	t_segment	*segments;
-
-	segments = get_segments(NULL);
+	
 	if (pipe(pipefd) == -1)
 		return (false);
 	heredoc_parent_signal_setup();
@@ -27,7 +25,6 @@ static bool	start_heredoc(char *delimiter, int *fd, bool is_it_expandable)
 		return (close_pipefd(pipefd));
 	if (child_pid == 0)
 	{
-		free_segment(segments, segments->segment_count);
 		heredoc_child_process(delimiter, pipefd, is_it_expandable);
 		exit(EXIT_SUCCESS);
 	}
