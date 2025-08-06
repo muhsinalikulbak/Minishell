@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kayraakbas <kayraakbas@student.42.fr>      +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 02:45:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/03 22:37:03 by kayraakbas       ###   ########.fr       */
+/*   Updated: 2025/08/06 11:09:01 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,15 @@ bool	heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd)
 	{
 		close(pipefd[0]);
 		*fd = -1;
-		return (true);
+		if (WTERMSIG(status) == SIGINT)
+			set_exit_code(130);
+		return (false);
 	}
 	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 	{
 		close(pipefd[0]);
 		*fd = -1;
-		set_exit_code(130);
+		set_exit_code(WEXITSTATUS(status));
 		return (false);
 	}
 	*fd = pipefd[0];
