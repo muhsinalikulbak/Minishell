@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/31 22:53:04 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/06 10:48:48 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_token
 	char			*value;
 	t_token_type	type;
 	struct s_token	*next;
-	struct s_token	*prev;
 	t_token_state	state;
 	bool			is_ambiguous;
 	bool			empty_string;
@@ -49,7 +48,6 @@ typedef struct s_lexer_data
 	t_token			**token;
 	char			*token_value;
 	char			*input_line;
-	char			*history;
 	int				input_length;
 	int				value_idx;
 	int				*i;

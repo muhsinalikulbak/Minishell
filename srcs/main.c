@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/08/04 20:20:07 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/08/06 10:49:07 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	process_input_line(char *line)
 	add_history(line);
 	if (lexer(&token, line))
 	{
+		free(line);
 		if (syntax_check(token))
 		{
 			segments = parser(token);
@@ -34,6 +35,8 @@ static void	process_input_line(char *line)
 		else
 			free_token(token);
 	}
+	else
+		free(line);
 }
 
 static void	input_loop(void)
@@ -54,7 +57,6 @@ static void	input_loop(void)
         {
             process_input_line(line);
         }
-        free(line);
     }
 }
 
