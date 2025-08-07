@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_setup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:21:48 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/06 15:30:54 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/08/07 16:16:52 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ static void	wait_child_process(int *pids, int seg_count)
 		{
 			if (WTERMSIG(status) == SIGINT)
 			{
-				last_status = 130;
+				last_status = 128 + SIGINT;
 				if (i == 0)
-                    write(STDERR_FILENO, "\n", 1);
+					write(STDERR_FILENO, "\n", 1);
 			}
             else if (WTERMSIG(status) == SIGQUIT)
-                last_status = 131;
+                last_status = 128 + SIGQUIT; //
 			else
-				last_status = 128 + WTERMSIG(status);
+				last_status = 128 + WTERMSIG(status); //
 		}
 		i++;
 	}

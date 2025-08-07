@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/07 03:44:07 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 15:43:41 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ void		free_redir(t_redir *redir, int end);
 t_token		*next_pipe(t_token *token);
 bool		create_segment(t_token *token, t_segment *segments,
 				int segment_count);
-void		print_segment_list(t_segment *segments, int segment_count);
 bool		heredoc_init(t_segment *segments);
-void		print_heredoc_data(t_segment *segments);
 void		heredoc_child_signal_setup(void);
 void		heredoc_parent_signal_setup(void);
 void		heredoc_restore_signals(void);

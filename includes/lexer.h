@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/06 10:48:48 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 15:44:57 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ bool	last_state(t_lexer_data *data);
 bool	check_operator(t_lexer_data *data);
 bool	tokenizer(t_lexer_data *data);
 void	free_token(t_token *list);
-void	print_token_list(t_token *list);
 bool	state_double_quote(t_lexer_data *data, char ch);
 void	state_single_quoute(t_lexer_data *data, char ch);
 void	past_space(t_lexer_data *data);

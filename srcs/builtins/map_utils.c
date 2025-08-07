@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 14:14:24 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/05 00:23:06 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 15:45:17 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	print_map_for_env(t_map *map)
 	ptr = map;
 	while (ptr)
 	{
-		if (ptr->content)  // NULL kontrol eklendi
+		if (ptr->content)
 		{
 			printf("%s=", ptr->key);
 			printf("%s\n", ptr->content);

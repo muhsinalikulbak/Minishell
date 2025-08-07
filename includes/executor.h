@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:21 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/05 15:34:10 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 15:47:11 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include "builtins.h"
 # include "parser.h"
-// Forward declarations
-typedef struct s_segment	t_segment;
 
 void    executor(t_segment *segments);
 void	close_all_pipes(int pipefd[][2], int cmd_count);
