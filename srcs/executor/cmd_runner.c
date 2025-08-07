@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:21:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/05 19:46:56 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:19:28 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	execute_builtin(t_segment *segments, bool is_child)
 {
 	char	*cmd;
 	t_map	**env_map;
-	
+
 	env_map = get_env_map(NULL);
 	cmd = segments->args[0];
 	if (str_equal(cmd, "cd"))
@@ -70,24 +70,24 @@ static void	print_err_and_exit(char *cmd, char *message, int exit_code)
 
 static void	handle_error(t_segment *segment)
 {
+	char	*cmd;
+
+	cmd = segment->args[0];
 	if (segment->cmd_type == CMD_NOT_FOUND)
 	{
-		print_err_and_exit(segment->args[0], ": command not found", 127);
-
+		print_err_and_exit(cmd, ": command not found", 127);
 	}
 	else if (segment->cmd_type == IS_A_DIRECTORY)
 	{
-		print_err_and_exit(segment->args[0], ": Is a directory", 126);
-
+		print_err_and_exit(cmd, ": Is a directory", 126);
 	}
 	else if (segment->cmd_type == NO_PATH)
 	{
-		print_err_and_exit(segment->args[0], ": No such file or directory", 127);
-
+		print_err_and_exit(cmd, ": No such file or directory", 127);
 	}
 	else if (segment->cmd_type == PERMISSION_DENIED)
 	{
-		print_err_and_exit(segment->args[0], ": Permission denied", 126);
+		print_err_and_exit(cmd, ": Permission denied", 126);
 	}
 }
 

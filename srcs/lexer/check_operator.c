@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/04 10:44:47 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:21:52 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ bool	tokenize_prev_value(t_lexer_data *data)
 			return (true);
 		}
 	}
-	if (len == 0 && !data->expanding) // Burası eğer expand edilmeden boş bir string ise free edilmeli, boş stringler çıkarılıyor.
+	if (len == 0 && !data->expanding)
 		free(data->token_value);
 	else if (!tokenizer(data))
 		return (false);

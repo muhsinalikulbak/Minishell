@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:21:48 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/05 16:56:41 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:16:23 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	wait_child_process(int *pids, int seg_count)
 {
 	int	i;
 	int	status;
-	int	last_status = 0;
+	int	last_status;
 
 	i = 0;
 	while (i < seg_count)
@@ -35,16 +35,9 @@ static void	wait_child_process(int *pids, int seg_count)
 			last_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 		{
-			if (WTERMSIG(status) == SIGINT)
-			{
-				last_status = 130;
-				if (i == 0)
-                    write(STDERR_FILENO, "\n", 1);
-			}
-            else if (WTERMSIG(status) == SIGQUIT)
-                last_status = 131;
-			else
-				last_status = 128 + WTERMSIG(status);
+			last_status = 128 + WTERMSIG(status);
+			if (i == 0 && last_status == 130)
+				write(STDERR_FILENO, "\n", 1);
 		}
 		i++;
 	}
@@ -54,7 +47,7 @@ static void	wait_child_process(int *pids, int seg_count)
 
 static void	child_process(t_segment *segment, int pipefd[][2], int i)
 {
-	exec_child_signal_setup();	
+	exec_child_signal_setup();
 	if (segment->segment_count - 1 != 0)
 	{
 		pipe_setup(pipefd, i, segment->segment_count);
@@ -64,6 +57,8 @@ static void	child_process(t_segment *segment, int pipefd[][2], int i)
 		handle_redirections(segment->redirections, true);
 	if (segment->args)
 		handle_command(segment);
+	else
+		cleanup_manager(EXIT_SUCCESS);
 	exit(EXIT_SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:39 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/08/02 20:34:42 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 17:49:07 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,4 @@
 # include "signals.h"
 # include "utils.h"
 
-extern volatile sig_atomic_t	g_signal_received;
 #endif

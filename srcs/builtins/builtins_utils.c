@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 12:43:22 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/05 21:15:20 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:13:48 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool	update_key_value(t_map **env_map_head, char *key, char *value)
 	node = try_get_key_value_pair(key);
 	if (node)
 	{
-		if (key) // map içerisinde zaten key olduğu için parametreden geleni free etmeliyiz
+		if (key)
 			free(key);
 		if (node->content)
 			free(node->content);

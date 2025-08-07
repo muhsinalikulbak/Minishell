@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:17:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/31 21:42:09 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:24:17 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ static bool	expand_special_param(char **value, char ch, bool *is_it_exit_code)
 	return (true);
 }
 
-static bool	get_value_for_token(t_lexer_data *data, char **value, bool *is_it_exit_code)
+static bool	get_value_for_token(t_lexer_data *data, char **value,
+		bool *is_it_exit_code)
 {
 	char	*line;
 	char	*key;
@@ -80,7 +81,8 @@ static bool	get_value_for_token(t_lexer_data *data, char **value, bool *is_it_ex
 	return (free(key), true);
 }
 
-static void	realloc_token_value(t_lexer_data *data, char *temp_value, char *value)
+static void	realloc_token_value(t_lexer_data *data, char *temp_value,
+		char *value)
 {
 	int	i;
 

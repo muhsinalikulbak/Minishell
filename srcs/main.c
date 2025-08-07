@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/08/04 20:20:07 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/08/07 18:40:26 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern volatile sig_atomic_t	g_signal_received;
 
 static void	process_input_line(char *line)
 {
@@ -21,12 +23,12 @@ static void	process_input_line(char *line)
 	add_history(line);
 	if (lexer(&token, line))
 	{
+		free(line);
 		if (syntax_check(token))
 		{
 			segments = parser(token);
 			if (segments)
 			{
-				get_segments(segments);
 				executor(segments);
 				free_segment(segments, segments->segment_count);
 			}
@@ -34,28 +36,28 @@ static void	process_input_line(char *line)
 		else
 			free_token(token);
 	}
+	else
+		free(line);
 }
 
 static void	input_loop(void)
 {
 	char	*line;
 
-    while (true)
-    {
+	while (true)
+	{
 		g_signal_received = 0;
-        line = get_input(false);
-
-        if (!line)
-        {
-            handle_eof();
-            break;
-        }
-        if (ft_strlen(line) > 0)
-        {
-            process_input_line(line);
-        }
-        free(line);
-    }
+		line = get_input(false);
+		if (!line)
+		{
+			handle_eof();
+			break ;
+		}
+		if (ft_strlen(line) > 0)
+		{
+			process_input_line(line);
+		}
+	}
 }
 
 int	main(int argc, char **argv, char **env)

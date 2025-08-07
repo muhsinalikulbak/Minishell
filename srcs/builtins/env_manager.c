@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 17:20:07 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/03 13:18:02 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:15:00 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ int	get_env_map_count(void)
 
 static char	**set_env_for_execve(char **env, int count, t_map *map)
 {
-	int	i;
+	int		i;
 	char	*temp;
 
 	i = 0;
 	while (i < count)
 	{
-		if (map->content)  // Sadece content'i olan değişkenleri ekle
+		if (map->content)
 		{
 			temp = ft_strjoin(map->key, "=");
 			if (!temp)
@@ -73,7 +73,7 @@ static char	**set_env_for_execve(char **env, int count, t_map *map)
 	return (env);
 }
 
-char	**create_env_for_execve()
+char	**create_env_for_execve(void)
 {
 	t_map	*map;
 	char	**env;

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/05 16:37:08 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:38:14 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,17 @@ void		free_redir(t_redir *redir, int end);
 t_token		*next_pipe(t_token *token);
 bool		create_segment(t_token *token, t_segment *segments,
 				int segment_count);
-void		print_segment_list(t_segment *segments, int segment_count);
 bool		heredoc_init(t_segment *segments);
-void		print_heredoc_data(t_segment *segments);
 void		heredoc_child_signal_setup(void);
 void		heredoc_parent_signal_setup(void);
 void		heredoc_restore_signals(void);
+void		print_heredoc_warning(char *delimiter);
 void		handle_heredoc_eof(char *delimiter, int pipefd[2]);
 bool		heredoc_expand(char *line, int pipefd[2]);
-bool		heredoc_child_process(char *delimiter, int pipefd[2],
+void		heredoc_child_process(char *delimiter, int pipefd[2],
 				bool is_it_expandable);
 bool		find_cmd(t_segment *segments);
 void		set_cmd_type(t_segment *segment);
 bool		heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd);
 t_segment	*get_segments(t_segment *segments);
-
 #endif

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:44:02 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/03 22:55:08 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:34:14 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static bool	start_heredoc(char *delimiter, int *fd, bool is_it_expandable)
 {
-	int		pipefd[2];
-	pid_t	child_pid;
+	int			pipefd[2];
+	pid_t		child_pid;
 
 	if (pipe(pipefd) == -1)
 		return (false);
@@ -26,16 +26,15 @@ static bool	start_heredoc(char *delimiter, int *fd, bool is_it_expandable)
 	if (child_pid == 0)
 	{
 		heredoc_child_process(delimiter, pipefd, is_it_expandable);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
-	else
-		return (heredoc_parent_process(pipefd, child_pid, fd));
+	return (heredoc_parent_process(pipefd, child_pid, fd));
 }
 
 static bool	heredoc_scan(t_redir *redir)
 {
 	bool	is_it_expandable;
-	char	*delimiter;
+	char	*delim;
 	int		i;
 
 	i = 0;
@@ -43,9 +42,9 @@ static bool	heredoc_scan(t_redir *redir)
 	{
 		if (redir[i].type == HEREDOC)
 		{
-			delimiter = redir[i].file_name;
+			delim = redir[i].file_name;
 			is_it_expandable = redir[i].state == STATE_NORMAL;
-			if (!start_heredoc(delimiter, &redir[i].heredoc_fd, is_it_expandable))
+			if (!start_heredoc(delim, &redir[i].heredoc_fd, is_it_expandable))
 				return (false);
 		}
 		i++;

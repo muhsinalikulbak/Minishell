@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 04:08:38 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/03 23:21:24 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:34:51 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static bool	check_last_redir(t_token *token)
 		ft_putendl_fd("syntax error near unexpected token `newline'", 2);
 		return (false);
 	}
-	return (true); 
+	return (true);
 }
 
 bool	syntax_check(t_token *token_list)
