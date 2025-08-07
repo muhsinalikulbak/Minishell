@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/03 22:42:42 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 17:34:43 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ void	free_map(t_map *map);
 char	*try_get_value(char *key);
 t_map	*try_get_key_value_pair(char *key);
 t_map	**get_env_map(char **env);
-char**	create_env_for_execve();
-
+char	**create_env_for_execve(void);
 #endif

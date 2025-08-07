@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:48:37 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/08/07 02:36:59 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 17:32:08 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,20 @@ static void	input_loop(void)
 {
 	char	*line;
 
-    while (true)
-    {
+	while (true)
+	{
 		g_signal_received = 0;
-        line = get_input(false);
-
-        if (!line)
-        {
-            handle_eof();
-            break;
-        }
-        if (ft_strlen(line) > 0)
-        {
-            process_input_line(line);
-        }
-    }
+		line = get_input(false);
+		if (!line)
+		{
+			handle_eof();
+			break ;
+		}
+		if (ft_strlen(line) > 0)
+		{
+			process_input_line(line);
+		}
+	}
 }
 
 int	main(int argc, char **argv, char **env)
