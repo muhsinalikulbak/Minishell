@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:52:32 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/07 02:36:52 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 03:27:57 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,23 @@ static void	*print_err_segment(t_token *token, char *message)
 
 static bool	segment(t_token *token, t_segment *segments, int seg_count)
 {
+	int	exit_code;
+
 	if (!create_segment(token, segments, seg_count))
-		return (print_err_segment(token, "memory allocation failed"));
+	{
+		print_err_segment(token, "memory allocation failed");
+		return (false);
+	}
 	free_token(token);
 	get_segments(segments);
 	if (!heredoc_init(segments))
 	{
-		if (get_exit_code() != 130)
+		exit_code = get_exit_code();
+		if (exit_code != 130 && exit_code != 0)
 			ft_putendl_fd("heredoc initialization failed", 2);
-		return (NULL);
+		return (false);
 	}
-	return (segments);
+	return (true);
 }
 
 t_segment	*parser(t_token *token)

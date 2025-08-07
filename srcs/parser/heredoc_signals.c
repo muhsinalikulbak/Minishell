@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:56:34 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/07 00:58:20 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 03:44:26 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,17 @@ void	heredoc_restore_signals(void)
 	signal_setup();
 }
 
-void	handle_heredoc_eof(char *delimiter, int pipefd[2])
+void	print_heredoc_warning(char *delimiter)
 {
 	ft_putstr_fd(": warning: here-document", 2);
 	ft_putstr_fd("delimited by end-of-file (wanted `", 2);
 	ft_putstr_fd(delimiter, 2);
 	ft_putendl_fd("')", 2);
+}
+
+void	handle_heredoc_eof(char *delimiter, int pipefd[2])
+{
+	print_heredoc_warning(delimiter);
 	close(pipefd[1]);
 	cleanup_manager(EXIT_SUCCESS);
 }

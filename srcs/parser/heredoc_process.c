@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 02:45:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/07 01:01:01 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 03:44:18 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ void	heredoc_child_process(char *delimiter, int pipefd[2],
 		line = get_input(true);
 		if (!line)
 		{
+			print_heredoc_warning(delimiter);
 			close(pipefd[1]);
-			cleanup_manager(EXIT_FAILURE);
+			cleanup_manager(EXIT_SUCCESS);
 		}
 	}
 	free(line);

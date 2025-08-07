@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/07 00:52:14 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 03:44:07 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void		print_heredoc_data(t_segment *segments);
 void		heredoc_child_signal_setup(void);
 void		heredoc_parent_signal_setup(void);
 void		heredoc_restore_signals(void);
+void		print_heredoc_warning(char *delimiter);
 void		handle_heredoc_eof(char *delimiter, int pipefd[2]);
 bool		heredoc_expand(char *line, int pipefd[2]);
 void		heredoc_child_process(char *delimiter, int pipefd[2],
