@@ -6,11 +6,32 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/05 19:52:42 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:05:32 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	print_map_for_env(t_map *map)
+{
+	t_map	*ptr;
+
+	if (!map)
+	{
+		printf("Empty token map\n");
+		return ;
+	}
+	ptr = map;
+	while (ptr)
+	{
+		if (ptr->content)
+		{
+			printf("%s=", ptr->key);
+			printf("%s\n", ptr->content);
+		}
+		ptr = ptr->next;
+	}
+}
 
 void	env(char **args)
 {

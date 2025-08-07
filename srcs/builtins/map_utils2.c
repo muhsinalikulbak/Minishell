@@ -6,13 +6,13 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 14:19:46 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/03 14:12:55 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:07:45 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	extract_key_content(char *str, char **key, char **content)
+static void	extract_key_content(char *str, char **key, char **content)
 {
 	int	j;
 	int	key_len;

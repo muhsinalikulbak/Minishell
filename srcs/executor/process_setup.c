@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:21:48 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/07 17:30:29 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:16:23 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	wait_child_process(int *pids, int seg_count)
 {
 	int	i;
 	int	status;
-	int	last_status = 0;
+	int	last_status;
 
 	i = 0;
 	while (i < seg_count)
@@ -47,7 +47,7 @@ static void	wait_child_process(int *pids, int seg_count)
 
 static void	child_process(t_segment *segment, int pipefd[][2], int i)
 {
-	exec_child_signal_setup();	
+	exec_child_signal_setup();
 	if (segment->segment_count - 1 != 0)
 	{
 		pipe_setup(pipefd, i, segment->segment_count);

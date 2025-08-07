@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 01:29:56 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/05 20:19:36 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:18:10 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	single_command_builtin(t_segment *segment)
 {
 	int		saved_stdout;
-	int 	saved_stdin;
+	int		saved_stdin;
 	bool	redirect_ok;
 
 	redirect_ok = true;

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 01:20:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/05 19:43:36 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:11:32 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static bool	print_malloc_error(char *str)
 	return (false);
 }
 
-static bool	extract_key_and_value(char **key, char **value, char *key_with_value)
+static bool	extract_key_and_value(char **key, char **value,
+		char *key_with_value)
 {
 	char	*equal_position;
 
@@ -74,6 +75,7 @@ static void	process_export_variables(t_map **env_map, char **args)
 	char	*key;
 	char	*value;
 
+	set_exit_code(0);
 	i = 1;
 	while (args[i])
 	{
@@ -94,7 +96,6 @@ void	export(char **args)
 	t_map	**env_map;
 
 	env_map = get_env_map(NULL);
-	set_exit_code(0);
 	if (!args[1])
 		print_export(env_map, ft_mapsize(*env_map));
 	else

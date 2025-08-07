@@ -6,11 +6,19 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 02:45:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/07 03:44:18 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:37:51 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_heredoc_warning(char *delimiter)
+{
+	ft_putstr_fd(": warning: here-document", 2);
+	ft_putstr_fd("delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd(delimiter, 2);
+	ft_putendl_fd("')", 2);
+}
 
 static void	write_pipefd(char *line, int pipefd[2])
 {
@@ -82,5 +90,3 @@ bool	heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd)
 	*fd = pipefd[0];
 	return (true);
 }
-
-

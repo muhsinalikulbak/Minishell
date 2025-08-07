@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:19 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/07 17:34:43 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:05:46 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_map	*create_map_node(char *key, char *content);
 void	ft_map_add_back(t_map **map, t_map *new);
 t_map	*ft_maplast(t_map *map);
 int		ft_mapsize(t_map *map);
-void	print_map_for_env(t_map *map);
 t_map	*mat_to_map(char **mat);
 void	free_map(t_map *map);
 char	*try_get_value(char *key);

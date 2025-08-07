@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:48:03 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/01 18:17:51 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/08/07 18:33:19 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,3 @@ bool	heredoc_expand(char *line, int pipefd[2])
 	}
 	return (true);
 }
-
-
-
