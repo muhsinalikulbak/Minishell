@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:28 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/07 18:38:14 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/08 16:51:52 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,5 @@ bool		find_cmd(t_segment *segments);
 void		set_cmd_type(t_segment *segment);
 bool		heredoc_parent_process(int pipefd[2], pid_t child_pid, int *fd);
 t_segment	*get_segments(t_segment *segments);
+bool		resolve_cmd_path(char *cmd, char *env_path, t_segment *segment);
 #endif
