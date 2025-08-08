@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/31 22:53:04 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/08 11:29:38 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ bool	last_state(t_lexer_data *data)
 		if (data->state == STATE_NORMAL)
 		{
 			data->token_value[data->value_idx] = '\0';
+			if (check_empty_string(data))
+				return (tokenizer(data));
 			return (tokenizer(data));
 		}
 		else
