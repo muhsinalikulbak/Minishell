@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:57:07 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/08/06 10:55:15 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/08 11:31:49 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,52 +99,3 @@ bool	tokenizer(t_lexer_data *data)
 		token_type = WORD;
 	return (token_add_back(data, token_type));
 }
-/*
-// Bu en son silinecek
-void print_token_list(t_token *list)
-{
-    t_token *ptr;
-    if (!list)
-    {
-        printf("\033[1;31m[Error] Empty token list\033[0m\n");
-        return;
-    }
-
-    char *token_type[] = {
-        "WORD", 
-        "PIPE", 
-        "REDIR_IN", 
-        "REDIR_OUT", 
-        "APPEND", 
-        "HEREDOC", 
-        NULL
-    };
-
-    int max_len = 0;
-    ptr = list;
-    while (ptr)
-    {
-        int len = ft_strlen(ptr->value);
-        if (len > max_len)
-            max_len = len;
-        ptr = ptr->next;
-    }
-
-    ptr = list;
-    printf("\033[1;32m--- TOKEN LIST ---\033[0m\n");
-
-    while (ptr)
-    {
-        printf("\033[1;34m[Token]\033[0m ");
-        printf("\"%s\"", ptr->value);
-        int token_len = (int)strlen(ptr->value) + 2;
-        for (int i = 0; i < max_len + 2 - token_len; i++)
-            putchar(' ');
-        printf(" \033[1;36mType\033
-		[0m: \033[1;33m%s\
-			033[0m\n", token_type[ptr->type]);
-        ptr = ptr->next;
-    }
-
-    printf("\033[1;32m--- End of Token List ---\033[0m\n");
-}*/

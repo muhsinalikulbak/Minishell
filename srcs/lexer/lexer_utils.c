@@ -6,11 +6,30 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 01:32:14 by muhsin            #+#    #+#             */
-/*   Updated: 2025/07/12 03:15:38 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/08 11:35:22 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool	check_empty_string(t_lexer_data *data)
+{
+	int		idx;
+	char	*line;
+
+	idx = *data->i;
+	line = data->input_line;
+	if (idx - 2 >= 0)
+	{
+		if ((line[idx - 1] == '"' && line[idx - 2] == '"')
+			|| (line[idx - 1 == '\''] && line[idx - 2] == '\''))
+		{
+			data->empty_string = true;
+			return (true);
+		}
+	}
+	return (false);
+}
 
 void	past_space(t_lexer_data *data)
 {

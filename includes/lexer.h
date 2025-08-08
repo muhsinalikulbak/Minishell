@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 23:04:23 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/07 15:44:57 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/08 11:28:34 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,5 @@ void	past_space(t_lexer_data *data);
 void	print_redir_error(char *line, int i);
 bool	expand_dollar(t_lexer_data *data);
 bool	tokenize_prev_value(t_lexer_data *data);
+bool	check_empty_string(t_lexer_data *data);
 #endif

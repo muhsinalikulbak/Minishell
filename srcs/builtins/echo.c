@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 19:27:55 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/07/29 14:24:35 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/08 17:06:00 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	echo(char **args, int fd)
 	while (args[i])
 	{
 		j = 0;
+		if (!args[i][j])
+			break ;
 		if (args[i][j] == '-' && ft_strlen(args[i]) > 1)
 		{
 			j++;

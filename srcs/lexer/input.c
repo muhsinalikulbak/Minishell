@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:01:14 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/07 18:28:33 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/07 18:47:36 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*get_input(bool is_heredoc)
 		prompt = create_prompt();
 		if (!prompt)
 		{
-			line = readline("Minishell$ ");
+			line = readline("\001\033[1;32m\002Minishell$ \001\033[0m\002");
 		}
 		else
 		{

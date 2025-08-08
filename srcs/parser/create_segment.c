@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 16:10:19 by kayraakbas        #+#    #+#             */
-/*   Updated: 2025/07/31 22:43:34 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/09 00:41:32 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,76 +122,3 @@ bool	create_segment(t_token *token, t_segment *segments, int segment_count)
 	}
 	return (true);
 }
-
-/*
-// Bu en son silinecek - test için
-void print_segment_list(t_segment *segments, int segment_count)
-{
-    if (!segments)
-    {
-        printf("\033[1;31m[Error] Empty segment list\033[0m\n");
-        return;
-    }
-
-    char *redir_type[] = {
-        "TOKEN_WORD", "PIPE", "REDIR_IN", "REDIR_OUT", "APPEND", "HEREDOC", NULL
-    };
-    
-    char *token_state[] = {
-        "NORMAL", "IN_DQUOTE", "IN_SQUOTE", "IDLE", NULL
-    };
-
-    printf("\033[1;32m=== SEGMENT LIST ===\033[0m\n");
-    
-    for (int i = 0; i < segment_count; i++)
-    {
-        printf("\033[1;35m[Segment %d]\033[0m\n", i + 1);
-        
-        // Args yazdır
-        if (segments[i].args)
-        {
-            printf("  \033[1;36mArgs\033[0m: ");
-            for (int j = 0; segments[i].args[j]; j++)
-            {
-                if (j > 0) printf(" ");
-                printf("\033[1;33m\"%s\"\033[0m", segments[i].args[j]);
-            }
-            printf("\n");
-        }
-        else
-        {
-            printf("  \033[1;36mArgs\033[0m: \033[1;31mNULL\033[0m\n");
-        }
-        
-        // Redirections yazdır
-        if (segments[i].redirections)
-        {
-            printf("  \033[1;36mRedirections\033[0m:\n");
-            for (int j = 0; j < segments[i].redirections[0].redir_count; j++)
-            {
-                printf("    \033[1;34m[%d]\033[0m ", j + 1);
-                printf("\033[1;37mType\033[0m: \033[1;33m%s\033[0m, ", 
-                       redir_type[segments[i].redirections[j].type]);
-                printf("\033[1;37mFile\033[0m: \033[1;33m\"%s\"\033[0m, ", 
-                       segments[i].redirections[j].file_name);
-                printf("\033[1;37mState\033[0m: \033[1;33m%s\033[0m", 
-                       token_state[segments[i].redirections[j].state]);
-                if (segments[i].redirections[j].type == HEREDOC)
-                    printf(", \033[1;37mHeredoc_fd\033[0m: \033[1;33m%d\033[0m", 
-                           segments[i].redirections[j].heredoc_fd);
-                printf("\n");
-            }
-        }
-        else
-        {
-            printf("  \033[1;36mRedirections\033[0m: \033[1;31mNULL\033[0m\n");
-        }
-        
-        if (i < segment_count - 1)
-            printf("  \033[1;32m↓ PIPE ↓\033[0m\n");
-        printf("\n");
-    }
-    
-    printf("\033[1;32m=== End of Segment List ===\033[0m\n");
-}
-*/

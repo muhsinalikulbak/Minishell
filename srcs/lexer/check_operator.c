@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/07 18:21:52 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/08 11:35:11 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,16 @@ static bool	set_quote(t_lexer_data *data, char ch)
 bool	tokenize_prev_value(t_lexer_data *data)
 {
 	int		len;
-	int		idx;
-	char	*line;
 
 	data->token_value[data->value_idx] = '\0';
 	len = ft_strlen(data->token_value);
-	idx = *data->i;
-	line = data->input_line;
-	if (idx - 2 >= 0)
+	if (check_empty_string(data))
 	{
-		if ((line[idx - 1] == '"' && line[idx - 2] == '"')
-			|| (line[idx - 1 == '\''] && line[idx - 2] == '\''))
-		{
-			data->empty_string = true;
-			if (!tokenizer(data))
-				return (false);
-			return (true);
-		}
+		return (tokenizer(data));
 	}
 	if (len == 0 && !data->expanding)
 		free(data->token_value);
-	else if (!tokenizer(data))
-		return (false);
-	return (true);
+	return (tokenizer(data));
 }
 
 static bool	tokenize_operator(t_lexer_data *data, char *operator)
