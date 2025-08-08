@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/08 11:29:38 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/08 17:00:00 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ bool	last_state(t_lexer_data *data)
 				ft_putendl_fd("Quotation error, missing double quote (\")", 2);
 			else
 				ft_putendl_fd("Quotation error, missing single quote (\')", 2);
+			set_exit_code(1);
 			return (false);
 		}
 	}
