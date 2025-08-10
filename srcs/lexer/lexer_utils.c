@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 01:32:14 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/08 11:35:22 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/10 17:25:20 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	check_empty_string(t_lexer_data *data)
 	if (idx - 2 >= 0)
 	{
 		if ((line[idx - 1] == '"' && line[idx - 2] == '"')
-			|| (line[idx - 1 == '\''] && line[idx - 2] == '\''))
+			|| (line[idx - 1] == '\'' && line[idx - 2] == '\''))
 		{
 			data->empty_string = true;
 			return (true);

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:43:49 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/08 11:35:11 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/08/10 17:30:08 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ bool	tokenize_prev_value(t_lexer_data *data)
 		return (tokenizer(data));
 	}
 	if (len == 0 && !data->expanding)
+	{
 		free(data->token_value);
+		data->token_value = NULL;
+		return (true);
+	}
 	return (tokenizer(data));
 }
 

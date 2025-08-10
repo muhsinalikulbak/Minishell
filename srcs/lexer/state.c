@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:11:15 by muhsin            #+#    #+#             */
-/*   Updated: 2025/08/08 17:00:00 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/08/10 17:30:53 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ bool	last_state(t_lexer_data *data)
 		else
 		{
 			free(data->token_value);
+			data->token_value = NULL;
 			if (data->state == STATE_IN_DQUOTE)
 				ft_putendl_fd("Quotation error, missing double quote (\")", 2);
 			else
