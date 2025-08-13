@@ -19,77 +19,77 @@ Before compiling the project, you need to install the readline library:
 
 ### Ubuntu/Debian:
 
-   sudo apt-get update
-   sudo apt-get install libreadline-dev
+    sudo apt-get update
+    sudo apt-get install libreadline-dev
 
 ### macOS (with Homebrew):
 
-   brew install readline
+    brew install readline
 
 ### CentOS/RHEL/Fedora:
 
-   # For CentOS/RHEL
-   sudo yum install readline-devel
-   
-   # For Fedora
-   sudo dnf install readline-devel
+    # For CentOS/RHEL
+    sudo yum install readline-devel
+    
+    # For Fedora
+    sudo dnf install readline-devel
 
 ### Arch Linux:
 
-   sudo pacman -S readline
+    sudo pacman -S readline
 
 ## Installation
 
 1. Clone the repository:
 
-      git clone [your-repository-url]
-      cd minishell
+       git clone [your-repository-url]
+       cd minishell
 
 2. Compile the project:
 
-      make
+       make
 
 ## Makefile Commands
 
-- **`make`**: <span style="color: green;">Compiles the project and creates the `minishell` executable</span>
-- **`make re`**: <span style="color: orange;">Recompiles the entire project from scratch (equivalent to `make fclean` + `make`)</span>
-- **`make clean`**: <span style="color: yellow;">Removes all object files (`.o` files) but keeps the executable</span>
-- **`make fclean`**: <span style="color: red;">Removes all object files and the executable (complete cleanup)</span>
+- **`make`**: Compiles the project and creates the `minishell` executable
+- **`make re`**: Recompiles the entire project from scratch (equivalent to `make fclean` + `make`)
+- **`make clean`**: Removes all object files (`.o` files) but keeps the executable
+- **`make fclean`**: Removes all object files and the executable (complete cleanup)
 
 ## Usage
 
 Run the shell:
 
-   ./minishell
+    ./minishell
 
 Once started, you can use it like a regular shell:
 
-   minishell$ echo "Hello World"
-   Hello World
-   minishell$ ls -la | grep minishell
-   -rwxr-xr-x 1 user user 45678 Dec 10 15:30 minishell
-   minishell$ export MY_VAR=42
-   minishell$ echo $MY_VAR
-   42
-   minishell$ echo "Exit status: $?"
-   Exit status: 0
-   minishell$ echo "Shell PID: $$"
-   Shell PID: 12345
-   minishell$ cat < input.txt > output.txt
-   minishell$ ls | wc -l | cat -e
-   15$
-   minishell$ exit
+    minishell$ echo "Hello World"
+    Hello World
+    minishell$ ls -la | grep minishell
+    -rwxr-xr-x 1 user user 45678 Dec 10 15:30 minishell
+    minishell$ export MY_VAR=42
+    minishell$ echo $MY_VAR
+    42
+    minishell$ echo "Exit status: $?"
+    Exit status: 0
+    minishell$ echo "Shell PID: $$"
+    Shell PID: 12345
+    minishell$ cat < input.txt > output.txt
+    minishell$ ls | wc -l | cat -e
+    15$
+    minishell$ exit
 
 ### Supported Commands
 
 #### Built-in Commands:
-- <span style="color: blue;">`echo [-n]`</span> - Display text
-- <span style="color: blue;">`cd [path]`</span> - Change directory
-- <span style="color: blue;">`pwd`</span> - Print working directory
-- <span style="color: blue;">`export [var=value]`</span> - Set environment variable
-- <span style="color: blue;">`unset [var]`</span> - Unset environment variable
-- <span style="color: blue;">`env`</span> - Display environment variables
-- <span style="color: blue;">`exit [code]`</span> - Exit the shell
+- `echo [-n]` - Display text
+- `cd [path]` - Change directory
+- `pwd` - Print working directory
+- `export [var=value]` - Set environment variable
+- `unset [var]` - Unset environment variable
+- `env` - Display environment variables
+- `exit [code]` - Exit the shell
 
 #### External Commands:
 - Any executable in `PATH`
@@ -98,65 +98,65 @@ Once started, you can use it like a regular shell:
 ### Special Features:
 - **Pipes**: `command1 | command2 | command3`
 - **Redirections**: 
- - <span style="color: purple;">`command > file`</span> (output redirection)
- - <span style="color: purple;">`command >> file`</span> (append redirection)
- - <span style="color: purple;">`command < file`</span> (input redirection)
+  - `command > file` (output redirection)
+  - `command >> file` (append redirection)
+  - `command < file` (input redirection)
 - **Environment Variables**: 
- - <span style="color: green;">`$VAR` or `${VAR}`</span> - Variable expansion
- - <span style="color: orange;">`$?`</span> - Exit status of last command
- - <span style="color: orange;">`$$`</span> - Process ID of shell
+  - `$VAR` or `${VAR}` - Variable expansion
+  - `$?` - Exit status of last command
+  - `$$` - Process ID of shell
 - **Command History**: Use arrow keys to navigate through previous commands
 
 ## Architecture
 
-### 🔧 Parser/Lexer (State Machine)
+### Parser/Lexer (State Machine)
 The parsing system uses a finite state machine approach to tokenize and parse input:
 - **Lexical Analysis**: Converts input string into tokens
 - **Syntax Analysis**: Validates command structure and builds parse tree
 - **State Management**: Handles quotes, escapes, and special characters
 
-### ⚡ Executor (Multiprocess)
+### Executor (Multiprocess)
 The execution system implements parallel processing for pipeline commands:
 - **Process Creation**: Each pipeline segment runs in its own process
 - **IPC Management**: Proper pipe setup and file descriptor handling
 - **Synchronization**: Parent process waits for all child processes
 - **Resource Cleanup**: Automatic cleanup of processes and file descriptors
 
-### 🔄 Variable Expansion
+### Variable Expansion
 The shell supports comprehensive variable expansion:
-- **Environment Variables**: <span style="color: green;">`$HOME`, `$PATH`, `$USER`</span> etc.
+- **Environment Variables**: `$HOME`, `$PATH`, `$USER` etc.
 - **Custom Variables**: Variables set with `export`
 - **Special Variables**:
- - <span style="color: orange;">`$?`</span> - Exit status of the last executed command
- - <span style="color: orange;">`$$`</span> - Process ID of the current shell
+  - `$?` - Exit status of the last executed command
+  - `$$` - Process ID of the current shell
 - **Expansion in Quotes**: 
- - <span style="color: green;">Double quotes</span>: Variables are expanded
- - <span style="color: red;">Single quotes</span>: Variables are treated literally
-- **Parameter Expansion**: <span style="color: blue;">`${VAR}`</span> syntax for complex cases
+  - Double quotes: Variables are expanded
+  - Single quotes: Variables are treated literally
+- **Parameter Expansion**: `${VAR}` syntax for complex cases
 
-### 🚦 Signal Handling
+### Signal Handling
 The shell implements proper signal management:
 - **SIGINT (Ctrl+C)**:
- - In interactive mode: <span style="color: green;">Displays new prompt on new line</span>
- - During command execution: <span style="color: red;">Terminates current command</span>
- - Exit status set to <span style="color: orange;">130</span>
+  - In interactive mode: Displays new prompt on new line
+  - During command execution: Terminates current command
+  - Exit status set to 130
 - **SIGQUIT (Ctrl+\)**:
- - <span style="color: yellow;">Ignored in interactive mode</span>
- - During command execution: <span style="color: red;">Terminates with core dump</span>
- - Exit status set to <span style="color: orange;">131</span>
+  - Ignored in interactive mode
+  - During command execution: Terminates with core dump
+  - Exit status set to 131
 - **EOF (Ctrl+D)**:
- - <span style="color: blue;">Exits the shell gracefully</span>
- - Prints "exit" message
+  - Exits the shell gracefully
+  - Prints "exit" message
 - **Signal Inheritance**: Child processes receive appropriate signal handling
 
 ## Error Handling
 
 The shell handles various error conditions gracefully:
-- <span style="color: red;">Invalid commands and syntax errors</span>
-- <span style="color: orange;">File permission issues</span>
-- <span style="color: red;">Memory allocation failures</span>
-- <span style="color: yellow;">Signal interruptions</span>
-- <span style="color: orange;">Pipe and redirection errors</span>
+- Invalid commands and syntax errors
+- File permission issues
+- Memory allocation failures
+- Signal interruptions
+- Pipe and redirection errors
 
 ## Contributing
 
@@ -168,4 +168,4 @@ The shell handles various error conditions gracefully:
 
 ## License
 
-This project is part of the **42 School** curriculum and follows the school's academic guidelines.
+This project is part of the 42 School curriculum and follows the school's academic guidelines.
