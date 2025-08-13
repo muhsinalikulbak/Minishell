@@ -42,8 +42,8 @@ Before compiling the project, you need to install the readline library:
 
 1. Clone the repository:
 
-       git clone [your-repository-url]
-       cd minishell
+       git clone https://github.com/muhsinalikulbak/Minishell.git
+       cd Minishell
 
 2. Compile the project:
 
